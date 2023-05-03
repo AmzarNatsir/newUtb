@@ -7,18 +7,18 @@ $(function(){
         
     });
 });
-// var goEdit = function(el) {
-//     $("#frm_modal").load(route('unitEdit', $(el).val()));
-// }
+var goEdit = function(el) {
+    $("#frm_modal").load(route('productEdit', $(el).val()));
+}
 
-// function konfirmHapus()
-// {
-//     var psn = confirm("Delete Data ?");
-//     if(psn==true)
-//     {
-//         return true;
-//     } else {
-//         return false;
-//     }
+function konfirmHapus()
+{
+    var psn = confirm("Delete Data ?");
+    if(psn==true)
+    {
+        return true;
+    } else {
+        return false;
+    }
 
-// }
+}

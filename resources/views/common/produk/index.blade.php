@@ -29,12 +29,12 @@
             <thead>
             <tr>
                 <th style="width: 5%;">No.</th>
-                <th>Kode</th>
+                <th class="text-center">Kode</th>
                 <th>Produk</th>
-                <th>Unit</th>
-                <th>Kemasan</th>
-                <th>Harga Toko</th>
-                <th>Harga Eceran</th>
+                <th class="text-center">Unit</th>
+                <th class="text-center">Kemasan</th>
+                <th class="text-right">Harga Toko</th>
+                <th class="text-right">Harga Eceran</th>
                 <th style="width: 10%;">Act</th>
             </tr>
             </thead>
@@ -42,13 +42,13 @@
             @php $nom=1 @endphp
             @foreach($allProduct as $list)
             <tr>
-                <td>{{ $nom }}</td>
-                <td>{{ $list->kode }}</td>
+                <td class="text-center">{{ $nom }}</td>
+                <td class="text-center">{{ $list->kode }}</td>
                 <td>{{ $list->nama_produk }}</td>
-                <td>{{ $list->get_unit->unit }}</td>
-                <td>{{ $list->kemasan }}</td>
-                <td>{{ $list->harga_toko }}</td>
-                <td>{{ $list->harga_eceran }}</td>
+                <td class="text-center">{{ $list->get_unit->unit }}</td>
+                <td class="text-center">{{ $list->kemasan }}</td>
+                <td class="text-right">{{ number_format($list->harga_toko, 0) }}</td>
+                <td class="text-right">{{ number_format($list->harga_eceran, 0) }}</td>
                 <td>
                     <div class="input-group-prepend">
                     <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -56,7 +56,7 @@
                     </button>
                     <div class="dropdown-menu">
                         <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goEdit(this)"><i class="fa fa-edit"></i> Edit</button>
-                        <a href="{{ url('unitDelete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                        <a href="{{ url('productDelete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
                     </div>
                   </div>
                 </td>

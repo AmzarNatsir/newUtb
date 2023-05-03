@@ -34,5 +34,8 @@ Route::get('unitDelete/{id}', [UnitController::class, 'delete'])->name('unitDele
 Route::get('product', [ProductController::class, 'index'])->name('product');
 Route::get('productAdd', [ProductController::class, 'add'])->name("productAdd");
 Route::post('productStore', [ProductController::class, 'store'])->name("productStore");
+Route::get('productEdit/{id}', [ProductController::class, 'edit'])->name("productEdit");
+Route::put('productUpdate/{id}', [ProductController::class, 'update'])->name('productUpdate');
+Route::get('productDelete/{id}', [ProductController::class, 'delete'])->name('productDelete');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

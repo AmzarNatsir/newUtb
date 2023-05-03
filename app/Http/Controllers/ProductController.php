@@ -51,4 +51,50 @@ class ProductController extends Controller
             return redirect('product')->with('message', 'Proses gagal. Error : '.$e->getMessage());
         }
     }
+
+    public function edit($id)
+    {
+        $query_main = ProductModel::find($id);
+        $query_unit = UnitModel::all();
+        $data = [
+            'res' => $query_main,
+            'allUnit' => $query_unit
+        ];
+        return view('common.produk.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $update = ProductModel::find($id);
+            $update->kode = $request->inp_kode;
+            $update->nama_produk = $request->inp_nama;
+            $update->unit_id = $request->sel_satuan;
+            $update->kemasan = $request->inp_kemasan;
+            $update->harga_toko = str_replace(",","", $request->inp_harga_toko);
+            $update->harga_eceran = str_replace(",","", $request->inp_harga_eceran);
+            $exec = $update->save();
+            if($exec)
+            {
+                return redirect('product')->with('message', 'Update data berhasil');
+            } else {
+                return redirect('product')->with('message', 'Update data gagal');
+            }
+        } catch (QueryException $e)
+        {
+            return redirect('product')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
+    }
+
+    public function delete($id)
+    {
+        $delete = ProductModel::find($id);
+        $exec = $delete->delete();
+        if($exec)
+        {
+            return redirect('product')->with('message', 'Data berhasil dihapus');
+        } else {
+            return redirect('product')->with('message', 'Data gagal dihapus');
+        }
+    }
 }
