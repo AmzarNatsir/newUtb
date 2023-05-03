@@ -76,7 +76,7 @@
             <a href="{{ route('listUnit') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Unit</p></a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Product</p></a>
+            <a href="{{ route('product') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Product</p></a>
         </li>
     </ul>
 </li>

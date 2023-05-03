@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,12 +22,17 @@ Route::get('/', function () {
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Auth::routes();
-
+//Common Unit
 Route::get('unit', [UnitController::class, 'index'])->name("listUnit");
 Route::get('unitAdd', [UnitController::class, 'add'])->name("unitAdd");
 Route::post('unitStore', [UnitController::class, 'store'])->name("unitStore");
 Route::get('unitEdit/{id}', [UnitController::class, 'edit'])->name("unitEdit");
 Route::put('unitUpdate/{id}', [UnitController::class, 'update'])->name('unitUpdate');
 Route::get('unitDelete/{id}', [UnitController::class, 'delete'])->name('unitDelete');
+
+//Common Product
+Route::get('product', [ProductController::class, 'index'])->name('product');
+Route::get('productAdd', [ProductController::class, 'add'])->name("productAdd");
+Route::post('productStore', [ProductController::class, 'store'])->name("productStore");
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
