@@ -78,6 +78,9 @@
         <li class="nav-item">
             <a href="{{ route('product') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Product</p></a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('supplier') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Supplier</p></a>
+        </li>
     </ul>
 </li>
 <li class="nav-item">

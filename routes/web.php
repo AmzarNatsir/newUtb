@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,5 +38,13 @@ Route::post('productStore', [ProductController::class, 'store'])->name("productS
 Route::get('productEdit/{id}', [ProductController::class, 'edit'])->name("productEdit");
 Route::put('productUpdate/{id}', [ProductController::class, 'update'])->name('productUpdate');
 Route::get('productDelete/{id}', [ProductController::class, 'delete'])->name('productDelete');
+
+//Common Supplier
+Route::get('supplier', [SupplierController::class, 'index'])->name('supplier');
+Route::get('supplierAdd', [SupplierController::class, 'add'])->name("supplierAdd");
+Route::post('supplierStore', [SupplierController::class, 'store'])->name("supplierStore");
+Route::get('supplierEdit/{id}', [SupplierController::class, 'edit'])->name("supplierEdit");
+Route::put('supplierUpdate/{id}', [SupplierController::class, 'update'])->name('supplierUpdate');
+Route::get('supplierDelete/{id}', [SupplierController::class, 'delete'])->name('supplierDelete');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
