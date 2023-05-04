@@ -19,7 +19,9 @@ class ProductModel extends Model
         'kemasan',
         'harga_toko',
         'harga_eceran',
-        'gambar'
+        'gambar',
+        'stok_awal',
+        'stok_akhir'
     ];
 
     public function get_unit()

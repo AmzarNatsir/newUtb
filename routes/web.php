@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\POController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
@@ -23,6 +24,8 @@ Route::get('/', function () {
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Common Unit
 Route::get('unit', [UnitController::class, 'index'])->name("listUnit");
 Route::get('unitAdd', [UnitController::class, 'add'])->name("unitAdd");
@@ -47,4 +50,8 @@ Route::get('supplierEdit/{id}', [SupplierController::class, 'edit'])->name("supp
 Route::put('supplierUpdate/{id}', [SupplierController::class, 'update'])->name('supplierUpdate');
 Route::get('supplierDelete/{id}', [SupplierController::class, 'delete'])->name('supplierDelete');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Purchase Order
+Route::get('purchaseOrder', [POController::class, 'index'])->name('purchaseOrder');
+Route::get('purchaseOrderAdd', [POController::class, 'add'])->name('purchaseOrderAdd');
+Route::post('purchaseOrderStore', [POController::class, 'store'])->name("purchaseOrderStore");
+
