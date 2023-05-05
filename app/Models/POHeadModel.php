@@ -22,12 +22,19 @@ class POHeadModel extends Model
         'diskon_persen',
         'diskon_rupiah',
         'total_po',
+        'total_po_net',
         'status_po',
+        'cara_bayar',
         'user_id'
     ];
 
     public function get_supplier()
     {
         return $this->belongsTo(SupplierModel::class, 'supplier_id', 'id');
+    }
+
+    public function get_detail()
+    {
+        return $this->hasMany(PODetailModel::class, 'head_id', 'id');
     }
 }

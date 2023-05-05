@@ -97,4 +97,27 @@ class ProductController extends Controller
             return redirect('product')->with('message', 'Data gagal dihapus');
         }
     }
+
+    public function searchItem(Request $request)
+    {
+        $keyword = $request->search;
+        $result = ProductModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->get();
+        $response = array();
+        foreach($result as $item){
+            $response[] = array(
+                "value"=>$item->id, 
+                "label"=>$item->nama_produk,
+                "kode"=>$item->kode,
+                "satuan"=>$item->get_unit->unit,
+                "harga_toko"=>$item->harga_toko,
+                "harga_eceran" => $item->harga_eceran,
+                "kemasan" => $item->kemasan,
+                "stok" => $item->stok_akhir
+            );
+        }
+        return response()
+            ->json($response)
+            ->withCallback($request->input('callback'));
+
+    }
 }

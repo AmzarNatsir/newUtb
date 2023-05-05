@@ -38,7 +38,48 @@
                 <th style="width: 10%;">Act</th>
             </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                @php
+                $nom=1
+                @endphp
+                @foreach($all_po as $list)
+                    <tr>
+                        <td>{{ $nom }}</td>
+                        <td class="text-center">{{ $list->nomor_po }}</td>
+                        <td class="text-center">{{ date_format(date_create($list->tanggal_po), 'd-m-Y') }}</td>
+                        <th>{{ $list->get_supplier->nama_supplier }}</th>
+                        <th class="text-right">{{ number_format($list->total_po, 0) }}</th>
+                        <td class="text-center">
+                            @if(empty($list->status_po)) 
+                                Draft
+                            @elseif($list->status_po==1)
+                                Approved
+                            @elseif($list->status_po==2)
+                                Billed
+                            @else
+                                Closed
+                            @endif
+                        </td>
+                        <td>{{ $list->keterangan }}</td>
+                        <td>
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                Action
+                                </button>
+                                <div class="dropdown-menu">
+                                    @if(empty($list->status_po))
+                                    <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goEdit(this)"><i class="fa fa-edit"></i> Edit</button>
+                                    <a href="{{ url('unitDelete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                                    @endif
+                                    <div class="dropdown-divider"></div>
+                                    <button type="button" class="dropdown-item" id="tbl_approve" name="tbl_approve" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-print"></i> Approve</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @php $nom++ @endphp
+                @endforeach
+            </tbody>
         </table>
     </div>
     <!-- /.card-body -->

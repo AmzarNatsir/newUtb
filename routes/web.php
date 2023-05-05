@@ -54,4 +54,8 @@ Route::get('supplierDelete/{id}', [SupplierController::class, 'delete'])->name('
 Route::get('purchaseOrder', [POController::class, 'index'])->name('purchaseOrder');
 Route::get('purchaseOrderAdd', [POController::class, 'add'])->name('purchaseOrderAdd');
 Route::post('purchaseOrderStore', [POController::class, 'store'])->name("purchaseOrderStore");
+Route::get('approveOrder/{id}', [POController::class, 'approve'])->name('approveOrder');
 
+Route::get('printOrder/{id}', [POController::class, 'print'])->name('printOrder');
+
+Route::post('searchItem', [ProductController::class, 'searchItem'])->name('searchItem');
