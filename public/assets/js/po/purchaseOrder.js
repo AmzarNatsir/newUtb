@@ -5,6 +5,13 @@ $(function(){
     {
         $("#frm_modal").load(APP_URL_ADD);
     });
+
+    $("#tbl_edit").on("click", function()
+    {
+        var id_data = this.value;
+        $("#frm_modal").load(route('editOrder', id_data));
+    });
+
     $("#tbl_approve").on("click", function()
     {
         var id_data = this.value;
@@ -16,4 +23,16 @@ var goPrint = function(el)
 {
     var id_data = $(el).val();
     window.open(route('printOrder', id_data), "_blank");
+}
+
+function konfirmHapus()
+{
+    var psn = confirm("Yakin akan menghapus data ?");
+    if(psn==true)
+    {
+        return true;
+    } else {
+        return false;
+    }
+
 }

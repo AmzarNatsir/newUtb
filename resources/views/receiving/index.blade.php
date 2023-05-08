@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Stock Keeper')
-@section('breadcrumb', 'Purchase Order')
+@section('breadcrumb', 'Receiving')
 @section('content')
 @routes
 <!-- content -->
@@ -8,7 +8,7 @@
     <!-- Default box -->
     <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Purchase Order</h3>
+        <h3 class="card-title">Receiving</h3>
         <div class="card-tools">
             <ul class="nav nav-pills ml-auto">
             <li class="nav-item">
@@ -55,9 +55,9 @@
                             @elseif($list->status_po==1)
                             <span class='badge bg-success'>Approved</span>
                             @elseif($list->status_po==2)
-                            <span class='badge bg-info'>Billed</span>
+                                Billed
                             @else
-                            <span class='badge bg-danger'>Closed</span>
+                                Closed
                             @endif
                         </td>
                         <td>{{ $list->keterangan }}</td>
@@ -67,15 +67,7 @@
                                 Action
                                 </button>
                                 <div class="dropdown-menu">
-                                    @if(empty($list->status_po))
-                                    <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-edit"></i> Edit</button>
-                                    <a href="{{ url('deleteOrder') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
-                                    <div class="dropdown-divider"></div>
-                                    <button type="button" class="dropdown-item" id="tbl_approve" name="tbl_approve" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-thumbs-up"></i> Approve</button>
-                                    @endif
-                                    @if($list->status_po==1)
-                                    <button type="button" class="dropdown-item" id="tbl_print" name="tbl_print" value="{{ $list->id }}" onClick='goPrint(this)'><i class="fa fa-print"></i> Print</button>
-                                    @endif
+                                    <button type="button" class="dropdown-item" id="tbl_receive" name="tbl_receive" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-edit"></i> Receive</button>
                                 </div>
                             </div>
                         </td>
@@ -97,7 +89,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('assets/js/po/purchaseOrder.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/receive.js') }}"></script>
 @endsection
 
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\POController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
@@ -54,8 +55,20 @@ Route::get('supplierDelete/{id}', [SupplierController::class, 'delete'])->name('
 Route::get('purchaseOrder', [POController::class, 'index'])->name('purchaseOrder');
 Route::get('purchaseOrderAdd', [POController::class, 'add'])->name('purchaseOrderAdd');
 Route::post('purchaseOrderStore', [POController::class, 'store'])->name("purchaseOrderStore");
+Route::get('editOrder/{id}', [POController::class, 'edit'])->name('editOrder');
+Route::put('updateOrder/{id}', [POController::class, 'update'])->name('updateOrder');
+Route::post('deleteItemOrder', [POController::class, 'delete_items'])->name('deleteItemOrder');
+Route::post('deleteOrder', [POController::class, 'delete_po'])->name('deleteOrder');
+//approve PO
 Route::get('approveOrder/{id}', [POController::class, 'approve'])->name('approveOrder');
-
+Route::put('approvePOStore/{id}', [POController::class, 'approveStore'])->name('approvePOStore');
 Route::get('printOrder/{id}', [POController::class, 'print'])->name('printOrder');
+//Receiving
+Route::get('receiving', [ReceivingController::class, 'index'])->name('receiving');
+Route::get('receivingAdd/{id}', [ReceivingController::class, 'add'])->name('receivingAdd');
+Route::post('receiveStore', [ReceivingController::class, 'store'])->name('receiveStore');
+
+//Manajemen Stok
+Route::get('daftarStok', [ProductController::class, 'list_stok'])->name('daftarStok');
 
 Route::post('searchItem', [ProductController::class, 'searchItem'])->name('searchItem');

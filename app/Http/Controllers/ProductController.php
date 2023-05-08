@@ -120,4 +120,12 @@ class ProductController extends Controller
             ->withCallback($request->input('callback'));
 
     }
+
+    //manajemen stok
+    public function list_stok()
+    {
+        $query = ProductModel::all();
+        $data['allProduct'] = $query;
+        return view('manajemen_stok.daftar.index', $data);
+    }
 }
