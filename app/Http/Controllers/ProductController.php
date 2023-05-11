@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MerkModel;
 use App\Models\ProductModel;
 use App\Models\UnitModel;
 use Illuminate\Database\QueryException;
@@ -24,7 +25,9 @@ class ProductController extends Controller
     public function add()
     {
         $query_unit = UnitModel::all();
+        $query_merk = MerkModel::all();
         $data['allUnit'] = $query_unit;
+        $data['allMerk'] = $query_merk;
         return view('common.produk.add', $data);
     }
 
@@ -34,6 +37,7 @@ class ProductController extends Controller
             $new_data = new ProductModel();
             $new_data->kode = $request->inp_kode;
             $new_data->nama_produk = $request->inp_nama;
+            $new_data->merk_id = $request->sel_merk;
             $new_data->unit_id = $request->sel_satuan;
             $new_data->kemasan = $request->inp_kemasan;
             $new_data->harga_toko = str_replace(",","", $request->inp_harga_toko);
@@ -56,9 +60,11 @@ class ProductController extends Controller
     {
         $query_main = ProductModel::find($id);
         $query_unit = UnitModel::all();
+        $query_merk = MerkModel::all();
         $data = [
             'res' => $query_main,
-            'allUnit' => $query_unit
+            'allUnit' => $query_unit,
+            'allMerk' => $query_merk
         ];
         return view('common.produk.edit', $data);
     }
@@ -69,6 +75,7 @@ class ProductController extends Controller
             $update = ProductModel::find($id);
             $update->kode = $request->inp_kode;
             $update->nama_produk = $request->inp_nama;
+            $update->merk_id = $request->sel_merk;
             $update->unit_id = $request->sel_satuan;
             $update->kemasan = $request->inp_kemasan;
             $update->harga_toko = str_replace(",","", $request->inp_harga_toko);
@@ -127,5 +134,35 @@ class ProductController extends Controller
         $query = ProductModel::all();
         $data['allProduct'] = $query;
         return view('manajemen_stok.daftar.index', $data);
+    }
+
+    public function setting_stok()
+    {
+        $query = ProductModel::all();
+        $data['allProduct'] = $query;
+        return view('manajemen_stok.daftar.setting', $data);
+    }
+
+    public function setting_stok_store(Request $request)
+    {
+        try {
+            $jml_item = count($request->id_stok);
+            foreach(array($request) as $key => $value)
+            {
+                for($i=0; $i<$jml_item; $i++)
+                {
+                    $update = ProductModel::find($value['id_stok'][$i]);
+                    $update->harga_toko = str_replace(",","", $value['inp_harga_toko'][$i]);
+                    $update->harga_eceran = str_replace(",","", $value['inp_harga_eceran'][$i]);
+                    $update->stok_awal = str_replace(",","", $value['inp_stok_awal'][$i]);
+                    $update->stok_akhir = str_replace(",","", $value['inp_stok_akhir'][$i]);
+                    $update->save();
+                }
+            }
+            return redirect('daftarStok')->with('message', 'Pengaturan data produk berhasil disimpan');
+        } catch (QueryException $e)
+        {
+            return redirect('daftarStok')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
     }
 }

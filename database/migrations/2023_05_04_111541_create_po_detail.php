@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('head_id')->references('id')->on('po_head');
             $table->integer('produk_id')->unsigned();
             $table->foreign('produk_id')->references('id')->on('common_product');
-            $table->integer('qty');
+            $table->double('qty');
             $table->double('harga');
             $table->double('sub_total');
             $table->integer('status_item')->nullable();

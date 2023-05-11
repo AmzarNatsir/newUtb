@@ -12,8 +12,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/AdminLTE/dist/css/adminlte.min.css')}} ">
   <style>
-    @page { margin: 40px 40px; }
-    footer { position: fixed; bottom: -60px; left: 0px; right: 0px; height: 50px; }
+    @page { margin: 30px 40px; }
+    footer { position: fixed; bottom: -20px; left: 0px; right: 0px; height: 50px; }
     p { page-break-after: always; }
     p:last-child { page-break-after: never; }
   </style>
@@ -21,80 +21,81 @@
 <body>
 <table style="width: 100%;">
 <tr>
-  <td style="width: 10%;"><img src="{{ asset('assets/AdminLTE/dist/img/utb_logo.png')}}" alt="UTB Logo" style="width: 100px;  height: auto;"></td>
-  <td style="width: 50%;"><h1>Purchase Order</h1></td>
-  <td><span class='badge' style="text-align: left;">
-          <strong>PT. Usaha Tani Bersama</strong><br>
-          Jl. <br>
-          Kendari, Sulawesi Tenggara, Indonesia
-          </span>
-  </td>
+  <td style="width: 50%;"></td>
+  <td style="width: 10%; vertical-align: bottom;"><img src="{{ asset('assets/AdminLTE/dist/img/utb_logo.png')}}" alt="UTB Logo" style="width: 120px;  height: auto;"></td>
+  <td style="vertical-align: middle;"><h5><strong>PT. USAHA TANI BERSAMA</strong></h5></td>
 </tr>
 </table>
 <table style="font-size: 10pt; width: 100%; border-collapse: collapse;">
 <tr>
-  <td style="width: 50%; height: 35px;"><strong>Nomor # {{ $resHead->nomor_po }}</strong></td>
-  <td><strong>Tanggal : {{ date_format(date_create($resHead->tanggal_po), 'd-m-Y') }}</strong></td>
-</tr>
-<tr style="background-color: #eaedf1">
-  <td style="height: 30px;"><strong>SUPPLIER</strong></td>
-  <td><strong>KETERANGAN</strong></td>
-</tr>
-<tr>
   <td style="vertical-align: top;">
-    <p>{{ $resHead->get_supplier->nama_supplier }}<br>
-    {{ $resHead->get_supplier->alamat }}</p>
+    <p><strong>Kepada</strong><br>
+    <strong>{{ $resHead->get_supplier->nama_supplier }}</strong><br>
+    {{ $resHead->get_supplier->alamat }}<br>
+    Telp. &nbsp;&nbsp;&nbsp;: {{ $resHead->get_supplier->no_telepon }}<br>
+    Email&nbsp;&nbsp;&nbsp;: {{ $resHead->get_supplier->email }}<br>
+    </p>
   </td>
-  <td style="vertical-align: top;"><p>{{ $resHead->keterangan }}<br></td>
+  <td style="vertical-align: middle;"><p><strong>Pesanan Pembelian</strong><br>
+  No.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ $resHead->nomor_po }}<br>
+  Tanggal&nbsp;&nbsp;&nbsp;&nbsp; : {{ date_format(date_create($resHead->tanggal_po), 'd-m-Y') }}<br>
+  </p></td>
 </tr>
 </table>
-<table class="table-bordered table-vcenter"style="font-size: 8pt; width: 100%;">
+<table style="font-size: 8pt; width: 100%; border-collapse: collapse;" border='1' cellpadding="3" cellspacing="0">
   <tr>
-      <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
-      <th rowspan="2" style="vertical-align: middle; width: 15%;">Kode</th>
-      <th rowspan="2" style="vertical-align: middle;">Nama Produk</th>
-      <th colspan="3" class="text-center">Satuan</th>
-      <th rowspan="2" class="text-right" style="width: 12%; vertical-align: middle;" >Sub Total</th>
-      <th rowspan="2" class="text-right" style="width: 12%;vertical-align: middle;">Sub Total Net</th>
+      <th rowspan="2" class="text-center" style="width: 5%;">No.</th>
+      <th colspan="2" class="text-center">Keterangan</th>
+      <th rowspan="2" class="text-center" style="width: 15%;">Jumlah Kg</th>
+      <th rowspan="2" class="text-center" style="width: 15%;" >Harga Satuan</th>
+      <th rowspan="2" class="text-center" style="width: 15%;" >Total</th>
   </tr>
   <tr>
-      <th class="text-center" style="width: 10%">Satuan</th>
-      <th class="text-center" style="width: 5%">Qty</th>
-      <th class="text-center" style="width: 12%">Harga Satuan</th>
+      <th style="width: 30%;" class="text-center">Jenis Pupuk</th>
+      <th style="width: 20%;" class="text-center">Merek</th>
   </tr>
   <tbody>
   @php $nom=1 @endphp
   @foreach($resHead->get_detail as $list)
       <tr>
-      <td style="height: 30px;">{{ $nom }}</td>
-      <td>{{ $list->get_produk->kode }}</td>
+      <td style="height: 30px;" class="text-center">{{ $nom }}</td>
       <td>{{ $list->get_produk->nama_produk }}</td>
-      <td style='text-align: center'>{{ $list->get_produk->get_unit->unit }}</td>
-      <td style='text-align: center'>{{ $list->qty }}</td>
+      <td>{{ $list->get_produk->get_merk->merk }}</td>
+      <td style='text-align: right'>{{ $list->qty }}</td>
       <td style='text-align: right'>{{ number_format($list->harga, 0, ",", ".") }}</td>
-      <td style='text-align: right'>{{ number_format($list->sub_total, 0, ",", ".") }}</td>
       <td style='text-align: right'>{{ number_format($list->sub_total, 0, ",", ".") }}</td>
       </tr>
       @php $nom++ @endphp
   @endforeach
-  <tr style="background-color: #eaedf1">
-    <td colspan="7" class="text-right"><b>TOTAL</b></td>
+  <tr>
+    <td colspan="5" class="text-right"><b>Total Harga</b></td>
     <td style='text-align: right; height:30px'><b>{{ number_format($resHead->total_po, 0, ",", ".") }}</b></td>
-  </tr>
-  <tr style="background-color: #eaedf1">
-    <td colspan="7" class="text-right"><b>DISKON (RP)</b></td>
-    <td style='text-align: right; height:30px'><b>{{ number_format($resHead->diskon_rupiah, 0, ",", ".") }}</b></td>
-  </tr>
-  <tr style="background-color: #eaedf1">
-    <td colspan="7" class="text-right"><b>PPN (RP)</b></td>
-    <td style='text-align: right; height:30px'><b>{{ number_format($resHead->ppn_rupiah, 0, ",", ".") }}</b></td>
-  </tr>
-  <tr style="background-color: #eaedf1">
-    <td colspan="7" class="text-right"><b>TOTAL NET</b></td>
-    <td style='text-align: right; height:30px'><b>{{ number_format($resHead->total_po_net, 0, ",", ".") }}</b></td>
   </tr>
   </tbody>
 </table>
-<footer><div class="dropdown-divider"></div><div class="text-right"><span class='badge bg-info' style='font-size: 8pt;'>&copy;{{ date("d/m/Y H:s") }}</span></div></footer>
+<table style="font-size: 8pt; width: 100%; border-collapse: collapse;">
+  <tr>
+    <td style="height: 40px;" colspan="2"></td>
+  </tr>
+  <tr>
+    <td style="width: 70%;">
+    <p><strong>Note :</strong><br>
+    - Harap pengiriman barang disertakan nota/kwitansi<br>
+    - Nomor pesanan pembelian harap dicantumkan dalam nota/kwitansi<br>
+    - Barang akan kami kembalikan bila tidak sesuai pesanan<br>
+    - Setiap pengiriman barang harap disertakan salinan pesanan pembelian
+    </p>
+    </td>
+    <td class="text-center" style="vertical-align: top;">Disetujui Oleh</td>
+  </tr>
+  <tr>
+    <td style="height: 30px;" colspan="2"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="text-center">MUH. HASBI<br>Direktur</td>
+  </tr>
+</table>
+<footer><div class="dropdown-divider"></div><div class="text-center"><span class='badge' style='font-size: 8pt;'>Alamat : Jl. Sorumba No. 79, Wowawanggu, Kec. Kedia, Kota Kendari, Sulawesi Tenggara 93117<br>Telp. +62 401 3092867 Email : usahatanibersama21@gmail.com</span></div></footer>
 </body>
 </html>

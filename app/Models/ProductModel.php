@@ -21,11 +21,17 @@ class ProductModel extends Model
         'harga_eceran',
         'gambar',
         'stok_awal',
-        'stok_akhir'
+        'stok_akhir',
+        'merk_id'
     ];
 
     public function get_unit()
     {
         return $this->belongsTo(UnitModel::class, 'unit_id', 'id');
+    }
+
+    public function get_merk()
+    {
+        return $this->belongsTo(MerkModel::class, 'merk_id', 'id');
     }
 }

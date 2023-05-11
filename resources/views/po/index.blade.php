@@ -53,11 +53,11 @@
                             @if(empty($list->status_po)) 
                                 <span class='badge bg-primary'>Draft</span>
                             @elseif($list->status_po==1)
-                            <span class='badge bg-success'>Approved</span>
+                            <span class='badge bg-info'>Approved</span>
                             @elseif($list->status_po==2)
-                            <span class='badge bg-info'>Billed</span>
+                            <span class='badge bg-success'>Received/Close</span>
                             @else
-                            <span class='badge bg-danger'>Closed</span>
+                            <span class='badge bg-danger'>Cancel PO</span>
                             @endif
                         </td>
                         <td>{{ $list->keterangan }}</td>
@@ -73,7 +73,7 @@
                                     <div class="dropdown-divider"></div>
                                     <button type="button" class="dropdown-item" id="tbl_approve" name="tbl_approve" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-thumbs-up"></i> Approve</button>
                                     @endif
-                                    @if($list->status_po==1)
+                                    @if($list->status_po > 0)
                                     <button type="button" class="dropdown-item" id="tbl_print" name="tbl_print" value="{{ $list->id }}" onClick='goPrint(this)'><i class="fa fa-print"></i> Print</button>
                                     @endif
                                 </div>

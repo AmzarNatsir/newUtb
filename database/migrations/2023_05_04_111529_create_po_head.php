@@ -25,6 +25,8 @@ return new class extends Migration
             $table->float('diskon_persen')->nullable();
             $table->double('diskon_rupiah')->nullable();
             $table->double('total_po');
+            $table->double('total_po_net')->nullable();
+            $table->integer('cara_bayar')->nullable();
             $table->integer('status_po')->nullable();
             $table->integer('user_id')->nullable();
             $table->timestamps();

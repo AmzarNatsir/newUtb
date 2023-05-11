@@ -75,18 +75,20 @@ class ReceivingController extends Controller
                     $newdetail->save();
                     //Update Stok
                     $update = ProductModel::find($value['item_id'][$i]);
-                    $update->stok_akhir = $update->stok_akhir + $value['item_qty'][$i];
+                    $update->stok_akhir = ((int)$update->stok_akhir +  (int)str_replace(",","", $value['item_qty'][$i]));
                     $update->harga_toko = str_replace(",","", $value['harga_satuan'][$i]);
                     $update->save();
                 }
             }
+            $update_po = POHeadModel::find($request->inp_id_po);
+            $update_po->status_po = 2; //Received/Close
+            $update_po->save();
             if($id_head)
             {
-                return redirect('receiving')->with('message', 'Pembuatan Receive baru berhasil');
+                return redirect('receiving')->with('message', 'Proses Receive PO berhasil');
             } else {
-                return redirect('receiving')->with('message', 'Pembuatan Receive baru gagal');
+                return redirect('receiving')->with('message', 'Proses Receive PO gagal');
             }
-            //store detail
         } catch (QueryException $e)
         {
             return redirect('receiving')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
@@ -104,7 +106,7 @@ class ReceivingController extends Controller
         if(empty($result->nomor_receive)) {
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
         } else {
-            $no_trans_baru = substr($result->nomor_po, 9, 4)+1;
+            $no_trans_baru = (int)substr($result->nomor_receive, 9, 4) + 1;
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);
         }
         return $no_baru;

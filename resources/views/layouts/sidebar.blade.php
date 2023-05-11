@@ -76,6 +76,9 @@
             <a href="{{ route('listUnit') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Unit</p></a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('listMerk') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Merek</p></a>
+        </li>
+        <li class="nav-item">
             <a href="{{ route('product') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Product</p></a>
         </li>
         <li class="nav-item">
@@ -108,10 +111,11 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
+            <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Daftar Produk</p></a>
             <a href="{{ route('purchaseOrder') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Purchase Order</p></a>
             <a href="{{ route('receiving') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Receiving</p></a>
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Sale</p></a>
-            <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Manajement Stock</p></a>
+            <a href="{{ route('penjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
+            
         </li>
     </ul>
 </li>

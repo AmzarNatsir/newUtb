@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\MerkController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\POController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
+use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +38,14 @@ Route::get('unitEdit/{id}', [UnitController::class, 'edit'])->name("unitEdit");
 Route::put('unitUpdate/{id}', [UnitController::class, 'update'])->name('unitUpdate');
 Route::get('unitDelete/{id}', [UnitController::class, 'delete'])->name('unitDelete');
 
+//Common Merk
+Route::get('merk', [MerkController::class, 'index'])->name("listMerk");
+Route::get('merkAdd', [MerkController::class, 'add'])->name("merkAdd");
+Route::post('merkStore', [MerkController::class, 'store'])->name("merkStore");
+Route::get('merkEdit/{id}', [MerkController::class, 'edit'])->name("merkEdit");
+Route::put('merkUpdate/{id}', [MerkController::class, 'update'])->name('merkUpdate');
+Route::get('merkDelete/{id}', [MerkController::class, 'delete'])->name('merkDelete');
+
 //Common Product
 Route::get('product', [ProductController::class, 'index'])->name('product');
 Route::get('productAdd', [ProductController::class, 'add'])->name("productAdd");
@@ -51,6 +62,10 @@ Route::get('supplierEdit/{id}', [SupplierController::class, 'edit'])->name("supp
 Route::put('supplierUpdate/{id}', [SupplierController::class, 'update'])->name('supplierUpdate');
 Route::get('supplierDelete/{id}', [SupplierController::class, 'delete'])->name('supplierDelete');
 
+//Manajemen Stok
+Route::get('daftarStok', [ProductController::class, 'list_stok'])->name('daftarStok');
+Route::get('settingStok', [ProductController::class, 'setting_stok'])->name('settingStok');
+Route::post('settingStokStore', [ProductController::class, 'setting_stok_store'])->name('settingStokStore');
 //Purchase Order
 Route::get('purchaseOrder', [POController::class, 'index'])->name('purchaseOrder');
 Route::get('purchaseOrderAdd', [POController::class, 'add'])->name('purchaseOrderAdd');
@@ -67,8 +82,8 @@ Route::get('printOrder/{id}', [POController::class, 'print'])->name('printOrder'
 Route::get('receiving', [ReceivingController::class, 'index'])->name('receiving');
 Route::get('receivingAdd/{id}', [ReceivingController::class, 'add'])->name('receivingAdd');
 Route::post('receiveStore', [ReceivingController::class, 'store'])->name('receiveStore');
+//penjualan
+Route::get('penjualan', [PenjualanController::class, 'index'])->name("penjualan");
 
-//Manajemen Stok
-Route::get('daftarStok', [ProductController::class, 'list_stok'])->name('daftarStok');
 
 Route::post('searchItem', [ProductController::class, 'searchItem'])->name('searchItem');

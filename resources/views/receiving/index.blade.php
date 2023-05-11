@@ -89,7 +89,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('assets/js/receive.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/receive/receive.js') }}"></script>
 @endsection
 
 

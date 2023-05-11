@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('po_head', function (Blueprint $table) {
-            $table->double('total_po_net')->nullable();
-            $table->integer('cara_bayar')->nullable();
+        Schema::create('common_merk', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('merk', 100);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('po_head', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('common_merk');
     }
 };
