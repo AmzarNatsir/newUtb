@@ -52,9 +52,12 @@
         });
         $(".select2").select2();
         $('.select2bs4').select2({
-            theme: 'bootstrap4'
+            theme: 'bootstrap4',
+            placeholder: "Select",
+            allowClear: true
         });
         $('.angka').number( true, 0 );
         $('.angka_dec').number( true, 2);
+        $('.datepicker').datepicker();
     });
 </script>

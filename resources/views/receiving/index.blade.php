@@ -9,13 +9,6 @@
     <div class="card">
     <div class="card-header">
         <h3 class="card-title">Receiving</h3>
-        <div class="card-tools">
-            <ul class="nav nav-pills ml-auto">
-            <li class="nav-item">
-                <button type="button" class="btn btn-outline-success btn-block btn-sm" data-toggle="modal" data-target="#modal-form" id="tbl_tambah" name="tbl_tambah"><i class="fa fa-plus"></i> Add PO</button>
-            </li>
-            </ul>
-        </div>
     </div>
     <div class="card-body">
         @if (Session::has('message'))

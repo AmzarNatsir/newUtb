@@ -18,7 +18,7 @@
             {!! session('message') !!}
         </div>
         @endif
-        <form method="post" onsubmit="return konfirm()" id="form_kasir">
+        <form action="{{ route('penjualanStore') }}" method="post" onsubmit="return konfirm()">
         {{csrf_field()}}
             <div class="row">
                 <div class="col-md-12">
@@ -72,8 +72,12 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="sel_supplier">Customer</label>
-                                <select class="form-control select2bs4" name="sel_supplier" id="sel_supplier" style="width: 100%;" required>
+                                <label for="sel_customer">Customer</label>
+                                <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>
+                                <option></option> 
+                                @foreach($allCustomer as $customer)
+                                <option value="{{ $customer->id }}">{{ $customer->nama_customer }}</option>
+                                @endforeach
                                 </select>
                             </div>
                             <div class="form-group row">
@@ -86,9 +90,9 @@
                                 </div>
                                 <label for="inpJatuhTempo" class="col-sm-3 col-form-label">Jatuh Tempo</label>
                                 <div class="col-sm-3">
-                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group date" id="reservationdate">
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglJatuhTempo" name="inpTglJatuhTempo">
+                                        <div class="input-group-append" >
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
@@ -137,7 +141,7 @@
                             <div class="form-group row">
                                 <label for="inputOngkosKirim" class="col-sm-6 col-form-label text-right">Ongkos Kirim</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control angka" id="inputOngkosKirim" name="inputOngkosKirim" value="0" style="text-align: right;">
+                                    <input type="text" class="form-control angka" id="inputOngkosKirim" name="inputOngkosKirim" value="0" onkeyup="hitOngkir(this)" style="text-align: right;">
                                 </div>
                             </div>
                             <div class="form-group row">

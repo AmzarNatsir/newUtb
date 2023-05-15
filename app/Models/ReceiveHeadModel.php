@@ -25,6 +25,8 @@ class ReceiveHeadModel extends Model
         'total_receice',
         'total_receive_net',
         'cara_bayar',
+        'no_invoice',
+        'tgl_invoice',
         'user_id'
     ];
 

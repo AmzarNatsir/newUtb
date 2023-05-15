@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Common')
-@section('breadcrumb', 'Merk')
+@section('title', 'Data Master')
+@section('breadcrumb', 'Merek')
 @section('content')
 @routes
 <!-- content -->
@@ -8,11 +8,11 @@
     <!-- Default box -->
     <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Merk</h3>
+        <h3 class="card-title">Merek</h3>
         <div class="card-tools">
             <ul class="nav nav-pills ml-auto">
             <li class="nav-item">
-                <button type="button" class="btn btn-outline-success btn-block btn-sm" data-toggle="modal" data-target="#modal-form" id="tbl_tambah" name="tbl_tambah"><i class="fa fa-plus"></i> Add New</button>
+                <button type="button" class="btn btn-outline-success btn-block btn-sm" data-toggle="modal" data-target="#modal-form" id="tbl_tambah" name="tbl_tambah"><i class="fa fa-plus"></i> Tambah Data</button>
             </li>
             </ul>
         </div>
@@ -29,7 +29,7 @@
             <thead>
             <tr>
                 <th style="width: 5%;">No.</th>
-                <th>Merk</th>
+                <th>Merek</th>
                 <th style="width: 10%;">Act</th>
             </tr>
             </thead>

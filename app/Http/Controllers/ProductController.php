@@ -45,14 +45,14 @@ class ProductController extends Controller
             $exec = $new_data->save();
             if($exec)
             {
-                return redirect('product')->with('message', 'Data berhasil disimpan');
+                return redirect('stok')->with('message', 'Data berhasil disimpan');
             } else {
-                return redirect('product')->with('message', 'Data gagal disimpan');
+                return redirect('stok')->with('message', 'Data gagal disimpan');
             }
            
         } catch (QueryException $e)
         {
-            return redirect('product')->with('message', 'Proses gagal. Error : '.$e->getMessage());
+            return redirect('stok')->with('message', 'Proses gagal. Error : '.$e->getMessage());
         }
     }
 
@@ -83,13 +83,13 @@ class ProductController extends Controller
             $exec = $update->save();
             if($exec)
             {
-                return redirect('product')->with('message', 'Update data berhasil');
+                return redirect('stok')->with('message', 'Update data berhasil');
             } else {
-                return redirect('product')->with('message', 'Update data gagal');
+                return redirect('stok')->with('message', 'Update data gagal');
             }
         } catch (QueryException $e)
         {
-            return redirect('product')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+            return redirect('stok')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
         }
     }
 
@@ -99,9 +99,9 @@ class ProductController extends Controller
         $exec = $delete->delete();
         if($exec)
         {
-            return redirect('product')->with('message', 'Data berhasil dihapus');
+            return redirect('stok')->with('message', 'Data berhasil dihapus');
         } else {
-            return redirect('product')->with('message', 'Data gagal dihapus');
+            return redirect('stok')->with('message', 'Data gagal dihapus');
         }
     }
 
@@ -114,6 +114,29 @@ class ProductController extends Controller
             $response[] = array(
                 "value"=>$item->id, 
                 "label"=>$item->nama_produk,
+                "kode"=>$item->kode,
+                "satuan"=>$item->get_unit->unit,
+                "harga_toko"=>$item->harga_toko,
+                "harga_eceran" => $item->harga_eceran,
+                "kemasan" => $item->kemasan,
+                "stok" => $item->stok_akhir
+            );
+        }
+        return response()
+            ->json($response)
+            ->withCallback($request->input('callback'));
+
+    }
+
+    public function searchItemJual(Request $request)
+    {
+        $keyword = $request->search;
+        $result = ProductModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->get();
+        $response = array();
+        foreach($result as $item){
+            $response[] = array(
+                "value"=>$item->id, 
+                "label"=> "[".$item->nama_produk." | Stok : ".$item->stok_akhir." ".$item->get_unit->unit."]",
                 "kode"=>$item->kode,
                 "satuan"=>$item->get_unit->unit,
                 "harga_toko"=>$item->harga_toko,

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MerkController;
+use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\POController;
 use App\Http\Controllers\ProductController;
@@ -9,6 +11,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Finder\Iterator\CustomFilterIterator;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +34,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Common Unit
-Route::get('unit', [UnitController::class, 'index'])->name("listUnit");
+Route::get('satuan', [UnitController::class, 'index'])->name("satuan");
 Route::get('unitAdd', [UnitController::class, 'add'])->name("unitAdd");
 Route::post('unitStore', [UnitController::class, 'store'])->name("unitStore");
 Route::get('unitEdit/{id}', [UnitController::class, 'edit'])->name("unitEdit");
@@ -47,7 +50,7 @@ Route::put('merkUpdate/{id}', [MerkController::class, 'update'])->name('merkUpda
 Route::get('merkDelete/{id}', [MerkController::class, 'delete'])->name('merkDelete');
 
 //Common Product
-Route::get('product', [ProductController::class, 'index'])->name('product');
+Route::get('stok', [ProductController::class, 'index'])->name('stok');
 Route::get('productAdd', [ProductController::class, 'add'])->name("productAdd");
 Route::post('productStore', [ProductController::class, 'store'])->name("productStore");
 Route::get('productEdit/{id}', [ProductController::class, 'edit'])->name("productEdit");
@@ -61,6 +64,14 @@ Route::post('supplierStore', [SupplierController::class, 'store'])->name("suppli
 Route::get('supplierEdit/{id}', [SupplierController::class, 'edit'])->name("supplierEdit");
 Route::put('supplierUpdate/{id}', [SupplierController::class, 'update'])->name('supplierUpdate');
 Route::get('supplierDelete/{id}', [SupplierController::class, 'delete'])->name('supplierDelete');
+
+//Common Customer
+Route::get('customer', [CustomerController::class, 'index'])->name('customer');
+Route::get('customerAdd', [CustomerController::class, 'add'])->name("customerAdd");
+Route::post('customerStore', [CustomerController::class, 'store'])->name("customerStore");
+Route::get('customerEdit/{id}', [CustomerController::class, 'edit'])->name("customerEdit");
+Route::put('customerUpdate/{id}', [CustomerController::class, 'update'])->name('customerUpdate');
+Route::get('customerDelete/{id}', [CustomerController::class, 'delete'])->name('customerDelete');
 
 //Manajemen Stok
 Route::get('daftarStok', [ProductController::class, 'list_stok'])->name('daftarStok');
@@ -84,6 +95,15 @@ Route::get('receivingAdd/{id}', [ReceivingController::class, 'add'])->name('rece
 Route::post('receiveStore', [ReceivingController::class, 'store'])->name('receiveStore');
 //penjualan
 Route::get('penjualan', [PenjualanController::class, 'index'])->name("penjualan");
+Route::post('penjualanStore', [PenjualanController::class, 'store'])->name("penjualanStore");
 
+Route::post('searchItem', [ProductController::class, 'searchItemJual'])->name('searchItem');
+Route::post('searchItemPenjualan', [ProductController::class, 'searchItemJual'])->name('searchItemPenjualan');
 
-Route::post('searchItem', [ProductController::class, 'searchItem'])->name('searchItem');
+//Pelaporan
+//Pembelian
+Route::get('laporanPembelian', [PelaporanController::class, 'laporan_pembelian'])->name("laporanPembelian");
+
+Route::get('laporanPenjualan', [PelaporanController::class, 'laporan_penjualam'])->name("laporanPenjualan");
+Route::post('laporanPenjualanFilter', [PelaporanController::class, 'laporan_penjualan_filter'])->name('laporanPenjualanFilter');
+Route::get('laporanPenjualanDetail/{id}', [PelaporanController::class, 'laporan_penjualan_detail'])->name('laporanPenjualanDetail');

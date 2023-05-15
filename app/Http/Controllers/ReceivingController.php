@@ -46,10 +46,12 @@ class ReceivingController extends Controller
             $save_head->supplier_id = $request->sel_supplier;
             $save_head->nomor_receive = $this->create_no_receive();
             $save_head->tanggal_receive = $this->datetimeStore;
+            $save_head->no_invoice = $request->inp_no_invoice;
+            $save_head->tgl_invoice = ($request->inp_tgl_invoice=="") ? NULL : date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_invoice)));
             $save_head->keterangan = $request->inp_keterangan;
             $save_head->ppn_persen = $request->inputTotal_PpnPersen;
             $save_head->ppn_rupiah = str_replace(",","", $request->inputTotal_DiskRupiah);
-            $save_head->diskon_persen = $request->inputKeterangan;
+            $save_head->diskon_persen = $request->inputTotal_DiskPersen;;
             $save_head->diskon_rupiah = str_replace(",","", $request->inputTotal_PpnRupiah);
             $save_head->total_receice = str_replace(",","", $request->inputTotal);
             $save_head->total_receive_net = str_replace(",","", $request->inputTotalNet);

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Data Master')
-@section('breadcrumb', 'Stok')
+@section('breadcrumb', 'Customer')
 @section('content')
 @routes
 <!-- content -->
@@ -8,7 +8,7 @@
     <!-- Default box -->
     <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Stok</h3>
+        <h3 class="card-title">Customer</h3>
         <div class="card-tools">
             <ul class="nav nav-pills ml-auto">
             <li class="nav-item">
@@ -28,29 +28,35 @@
         <table class="table table-bordered table-hover datatable ListData" style="width: 100%;">
             <thead>
             <tr>
-                <th style="width: 5%;">No.</th>
+                <th style="width: 5%;" class="text-center">No.</th>
                 <th class="text-center">Kode</th>
-                <th>Produk</th>
-                <th>Merk</th>
-                <th class="text-center">Kemasan</th>
-                <th class="text-center">Unit</th>
-                <th class="text-right">Harga Toko</th>
-                <th class="text-right">Harga Eceran</th>
+                <th class="text-center">Customer</th>
+                <th class="text-center">Alamat</th>
+                <th class="text-center">Kota</th>
+                <th class="text-center">No. Telepon</th>
+                <th class="text-center">Level</th>
                 <th style="width: 10%;">Act</th>
             </tr>
             </thead>
             <tbody>
             @php $nom=1 @endphp
-            @foreach($allProduct as $list)
+            @foreach($allCustomer as $list)
             <tr>
                 <td class="text-center">{{ $nom }}</td>
                 <td class="text-center">{{ $list->kode }}</td>
-                <td>{{ $list->nama_produk }}</td>
-                <td>{{ $list->get_merk->merk }}</td>
-                <td class="text-center">{{ $list->kemasan }}</td>
-                <td class="text-center">{{ $list->get_unit->unit }}</td>
-                <td class="text-right">{{ number_format($list->harga_toko, 0) }}</td>
-                <td class="text-right">{{ number_format($list->harga_eceran, 0) }}</td>
+                <td>{{ $list->nama_customer }}</td>
+                <td>{{ $list->alamat }}</td>
+                <td>{{ $list->kota }}</td>
+                <td>{{ $list->no_telepon }}</td>
+                <td class="text-center">
+                @if($list->level==1)
+                <span class='badge bg-primary' style="font-size: small;">Customer</span>
+                @elseif($list->level==2)
+                <span class='badge bg-success' style="font-size: small;">Agent</span>
+                @else
+                <span class='badge bg-danger' style="font-size: small;">Reseller</span>
+                @endif
+                </td>
                 <td>
                     <div class="input-group-prepend">
                     <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -58,7 +64,7 @@
                     </button>
                     <div class="dropdown-menu">
                         <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goEdit(this)"><i class="fa fa-edit"></i> Edit</button>
-                        <a href="{{ url('productDelete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                        <a href="{{ url('customerDelete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
                     </div>
                   </div>
                 </td>
@@ -80,7 +86,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('assets/js/common/product.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/common/customer.js') }}"></script>
 @endsection
 
 

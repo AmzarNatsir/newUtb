@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title">Edit</h4>
+    <h4 class="modal-title">Edit Data</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span></button>
 </div>
@@ -8,7 +8,7 @@
 {{ method_field('PUT') }}
     <div class="modal-body">
         <div class="form-group">
-            <label for="inp_merk">Merk</label>
+            <label for="inp_merk">Merek</label>
             <input type="text" name="inp_merk" id="inp_merk" class="form-control" maxlength="100" value="{{ $res->merk }}" required>
         </div>
     </div>

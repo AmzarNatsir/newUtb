@@ -16,7 +16,6 @@
         @else
         <img src="{{asset('assets/AdminLTE/dist/img/utb_logo.png')}}" class="img-circle elevation-2" alt="User Image">
         @endif
-        
     </div>
     <div class="info">
         <a href="{{ url('home') }}" class="d-block">{{ (isset(auth()->user()->name)) ? auth()->user()->name : "Development" }}</a>
@@ -59,27 +58,30 @@
     </ul>
 </li>
 <li class="nav-item">
-    <a href="#" class="nav-link"><i class="nav-icon fas fa-copy"></i><p>Report<i class="right fas fa-angle-left"></i></p></a>
+    <a href="#" class="nav-link"><i class="nav-icon fas fa-copy"></i><p>Pelaporan<i class="right fas fa-angle-left"></i></p></a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stock</p></a>
+            <a href="{{ route('laporanPembelian') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembelian</p></a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('laporanPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stok</p></a>
         </li>
     </ul>
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon far fa-plus-square"></i>
-        <p>Common<i class="fas fa-angle-left right"></i></p>
+        <p>Data Master<i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('listUnit') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Unit</p></a>
+            <a href="{{ route('satuan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Satuan</p></a>
         </li>
         <li class="nav-item">
             <a href="{{ route('listMerk') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Merek</p></a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('product') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Product</p></a>
         </li>
         <li class="nav-item">
             <a href="{{ route('supplier') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Supplier</p></a>
@@ -93,7 +95,7 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>List Customer</p></a>
+            <a href="{{ route('customer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Customer</p></a>
         </li>
         <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Submission Approval</p></a>
@@ -103,15 +105,27 @@
         </li>
     </ul>
 </li>
-<li class="nav-header">TRANSACTION</li>
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-table"></i>
-        <p>Stock Keeper<i class="fas fa-angle-left right"></i></p>
+        <i class="nav-icon far fa-plus-square"></i>
+        <p>Manajemen Stok<i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Daftar Produk</p></a>
+            <a href="{{ route('stok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stok Baru</p></a>
+            <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Daftar Stok</p></a>
+            <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Kartu Stok</p></a>
+        </li>
+    </ul>
+</li>
+<li class="nav-header">TRANSAKSI</li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-table"></i>
+        <p>Transaksi<i class="fas fa-angle-left right"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
             <a href="{{ route('purchaseOrder') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Purchase Order</p></a>
             <a href="{{ route('receiving') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Receiving</p></a>
             <a href="{{ route('penjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>

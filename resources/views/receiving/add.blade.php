@@ -92,6 +92,25 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inp_no_invoice">Nomor Invoice</label>
+                                    <input type="text" class="form-control" name="inp_no_invoice" id="inp_no_invoice" maxlength="50" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inp_tgl_invoice">Tanggal Invoice</label>
+                                    <div class="input-group date" id="inp_tgl_invoice">
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inp_tgl_invoice" name="inp_tgl_invoice">
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="sel_supplier">Supplier</label>
                             

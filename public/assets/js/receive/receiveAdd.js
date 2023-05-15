@@ -1,5 +1,5 @@
 $(function(){
-
+    $('.datepicker').datepicker();
 });
 var hapus_item = function(el){
     $(el).parent().parent().slideUp(100,function(){

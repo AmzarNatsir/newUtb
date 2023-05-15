@@ -1,4 +1,5 @@
 $(function(){
+    window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
     var total_net = $("#inputTotalNet").val();
     if(total_net==0)
     {
@@ -12,7 +13,7 @@ $(function(){
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "POST",
-                url: route('searchItem'),
+                url: route('searchItemPenjualan'),
                 dataType: "json",
                 data: {
                     search: request.term
@@ -24,12 +25,17 @@ $(function(){
             });
         },
         select: function(event, ui) {
-            $("#inputSearch").val(ui.item.label);
-            var content_item = '<tr class="rows_item" name="rows_item[]"><td><input type="hidden" name="id_row[]" value=""><button type="button" title="Hapus Baris" class="btn btn-danger btn-sm waves-effect waves-light" onclick="hapus_item(this)"><i class="fa fa-minus"></i></button></td>'+'<td><input type="hidden" name="item_id[]" value="'+ui.item.value+'"><label style="color: blue; font-size: 11pt">'+ui.item.label+'</label></td>'+'<td style="text-align: center"><label style="color: blue; font-size: 11pt">'+ui.item.satuan+'</label></td>'+'<td align="center"><input type="text" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="1" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)"></td>'+'<td class="text-right"><input type="text" class="form-control form-control-sm angka" id="harga_satuan[]" name="harga_satuan[]" value="'+ui.item.harga_toko+'" style="text-align: right" onkeyup="hitSubTotal(this)" onblur="changeToNull(this)" readonly></td>'+'<td class="text-right"><input type="text" name="item_sub_total[]" value="'+ui.item.harga_toko+'" class="form-control form-control-sm text-right angka" readonly></td>'+'<td class="text-right"><input type="text" name="item_diskon[]" value="0" class="form-control form-control-sm text-right angka_dec" onkeyup="hitDiskon(this)" onblur="changeToNull(this)"></td>'+'<td class="text-right"><input type="text" name="item_diskonrp[]" value="0" class="form-control form-control-sm text-right angka" onkeyup="hitDiskonNilai(this)" onblur="changeToNull()"></td>'+'<td class="text-right"><input type="text" name="item_sub_total_net[]" value="'+ui.item.harga_toko+'" class="form-control form-control-sm text-right angka" readonly></td>'+'</tr>';
-            $(".row_baru").after(content_item);
-            $('.angka').number( true, 0 );
-            $("#inputSearch").val("");
-            total();
+            if(ui.item.stok == 0)
+            {
+                alert("Persediaan Stok Habis");
+            } else {
+                $("#inputSearch").val(ui.item.label);
+                var content_item = '<tr class="rows_item" name="rows_item[]"><td><input type="hidden" name="id_row[]" value=""><button type="button" title="Hapus Baris" class="btn btn-danger btn-sm waves-effect waves-light" onclick="hapus_item(this)"><i class="fa fa-minus"></i></button></td>'+'<td><input type="hidden" name="item_id[]" value="'+ui.item.value+'"><label style="color: blue; font-size: 11pt">'+ui.item.label+'</label></td>'+'<td style="text-align: center"><label style="color: blue; font-size: 11pt">'+ui.item.satuan+'</label></td>'+'<td align="center"><input type="hidden" name="stok_akhir[]" value="'+ui.item.stok+'"><input type="text" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="1" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="cekPersediaan(this)"></td>'+'<td class="text-right"><input type="text" class="form-control form-control-sm angka" id="harga_satuan[]" name="harga_satuan[]" value="'+ui.item.harga_eceran+'" style="text-align: right" onkeyup="hitSubTotal(this)" onblur="changeToNull(this)" readonly></td>'+'<td class="text-right"><input type="text" name="item_sub_total[]" value="'+ui.item.harga_toko+'" class="form-control form-control-sm text-right angka" readonly></td>'+'<td class="text-right"><input type="text" name="item_diskon[]" value="0" class="form-control form-control-sm text-right angka_dec" onkeyup="hitDiskon(this)" onblur="changeToNull(this)"></td>'+'<td class="text-right"><input type="text" name="item_diskonrp[]" value="0" class="form-control form-control-sm text-right angka" onkeyup="hitDiskonNilai(this)" onblur="changeToNull()"></td>'+'<td class="text-right"><input type="text" name="item_sub_total_net[]" value="'+ui.item.harga_toko+'" class="form-control form-control-sm text-right angka" readonly></td>'+'</tr>';
+                $(".row_baru").after(content_item);
+                $('.angka').number( true, 0 );
+                $("#inputSearch").val("");
+                total();
+            }
             return false;
         }
     });
@@ -47,6 +53,24 @@ var changeToNull = function(el)
     if($(el).val()=="")
     {
         $(el).val("0");
+    }
+}
+
+var cekPersediaan = function(el)
+{
+    if($(el).val()=="")
+    {
+        $(el).val("0");
+    }
+    var currentRow=$(el).closest("tr");
+    var qty = $(el).val();
+    var stok_akhir = $(el).parent().parent().find('input[name="stok_akhir[]"]').val();
+    if(parseInt(qty) > parseInt(stok_akhir))
+    {
+        alert("Maaf. Persediaan Stok tidak cukup");
+        $(el).val("1");
+        hitungSubTotal(el);
+        return false
     }
 }
 
@@ -97,6 +121,15 @@ var hitPpnTotalPersen = function(el)
     hitung_total_net()
 }
 
+var hitOngkir = function(el)
+{
+    if($(el).val()=="")
+    {
+        $(el).val("0");
+    }
+    hitung_total_net();
+}
+
 var hitPpnTotalNilai = function(el)
 {
     var total = $("#inputTotal").val();
@@ -135,7 +168,8 @@ function hitung_total_net()
     var total = $("#inputTotal").val();
     var diskon_rupiah = $("#inputTotal_DiskRupiah").val();
     var ppn_rupiah = $("#inputTotal_PpnRupiah").val();
-    var total_net = (total - diskon_rupiah) + parseInt(ppn_rupiah);
+    var ongkir = $("#inputOngkosKirim").val();
+    var total_net = (total - diskon_rupiah) + parseInt(ppn_rupiah) + parseInt(ongkir);
     $("#inputTotalNet").val(total_net);
     if(total_net>0)
     {
