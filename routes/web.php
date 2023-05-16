@@ -103,7 +103,14 @@ Route::post('searchItemPenjualan', [ProductController::class, 'searchItemJual'])
 //Pelaporan
 //Pembelian
 Route::get('laporanPembelian', [PelaporanController::class, 'laporan_pembelian'])->name("laporanPembelian");
-
+Route::post('laporanPembelianFilter', [PelaporanController::class, 'laporan_pembelian_filter'])->name('laporanPembelianFilter');
+Route::get('laporanPembelianDetail/{id}', [PelaporanController::class, 'laporan_pembelian_detail'])->name('laporanPembelianDetail');
+//penjualan
 Route::get('laporanPenjualan', [PelaporanController::class, 'laporan_penjualam'])->name("laporanPenjualan");
 Route::post('laporanPenjualanFilter', [PelaporanController::class, 'laporan_penjualan_filter'])->name('laporanPenjualanFilter');
 Route::get('laporanPenjualanDetail/{id}', [PelaporanController::class, 'laporan_penjualan_detail'])->name('laporanPenjualanDetail');
+Route::get('printInvoice/{id}', [PelaporanController::class, 'print_invoice'])->name('printInvoice');
+
+//laporan stok
+Route::get('laporanStok', [PelaporanController::class, 'laporan_stok'])->name("laporanStok");
+Route::post('laporanStokFilter', [PelaporanController::class, 'laporan_stok_filter'])->name('laporanStokFilter');

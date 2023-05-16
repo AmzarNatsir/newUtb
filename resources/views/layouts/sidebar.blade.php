@@ -67,7 +67,7 @@
             <a href="{{ route('laporanPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stok</p></a>
+            <a href="{{ route('laporanStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stok</p></a>
         </li>
     </ul>
 </li>

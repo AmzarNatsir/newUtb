@@ -2,6 +2,7 @@
 @section('title', 'Pelaporan')
 @section('breadcrumb', 'Laporan Pembelian')
 @section('content')
+@routes
 <section class="content">
     <!-- Default box -->
     <div class="card card-danger">
@@ -25,7 +26,6 @@
                                 </span>
                                 </div>
                                 <input type="text" class="form-control form-control-sm float-right reservation" id="searchTglTrans" name="searchTglTrans">
-                                <input type="hidden" name="id_stok" id="id_stok">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
@@ -53,7 +53,7 @@
             <div class="col-md-7">
                 <div class="card card-warning">
                     <div class="card-body">
-                        <table class="table table-bordered table-hover table-responsive" style="font-size: 12pt; width: 100%;">
+                        <table class="table table-bordered table-hover table-responsive" style="font-size: 10pt; width: 100%;">
                             <thead>
                             <tr>
                                 <td style="text-align: left;" colspan="9"><h4>Laporan Pembelian</h4>
@@ -63,8 +63,8 @@
                             <tr>
                                 <th style="width: 5%; text-align: center;">Act</th>
                                 <th style="width: 5%; text-align: center;">No.</th>
-                                <th style="width: 10%; text-align: center;">Tgl.Invoce</th>
                                 <th style="width: 10%; text-align: center;">No.Invoce</th>
+                                <th style="width: 10%; text-align: center;">Tgl.Invoce</th>
                                 <th>Supplier</th>
                                 <th style="width: 15%; text-align: center;">Total</th>
                                 <th style="width: 5%; text-align:right">Diskon</th>
@@ -80,7 +80,7 @@
             <div class="col-md-5">
                 <div class="card card-warning">
                     <div class="card-body">
-                        <table class="table table-bordered table-hover  table-responsive" style="font-size: 10pt; width: 100%;" id="table_penjualan">
+                        <table class="table table-bordered table-hover  table-responsive" style="font-size: 10pt; width: 100%;" id="table_pembelian">
                             <thead>
                             <tr>
                                 <td style="text-align: left;" colspan="9"><h4>Summary Pembelian</h4>
@@ -89,7 +89,6 @@
                             </tr>
                             <tr>
                                 <th style="width: 5%; text-align: center;">No.</th>
-                                <th style="width: 20%; text-align: center;">Kode</th>
                                 <th>Nama Produk</th>
                                 <th style="width: 10%; text-align: center;">Qty</th>
                                 <th style="width: 20%; text-align:right">Harga</th>
@@ -108,11 +107,12 @@
 </section>
 <!-- Modal -->
 <div class="modal fade" id="modal-form" data-backdrop="false">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div id="frm_modal"></div>
         </div>
     </div>
 </div>
+<script type="text/javascript" src="{{ asset('assets/js/laporan/laporanPembelian.js') }}"></script>
 @endsection
 

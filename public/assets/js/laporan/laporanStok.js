@@ -5,6 +5,7 @@ $(function(){
         },
     });
 });
+
 var goFilter = function()
 {
     var tgl_transaksi = $("#searchTglTrans").val().split(' - ');
@@ -22,7 +23,7 @@ var goFilter = function()
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        url : route("laporanPenjualanFilter"),
+        url : route("laporanStokFilter"),
         contentType: "application/json",
         method : 'post',
         dataType: "json",
@@ -42,11 +43,4 @@ var goFilter = function()
             $("#loaderDiv").hide();
         }
     });
-    // return false;
-};
-
-var goDetail = function(el)
-{
-    $("#frm_modal").load(route('laporanPenjualanDetail', $(el).val()));
-};
-
+}
