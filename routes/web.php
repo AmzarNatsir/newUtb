@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\Client\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,11 @@ Route::get('/', function () {
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// client/customers
+Route::prefix('client')->group(function(){
+    Route::get('/', [App::class,'index'])->name('client:app');
+});
 
 Auth::routes();
 //Common Unit
