@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\Client\App;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Iterator\CustomFilterIterator;
@@ -31,6 +32,11 @@ Route::get('/', function () {
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// client/customers
+Route::prefix('client')->group(function(){
+    Route::get('/', [App::class,'index'])->name('client:app');
+});
 
 Auth::routes();
 
