@@ -23,6 +23,9 @@ return new class extends Migration
             $table->double('harga_toko');
             $table->double('harga_eceran');
             $table->string('gambar', 200)->nullable();
+            $table->integer('merk_id')->nullable();
+            $table->double('stok_awal')->nullable();
+            $table->double('stok_akhir')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
