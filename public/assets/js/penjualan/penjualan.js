@@ -39,8 +39,20 @@ $(function(){
             return false;
         }
     });
+
+    // $("#tbl_print").on("click", function() {
+    //     var id_head = 2;
+    //      var myWindow = window.open(route('printInvoice', id_head), "_blank", "scrollbars=yes,width=400,height=500,top=300");
+         
+    //      // focus on the popup //
+    //      myWindow.focus();
+    // });
 });
 
+var printInvoice = function()
+{
+    alert("hmmmmm");
+}
 var hapus_item = function(el){
     $(el).parent().parent().slideUp(100,function(){
         $(this).remove();
@@ -72,6 +84,11 @@ var cekPersediaan = function(el)
         hitungSubTotal(el);
         return false
     }
+}
+
+var hitSubTotal = function(el)
+{
+    hitungSubTotal(el);
 }
 
 var hitDiskon = function(el)

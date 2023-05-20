@@ -92,6 +92,11 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="sel_supplier">Supplier</label>
+                            
+                            <input type="text" class="form-control" value="{{ $resHead->get_supplier->nama_supplier }}" readonly>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -111,14 +116,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="sel_supplier">Supplier</label>
-                            
-                            <input type="text" class="form-control" value="{{ $resHead->get_supplier->nama_supplier }}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp_carabayar">Cara Pembayaran</label>
-                            <input type="text" class="form-control" value="{{ ($resHead->cara_bayar==1) ? 'Tunai' : 'Kredit' }}" readonly>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inp_carabayar">Cara Pembayaran</label>
+                                    <input type="text" class="form-control" value="{{ ($resHead->cara_bayar==1) ? 'Tunai' : 'Kredit' }}" readonly>
+                                </div>
+                            </div>
+                            @if($resHead->cara_bayar==1) 
+                            @php $ket_jtp = "disabled" @endphp
+                            @else
+                            @php $ket_jtp = "" @endphp
+                            @endif
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inp_tgl_invoice">Jatuh Tempo</label>
+                                    <div class="input-group date" id="inp_tgl_jatuh_tempo">
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inp_tgl_jatuh_tempo" name="inp_tgl_jatuh_tempo" {{ $ket_jtp }} />
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="inp_keterangan">Keterangan</label>

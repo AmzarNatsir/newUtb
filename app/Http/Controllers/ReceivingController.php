@@ -48,6 +48,7 @@ class ReceivingController extends Controller
             $save_head->tanggal_receive = $this->datetimeStore;
             $save_head->no_invoice = $request->inp_no_invoice;
             $save_head->tgl_invoice = ($request->inp_tgl_invoice=="") ? NULL : date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_invoice)));
+            $save_head->tgl_jatuh_tempo = ($request->cara_bayar==1) ? NULL : date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_jatuh_tempo)));
             $save_head->keterangan = $request->inp_keterangan;
             $save_head->ppn_persen = $request->inputTotal_PpnPersen;
             $save_head->ppn_rupiah = str_replace(",","", $request->inputTotal_DiskRupiah);

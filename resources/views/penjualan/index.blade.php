@@ -104,9 +104,9 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-outline-success" id="tbl_submit">Save changes</button>
-                            </div>
+                            <button type="button" class="btn btn-outline-danger" id="tbl_print" onclick="printInvoice()">Print</button>
+                            <button type="submit" class="btn btn-outline-success" id="tbl_submit">Save changes</button>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -164,6 +164,7 @@
 <script type="text/javascript" src="{{ asset('assets/js/initAll.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/penjualan/penjualan.js') }}"></script>
 @endsection
+
 
 
 

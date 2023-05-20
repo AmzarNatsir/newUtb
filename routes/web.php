@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HutangController;
 use App\Http\Controllers\MerkController;
 use App\Http\Controllers\PelaporanController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PiutangController;
 use App\Http\Controllers\POController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReceivingController;
@@ -99,18 +101,36 @@ Route::post('penjualanStore', [PenjualanController::class, 'store'])->name("penj
 
 Route::post('searchItem', [ProductController::class, 'searchItemJual'])->name('searchItem');
 Route::post('searchItemPenjualan', [ProductController::class, 'searchItemJual'])->name('searchItemPenjualan');
+//Hutang
+Route::get('pembayaranHutang', [HutangController::class, 'index'])->name('pembayaranHutang');
+Route::post('pembayaranHutangFilter', [HutangController::class, 'filter'])->name("pembayaranHutangFilter");
+Route::post('pembayaranHutangBayar', [HutangController::class, 'bayar'])->name("pembayaranHutangBayar");
+Route::post('pembayaranHutangStore', [HutangController::class, 'bayar_store'])->name("pembayaranHutangStore");
+Route::get('pembayaranHutangMutasi/{id}', [HutangController::class, 'mutasi'])->name("pembayaranHutangMutasi");
+Route::get('pembayaranHutangMutasiPrint/{id}', [HutangController::class, 'mutasi_print'])->name("pembayaranHutangMutasiPrint");
+//Piutang
+Route::get('penerimaanPiutang', [PiutangController::class, 'index'])->name('penerimaanPiutang');
+Route::post('penerimaanPiutangFilter', [PiutangController::class, 'filter'])->name("penerimaanPiutangFilter");
+Route::post('penerimaanPiutangBayar', [PiutangController::class, 'bayar'])->name("penerimaanPiutangBayar");
+Route::post('penerimaanPiutangStore', [PiutangController::class, 'bayar_store'])->name("penerimaanPiutangStore");
+Route::get('penerimaanPiutangMutasi/{id}', [PiutangController::class, 'mutasi'])->name("penerimaanPiutangMutasi");
+Route::get('penerimaanPiutangMutasiPrint/{id}', [PiutangController::class, 'mutasi_print'])->name("penerimaanPiutangMutasiPrint");
 
 //Pelaporan
 //Pembelian
 Route::get('laporanPembelian', [PelaporanController::class, 'laporan_pembelian'])->name("laporanPembelian");
 Route::post('laporanPembelianFilter', [PelaporanController::class, 'laporan_pembelian_filter'])->name('laporanPembelianFilter');
 Route::get('laporanPembelianDetail/{id}', [PelaporanController::class, 'laporan_pembelian_detail'])->name('laporanPembelianDetail');
+Route::get('laporanPembelianPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_pembelian_print'])->name('laporanPembelianPrint');
 //penjualan
 Route::get('laporanPenjualan', [PelaporanController::class, 'laporan_penjualam'])->name("laporanPenjualan");
 Route::post('laporanPenjualanFilter', [PelaporanController::class, 'laporan_penjualan_filter'])->name('laporanPenjualanFilter');
 Route::get('laporanPenjualanDetail/{id}', [PelaporanController::class, 'laporan_penjualan_detail'])->name('laporanPenjualanDetail');
-Route::get('printInvoice/{id}', [PelaporanController::class, 'print_invoice'])->name('printInvoice');
+Route::get('laporanPenjualanPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_penjualan_print'])->name('laporanPenjualanPrint');
+
+Route::get('printInvoice/{id}', [PenjualanController::class, 'print_invoice'])->name('printInvoice');
 
 //laporan stok
 Route::get('laporanStok', [PelaporanController::class, 'laporan_stok'])->name("laporanStok");
 Route::post('laporanStokFilter', [PelaporanController::class, 'laporan_stok_filter'])->name('laporanStokFilter');
+Route::get('laporanStokPrint/{param1}/{param2}', [PelaporanController::class, 'laporan_stok_print'])->name('laporanStokPrint');

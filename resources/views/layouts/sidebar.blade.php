@@ -136,14 +136,13 @@
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-table"></i>
-        <p>Finance<i class="fas fa-angle-left right"></i></p>
+        <p>Keuangan<i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Cash Receipts</p></a>
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Cash Disbursement</p></a>
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Debet/Hutang</p></a>
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Credit/Piutang</p></a>
+            <a href="{{ route('pembayaranHutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang</p></a>
+            <a href="{{ route('penerimaanPiutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penerimaan Piutang</p></a>
+            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Lainnya</p></a>
         </li>
     </ul>
 </li>

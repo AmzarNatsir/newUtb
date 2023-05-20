@@ -59,5 +59,10 @@
         $('.angka').number( true, 0 );
         $('.angka_dec').number( true, 2);
         $('.datepicker').datepicker();
+        $('.reservation').daterangepicker({
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+        });
     });
 </script>

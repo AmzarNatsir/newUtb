@@ -60,7 +60,7 @@
                                 Action
                                 </button>
                                 <div class="dropdown-menu">
-                                    <button type="button" class="dropdown-item" id="tbl_receive" name="tbl_receive" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-edit"></i> Receive</button>
+                                    <button type="button" class="dropdown-item tbl_receive" id="tbl_receive" name="tbl_receive[]" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-edit"></i> Receive</button>
                                 </div>
                             </div>
                         </td>
@@ -82,7 +82,18 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('assets/js/receive/receive.js') }}"></script>
+<!-- <script type="text/javascript" src="{{ asset('assets/js/receive/receive.js') }}"></script> -->
+<script>
+    $(function(){
+    // let APP_URL_ADD = route('receivingAdd');
+    window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
+    $(".ListData").on("click", '.tbl_receive', function()
+    {
+        var id_data = this.value;
+        $("#frm_modal").load(route('receivingAdd', id_data));
+    });
+});
+</script>
 @endsection
 
 

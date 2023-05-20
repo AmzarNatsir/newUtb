@@ -34,4 +34,9 @@ class JualHeadModel extends Model
     {
         return $this->belongsTo(CustomerModel::class, 'customer_id', 'id');
     }
+
+    public function get_detail()
+    {
+        return $this->hasMany(JualDetailModel::class, 'head_id', 'id');
+    }
 }

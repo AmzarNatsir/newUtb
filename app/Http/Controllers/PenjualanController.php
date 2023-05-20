@@ -8,6 +8,7 @@ use App\Models\JualHeadModel;
 use App\Models\ProductModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use PDF;
 
 class PenjualanController extends Controller
 {
@@ -109,6 +110,18 @@ class PenjualanController extends Controller
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);
         }
         return $no_baru;
+    }
+
+    public function print_invoice($id)
+    {
+        $data['dt_head'] = JualHeadModel::find($id);
+        // $data['dt_detail'] = JualDetailModel::where('head_id', $id)->get();
+        $pdf = PDF::loadview('penjualan.print_invoice', [
+            'dt_head' => JualHeadModel::find($id)
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+
+        // return view('penjualan.print_invoice', $data);
     }
 
 }

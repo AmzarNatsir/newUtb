@@ -8,6 +8,7 @@ use App\Models\ProductModel;
 use App\Models\ReceiveDetailModel;
 use App\Models\ReceiveHeadModel;
 use Illuminate\Http\Request;
+use PDF;
 
 class PelaporanController extends Controller
 {
@@ -104,6 +105,25 @@ class PelaporanController extends Controller
         return view('pelaporan.pembelian.detail', $data);
     }
 
+    public function laporan_pembelian_print($tgl_1=null, $tgl_2=null, $view_detail=null)
+    {
+        $arr_tgl_1 = explode('-', $tgl_1);
+        $ket_tgl_1 = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+        $arr_tgl_2 = explode('-', $tgl_2);
+        $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
+        
+        $result = ReceiveHeadModel::whereDate('tgl_invoice', '>=', $tgl_1)
+                        ->whereDate('tgl_invoice', '<=', $tgl_2)->get();
+
+        $pdf = PDF::loadview('pelaporan.pembelian.print', [
+            'list_data' => $result,
+            'periode' => $ket_periode,
+            'check_view_detail' => $view_detail
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+
+    }
     //laporan penjualan
     public function laporan_penjualam()
     {
@@ -122,7 +142,7 @@ class PelaporanController extends Controller
         foreach($result as $list)
         {
             // $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail" id="tbl" title="Klik untuk melihat detail" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"</button>';
-            $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
+            $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button><button type="button" class="btn btn-block btn-outline-success btn-sm" name="tbl-invoice[]" id="tbl-invoice" title="Klik untuk melihat detail" onClick="goPrintInvoice(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-print"></i></button>';
 
             $html .= "<tr>
             <td style='text-align: center;'>".$tbl_aksi."</td>
@@ -188,6 +208,24 @@ class PelaporanController extends Controller
         $data['head'] = JualHeadModel::find($id);
         $data['all_detail'] = JualDetailModel::where('head_id', $id)->get();
         return view('pelaporan.penjualan.detail', $data);
+    }
+
+    
+    public function laporan_penjualan_print($tgl_1=null, $tgl_2=null, $view_detail=null)
+    {
+        $tgl_awal = $tgl_1;
+        $tgl_akhir = $tgl_2;
+        $ket_periode = $tgl_1." s/d ".$tgl_2;
+
+        $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
+                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)->get();
+        
+        $pdf = PDF::loadview('pelaporan.penjualan.print', [
+            'list_data' => $result,
+            'periode' => $ket_periode,
+            'check_view_detail' => $view_detail
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
     }
 
     public function laporan_stok()
@@ -282,6 +320,99 @@ class PelaporanController extends Controller
             'periode' => "Periode : ".$request->ket_periode
         ]);
         // echo $html;
+    }
+
+    public function laporan_stok_print($tgl_1=null, $tgl_2=null)
+    {
+        $arr_tgl_1 = explode('-', $tgl_1);
+        $ket_tgl_1 = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+        $arr_tgl_2 = explode('-', $tgl_2);
+        $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
+        $result = ProductModel::orderBy('id')->get();
+        $nom=1;
+        $html="";
+        $qty_penjualan_cancel=0;
+        $qty_pembelian_cancel=0;
+        foreach($result as $list)
+        {
+            //stok awal
+            $qty_awal = ProductModel::find($list->id)->stok_awal;
+            $qty_pembelian_awal = \DB::table('receive_head')
+                                ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
+                                ->whereDate('receive_head.tanggal_receive', '<', $tgl_1)
+                                ->where('receive_detail.produk_id', $list->id)
+                                ->whereNull('receive_head.deleted_at')
+                                ->selectRaw('sum(receive_detail.qty) as t_pembelian_awal')
+                                ->pluck('t_pembelian_awal')->first();
+            $qty_penjualan_awal = \DB::table('jual_head')
+                                ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                                ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                                ->where('jual_detail.produk_id', $list->id)
+                                ->whereNull('jual_head.deleted_at')
+                                ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
+                                ->pluck('t_penjualan_awal')->first();
+            $stok_awal = ($qty_awal + $qty_pembelian_awal) - $qty_penjualan_awal;
+            //range date selected
+            $qty_pembelian = \DB::table('receive_head')
+                                ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
+                                ->whereDate('receive_head.tanggal_receive', '>=', $tgl_1)
+                                ->whereDate('receive_head.tanggal_receive', '<=', $tgl_2)
+                                ->where('receive_detail.produk_id', $list->id)
+                                ->whereNull('receive_head.deleted_at')
+                                ->selectRaw('sum(receive_detail.qty) as t_pembelian')
+                                ->pluck('t_pembelian')->first();
+
+            $qty_pembelian_cancel = \DB::table('receive_head')
+                                ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
+                                ->whereDate('receive_head.tanggal_receive', '>=', $tgl_1)
+                                ->whereDate('receive_head.tanggal_receive', '<=', $tgl_2)
+                                ->where('receive_detail.produk_id', $list->id)
+                                ->whereNotNull('receive_head.deleted_at')
+                                ->selectRaw('sum(receive_detail.qty) as t_pembelian')
+                                ->pluck('t_pembelian')->first();
+
+            $qty_penjualan = \DB::table('jual_head')
+                                ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
+                                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                                ->where('jual_detail.produk_id', $list->id)
+                                ->whereNull('jual_head.deleted_at')
+                                ->selectRaw('sum(jual_detail.qty) as t_penjualan')
+                                ->pluck('t_penjualan')->first();
+
+            $qty_penjualan_cancel = \DB::table('jual_head')
+                                ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
+                                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                                ->where('jual_detail.produk_id', $list->id)
+                                ->whereNotNull('jual_head.deleted_at')
+                                ->selectRaw('sum(jual_detail.qty) as t_penjualan')
+                                ->pluck('t_penjualan')->first();
+
+            //stok akhir
+            $current_qty = ($stok_awal + $qty_pembelian + $qty_pembelian_cancel) - ($qty_penjualan + $qty_penjualan_cancel);
+            $data[] = [
+                'no_urut' => $nom,
+                'kode' => $list->kode,
+                'nama_produk' => $list->nama_produk,
+                'stok_awal' => $stok_awal,
+                'harga_jual' => $list->harga_eceran,
+                'stok_masuk' => ((!empty($qty_pembelian)) ? $qty_pembelian : 0),
+                'stok_keluar' => ((!empty($qty_penjualan)) ? $qty_penjualan : 0),
+                'beli_cancel' => $qty_pembelian_cancel,
+                'jual_cancel' => $qty_penjualan_cancel,
+                'stok_akhir' => $current_qty,
+            ];
+            $nom++;
+        }
+        $newData = json_encode($data, TRUE);
+
+        $pdf = PDF::loadview('pelaporan.stok.print', [
+            'list_data' => json_decode($newData, true),
+            'periode' => $ket_periode
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
     }
 
 }

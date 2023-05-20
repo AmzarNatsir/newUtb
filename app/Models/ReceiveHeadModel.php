@@ -27,6 +27,7 @@ class ReceiveHeadModel extends Model
         'cara_bayar',
         'no_invoice',
         'tgl_invoice',
+        'tgl_jatuh_tempo',
         'user_id'
     ];
 
