@@ -112,6 +112,9 @@ Route::get('penjualan', [PenjualanController::class, 'index'])->name("penjualan"
 Route::post('penjualanStore', [PenjualanController::class, 'store'])->name("penjualanStore");
 
 //pemberian sample produk
+Route::get('pemberianSampel', [ProductController::class, 'pemberian_sampel'])->name("pemberianSampel");
+Route::post('pemberianSampelStore', [ProductController::class, 'pemberian_sampel_store'])->name("pemberianSampelStore");
+
 
 Route::post('searchItem', [ProductController::class, 'searchItemJual'])->name('searchItem');
 Route::post('searchItemPenjualan', [ProductController::class, 'searchItemJual'])->name('searchItemPenjualan');

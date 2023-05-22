@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerModel;
+use App\Models\JualDetailModel;
+use App\Models\JualHeadModel;
 use App\Models\MerkModel;
 use App\Models\ProductModel;
 use App\Models\UnitModel;
@@ -11,9 +14,12 @@ use PhpParser\Node\Expr\FuncCall;
 
 class ProductController extends Controller
 {
+    protected $datetimeStore;
+
     public function __construct()
     {
         $this->middleware('auth');
+        $this->datetimeStore = date("Y-m-d h:i:s");
     }
 
     public function index()
@@ -217,4 +223,84 @@ class ProductController extends Controller
             ->withCallback($request->input('callback'));
 
     }
+
+    public function pemberian_sampel()
+    {
+        $data = [
+            'allCustomer' => CustomerModel::all()
+        ];
+        return view('manajemen_stok.pemberian_sampel.index', $data);
+    }
+
+    public function pemberian_sampel_store(Request $request)
+    {
+        try {
+            $save_head = new JualHeadModel();
+            //store header
+            $save_head->customer_id = $request->sel_customer;
+            $save_head->no_invoice = $this->create_no_invoice();
+            $save_head->tgl_invoice = $this->datetimeStore;
+            $save_head->keterangan = $request->inp_keterangan;
+            $save_head->total_invoice = 0;
+            $save_head->ppn_persen = 0;
+            $save_head->ppn_rupiah = 0;
+            $save_head->diskon_persen = 0;
+            $save_head->diskon_rupiah = 0;
+            $save_head->ongkir = 0;
+            $save_head->total_invoice_net = 0;
+            $save_head->jenis_jual = 1; //pemberian sampel
+            $save_head->user_id = auth()->user()->id;
+            $save_head->save();
+            $id_head = $save_head->id;
+            //store detail
+            $jml_item = count($request->item_id);
+            foreach(array($request) as $key => $value)
+            {
+                for($i=0; $i<$jml_item; $i++)
+                {
+                    $newdetail = new JualDetailModel();
+                    $newdetail->head_id = $id_head;
+                    $newdetail->produk_id = $value['item_id'][$i];
+                    $newdetail->qty = $value['item_qty'][$i];
+                    $newdetail->harga = 0;
+                    $newdetail->diskitem_persen =0;
+                    $newdetail->diskitem_rupiah = 0;
+                    $newdetail->sub_total = 0;
+                    $newdetail->sub_total_net = 0;
+                    $newdetail->save();
+                    //Update Stok
+                    $update = ProductModel::find($value['item_id'][$i]);
+                    $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['item_qty'][$i]));
+                    $update->save();
+                }
+            }
+            if($id_head)
+            {
+                return redirect('pemberianSampel')->with('message', 'Transaksi berhasil disimpan');
+            } else {
+                return redirect('pemberianSampel')->with('message', 'Transaksi gagal disimpan');
+            }
+        } catch (QueryException $e)
+        {
+            return redirect('pemberianSampel')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
+    }
+
+    public function create_no_invoice()
+    {
+        $no_urut = 1;
+        $kd="INV";
+        $bulan = sprintf('%02s', date('m'));
+        $tahun = date('Y');
+        
+        $result = JualHeadModel::whereYear('tgl_invoice', $tahun)->orderby('id', 'desc')->first();
+        if(empty($result->no_invoice)) {
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
+        } else {
+            $no_trans_baru = (int)substr($result->no_invoice, 10, 4) + 1;
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);
+        }
+        return $no_baru;
+    }
+
 }

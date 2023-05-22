@@ -130,7 +130,7 @@
             <a href="{{ route('receiving') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Receiving</p></a>
             <a href="{{ route('penjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
             <div class="dropdown-divider"></div>
-            <a href="{{ route('kartuStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pemberian Sample</p></a>
+            <a href="{{ route('pemberianSampel') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pemberian Sample</p></a>
         </li>
     </ul>
 </li>
