@@ -114,7 +114,7 @@
         <li class="nav-item">
             <a href="{{ route('stok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stok Baru</p></a>
             <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Daftar Stok</p></a>
-            <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Kartu Stok</p></a>
+            <a href="{{ route('kartuStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Kartu Stok</p></a>
         </li>
     </ul>
 </li>
@@ -129,7 +129,8 @@
             <a href="{{ route('purchaseOrder') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Purchase Order</p></a>
             <a href="{{ route('receiving') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Receiving</p></a>
             <a href="{{ route('penjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
-            
+            <div class="dropdown-divider"></div>
+            <a href="{{ route('kartuStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pemberian Sample</p></a>
         </li>
     </ul>
 </li>

@@ -27,7 +27,8 @@ class JualHeadModel extends Model
         'ongkir',
         'total_invoice_net',
         'status_invoice',
-        'user_id'
+        'user_id',
+        'jenis_jual' //NULL: penjualan, 1. pemberian sample
     ];
 
     public function get_customer()

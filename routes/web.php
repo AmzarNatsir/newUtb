@@ -12,6 +12,7 @@ use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\Client\App;
+use App\Http\Controllers\DashbaordController;
 use App\Http\Controllers\HomeController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,7 @@ Route::prefix('client')->group(function(){
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [DashbaordController::class, 'index'])->name('dashboard');
 //Common Unit
 Route::get('satuan', [UnitController::class, 'index'])->name("satuan");
 Route::get('unitAdd', [UnitController::class, 'add'])->name("unitAdd");
@@ -86,6 +88,9 @@ Route::get('customerDelete/{id}', [CustomerController::class, 'delete'])->name('
 Route::get('daftarStok', [ProductController::class, 'list_stok'])->name('daftarStok');
 Route::get('settingStok', [ProductController::class, 'setting_stok'])->name('settingStok');
 Route::post('settingStokStore', [ProductController::class, 'setting_stok_store'])->name('settingStokStore');
+//kartu stok
+Route::get('kartuStok', [ProductController::class, 'kartu_stok'])->name('kartuStok');
+Route::post('searchItemKartuStok', [ProductController::class, 'searchItemKartuStok'])->name('searchItemKartuStok');
 //Purchase Order
 Route::get('purchaseOrder', [POController::class, 'index'])->name('purchaseOrder');
 Route::get('purchaseOrderAdd', [POController::class, 'add'])->name('purchaseOrderAdd');
@@ -105,6 +110,8 @@ Route::post('receiveStore', [ReceivingController::class, 'store'])->name('receiv
 //penjualan
 Route::get('penjualan', [PenjualanController::class, 'index'])->name("penjualan");
 Route::post('penjualanStore', [PenjualanController::class, 'store'])->name("penjualanStore");
+
+//pemberian sample produk
 
 Route::post('searchItem', [ProductController::class, 'searchItemJual'])->name('searchItem');
 Route::post('searchItemPenjualan', [ProductController::class, 'searchItemJual'])->name('searchItemPenjualan');

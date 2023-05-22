@@ -134,7 +134,8 @@ class PelaporanController extends Controller
         $tgl_awal = $request->tgl_1;
         $tgl_akhir = $request->tgl_2;
         $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)->get();
+                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)
+                            ->whereNULL('jenis_jual')->get();
         $nom=1;
         $total_net = 0;
         $html="";
@@ -171,6 +172,7 @@ class PelaporanController extends Controller
                         ->join('jual_detail', 'jual_detail.head_id', '=', 'jual_head.id')
                         ->join('common_product', 'common_product.id', '=', 'jual_detail.produk_id')
                         ->whereNull('jual_head.deleted_at')
+                        ->whereNULL('jual_head.jenis_jual')
                         // ->whereBetween('penjualan_head.tgl_trans', [$tgl_awal, $tgl_akhir])
                          ->whereDate('jual_head.tgl_invoice', '>=', $tgl_awal)
                         ->whereDate('jual_head.tgl_invoice', '<=', $tgl_akhir)
@@ -218,7 +220,7 @@ class PelaporanController extends Controller
         $ket_periode = $tgl_1." s/d ".$tgl_2;
 
         $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)->get();
+                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)->whereNULL('jenis_jual')->get();
         
         $pdf = PDF::loadview('pelaporan.penjualan.print', [
             'list_data' => $result,
@@ -259,6 +261,7 @@ class PelaporanController extends Controller
                                 ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
+                                ->whereNULL('jual_head.jenis_jual')
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
             $stok_awal = ($qty_awal + $qty_pembelian_awal) - $qty_penjualan_awal;
@@ -287,6 +290,7 @@ class PelaporanController extends Controller
                                 ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
+                                ->whereNULL('jual_head.jenis_jual')
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                                 ->pluck('t_penjualan')->first();
 
@@ -295,6 +299,7 @@ class PelaporanController extends Controller
                                 ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
                                 ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
                                 ->where('jual_detail.produk_id', $list->id)
+                                ->whereNULL('jual_head.jenis_jual')
                                 ->whereNotNull('jual_head.deleted_at')
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                                 ->pluck('t_penjualan')->first();
@@ -350,6 +355,7 @@ class PelaporanController extends Controller
                                 ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
+                                ->whereNULL('jual_head.jenis_jual')
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
             $stok_awal = ($qty_awal + $qty_pembelian_awal) - $qty_penjualan_awal;
@@ -378,6 +384,7 @@ class PelaporanController extends Controller
                                 ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
+                                ->whereNULL('jual_head.jenis_jual')
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                                 ->pluck('t_penjualan')->first();
 
@@ -387,6 +394,7 @@ class PelaporanController extends Controller
                                 ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNotNull('jual_head.deleted_at')
+                                ->whereNULL('jual_head.jenis_jual')
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                                 ->pluck('t_penjualan')->first();
 

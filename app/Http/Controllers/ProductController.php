@@ -7,6 +7,7 @@ use App\Models\ProductModel;
 use App\Models\UnitModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\FuncCall;
 
 class ProductController extends Controller
 {
@@ -187,5 +188,33 @@ class ProductController extends Controller
         {
             return redirect('daftarStok')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
         }
+    }
+
+    //kartu stok
+    public function kartu_stok()
+    {
+        return view('manajemen_stok.kartu_stok.index');
+    }
+
+    public function searchItemKartuStok(Request $request)
+    {
+        $keyword = $request->search;
+        $result = ProductModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->get();
+        $response = array();
+        foreach($result as $item){
+            $response[] = array(
+                "value"=>$item->id, 
+                "label"=> "[".$item->kode." | ".$item->nama_produk."]",
+                "kode" => $item->kode,
+                "nama_produk" => $item->nama_produk,
+                "merk" => $item->get_merk->merk,
+                "kemasan" => $item->kemasan,
+                "satuan"=>$item->get_unit->unit
+            );
+        }
+        return response()
+            ->json($response)
+            ->withCallback($request->input('callback'));
+
     }
 }
