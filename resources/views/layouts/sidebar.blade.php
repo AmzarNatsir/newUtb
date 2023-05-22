@@ -47,7 +47,7 @@
     </a>
 </li>
 <li class="nav-item menu-open">
-    <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon fas fa-chart-pie"></i><p>Dashboard</p></a>
+    <a href="{{ route('dashboard') }}" class="nav-link"><i class="nav-icon fas fa-chart-pie"></i><p>Dashboard</p></a>
 </li>
 <li class="nav-item">
     <a href="#" class="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i><p>Summary<i class="right fas fa-angle-left"></i></p></a>
