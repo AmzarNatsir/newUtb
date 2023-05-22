@@ -32,14 +32,14 @@ class UnitController extends Controller
             $exec = $new_data->save();
             if($exec)
             {
-                return redirect('unit')->with('message', 'Seccess');
+                return redirect('satuan')->with('message', 'Data berhasil disimpan');
             } else {
-                return redirect('unit')->with('message', 'Fail');
+                return redirect('satuan')->with('message', 'Data gagal disimpan');
             }
            
         } catch (QueryException $e)
         {
-            return redirect('unit')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+            return redirect('satuan')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
         }
     }
 
@@ -57,13 +57,13 @@ class UnitController extends Controller
             $exec = $update->save();
             if($exec)
             {
-                return redirect('unit')->with('message', 'Seccess');
+                return redirect('satuan')->with('message', 'Perubahan data berhasil disimpan');
             } else {
-                return redirect('unit')->with('message', 'Fail');
+                return redirect('satuan')->with('message', 'Perubahan data gagal disimpan');
             }
         } catch (QueryException $e)
         {
-            return redirect('unit')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+            return redirect('satuan')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
         }
     }
 
@@ -73,9 +73,9 @@ class UnitController extends Controller
         $exec = $delete->delete();
         if($exec)
         {
-            return redirect('unit')->with('message', 'Delete Seccess');
+            return redirect('satuan')->with('message', 'Data berhasil dihapus');
         } else {
-            return redirect('unit')->with('message', 'Delete Fail');
+            return redirect('satuan')->with('message', 'Data gagal dihapus');
         }
     }
 }
