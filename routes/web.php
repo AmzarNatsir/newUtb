@@ -12,6 +12,7 @@ use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\Client\App;
+use App\Http\Controllers\HomeController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Iterator\CustomFilterIterator;
@@ -40,7 +41,7 @@ Route::prefix('client')->group(function(){
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 //Common Unit
 Route::get('satuan', [UnitController::class, 'index'])->name("satuan");
 Route::get('unitAdd', [UnitController::class, 'add'])->name("unitAdd");
