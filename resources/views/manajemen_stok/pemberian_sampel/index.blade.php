@@ -6,7 +6,7 @@
 <!-- content -->
 <section class="content">
     <!-- Default box -->
-    <div class="card">
+    <div class="card card-success">
     <div class="card-header">
         <h3 class="card-title">Pemberian Sampel</h3>
     </div>
@@ -24,6 +24,17 @@
                 <div class="col-md-5">
                     <div class="card">
                         <div class="card-body">
+                            <div class="form-group row">
+                                <label for="inp_carabayar" class="col-sm-6 col-form-label">Tgl Pemberian</label>
+                                <div class="col-sm-6">
+                                    <div class="input-group date" id="inp_tgl_pemberian">
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inp_tgl_pemberian" name="inp_tgl_pemberian" value="{{ date('d-m-Y') }}">
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="sel_customer">Customer</label>
                                 <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>
@@ -38,8 +49,8 @@
                                 <textarea class="form-control" name="inp_keterangan" id="inp_keterangan" required></textarea>
                             </div>
                         </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="submit" class="btn btn-outline-success" id="tbl_submit">Submit</button>
+                        <div class="modal-footer float-right">
+                            <button type="submit" class="btn btn-success" id="tbl_submit">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -63,7 +74,7 @@
                             <div class="row">
                                 <div class="col-sm-12" style="overflow-y: auto; max-height: 100vh">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-vcenter" id="list_item" style="font-size: 13px">
+                                        <table class="table table-bordered table-vcenter" id="list_item" style="font-size: 11pt">
                                             <tr>
                                                 <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
                                                 <th rowspan="2" style="vertical-align: middle;">Nama Produk</th>

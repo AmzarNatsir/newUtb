@@ -239,7 +239,7 @@ class ProductController extends Controller
             //store header
             $save_head->customer_id = $request->sel_customer;
             $save_head->no_invoice = $this->create_no_invoice();
-            $save_head->tgl_invoice = $this->datetimeStore;
+            $save_head->tgl_invoice = ($request->inp_tgl_pemberian=="") ? $this->datetimeStore : date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_pemberian)));
             $save_head->keterangan = $request->inp_keterangan;
             $save_head->total_invoice = 0;
             $save_head->ppn_persen = 0;
