@@ -24,7 +24,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $query = ProductModel::all();
+        $query = ProductModel::orderby('kode', 'asc')->get();
         $data['allProduct'] = $query;
         return view('common.produk.index', $data);
     }
@@ -33,9 +33,28 @@ class ProductController extends Controller
     {
         $query_unit = UnitModel::all();
         $query_merk = MerkModel::all();
-        $data['allUnit'] = $query_unit;
-        $data['allMerk'] = $query_merk;
+        $data = [
+            'allUnit' => $query_unit,
+            'allMerk' => $query_merk,
+            'kode_baru' => $this->create_kode_produk()
+        ];
         return view('common.produk.add', $data);
+    }
+
+    public function create_kode_produk()
+    {
+        $sub = 1;
+        $no_item = 1;
+        $kd="UTB/Pupuk-";
+        
+        $result = ProductModel::orderby('id', 'desc')->first();
+        if(empty($result->kode)) {
+            $no_baru = $kd.sprintf('%02s', $no_item).".".sprintf('%04s', $sub); 
+        } else {
+            $no_trans_baru = (int)substr($result->kode, 11, 2) + 1;
+            $no_baru = $kd.sprintf('%02s', $no_trans_baru).".".sprintf('%04s', $sub);
+        }
+        return $no_baru;
     }
 
     public function store(Request $request)
@@ -47,8 +66,8 @@ class ProductController extends Controller
             $new_data->merk_id = $request->sel_merk;
             $new_data->unit_id = $request->sel_satuan;
             $new_data->kemasan = $request->inp_kemasan;
-            $new_data->harga_toko = str_replace(",","", $request->inp_harga_toko);
-            $new_data->harga_eceran = str_replace(",","", $request->inp_harga_eceran);
+            $new_data->harga_toko = 0;
+            $new_data->harga_eceran = 0;
             $exec = $new_data->save();
             if($exec)
             {
@@ -80,13 +99,11 @@ class ProductController extends Controller
     {
         try {
             $update = ProductModel::find($id);
-            $update->kode = $request->inp_kode;
             $update->nama_produk = $request->inp_nama;
             $update->merk_id = $request->sel_merk;
             $update->unit_id = $request->sel_satuan;
             $update->kemasan = $request->inp_kemasan;
-            $update->harga_toko = str_replace(",","", $request->inp_harga_toko);
-            $update->harga_eceran = str_replace(",","", $request->inp_harga_eceran);
+            $update->keterangan = $request->inp_ket;
             $exec = $update->save();
             if($exec)
             {
@@ -110,6 +127,28 @@ class ProductController extends Controller
         } else {
             return redirect('stok')->with('message', 'Data gagal dihapus');
         }
+    }
+
+    public function add_sub_produk($id)
+    {
+        $main = ProductModel::find($id);
+        $kode_produk_head = substr($main->kode, 0, 13);
+        $sub_main = \DB::table('common_product')
+                                ->where(\DB::raw('SUBSTR(kode,1, 13)'), '=', $kode_produk_head)
+                                ->whereNull('deleted_at')
+                                ->orderby('id', 'desc')
+                                ->selectRaw('kode')
+                                ->first();
+        $kode_produk_sub = $kode_produk_head . sprintf('%04s', (int)substr($sub_main->kode, 13, 4) + 1);
+        $query_unit = UnitModel::all();
+        $query_merk = MerkModel::all();
+        $data = [
+            'main' => $main,
+            'allUnit' => $query_unit,
+            'allMerk' => $query_merk,
+            'kode_sub' => $kode_produk_sub
+        ];
+        return view('common.produk.add_sub', $data);
     }
 
     public function searchItem(Request $request)

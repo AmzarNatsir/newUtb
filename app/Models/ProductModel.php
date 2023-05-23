@@ -22,7 +22,8 @@ class ProductModel extends Model
         'gambar',
         'stok_awal',
         'stok_akhir',
-        'merk_id'
+        'merk_id',
+        'keterangan'
     ];
 
     public function get_unit()

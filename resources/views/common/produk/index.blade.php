@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Data Master')
+@section('title', 'Manajemen Stok')
 @section('breadcrumb', 'Stok')
 @section('content')
 @routes
@@ -8,7 +8,7 @@
     <!-- Default box -->
     <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Stok</h3>
+        <h3 class="card-title">Stok Baru</h3>
         <div class="card-tools">
             <ul class="nav nav-pills ml-auto">
             <li class="nav-item">
@@ -29,13 +29,12 @@
             <thead>
             <tr>
                 <th style="width: 5%;">No.</th>
-                <th class="text-center">Kode</th>
+                <th class="text-center" style="width: 15%;">Kode</th>
                 <th>Produk</th>
-                <th>Merk</th>
-                <th class="text-center">Kemasan</th>
-                <th class="text-center">Unit</th>
-                <th class="text-right">Harga Toko</th>
-                <th class="text-right">Harga Eceran</th>
+                <th style="width: 15%;">Merk</th>
+                <th class="text-center" style="width: 15%;">Kemasan</th>
+                <th class="text-center" style="width: 15%;">Unit</th>
+                <td style="width: 20%;">Keterangan</td>
                 <th style="width: 10%;">Act</th>
             </tr>
             </thead>
@@ -49,14 +48,14 @@
                 <td>{{ $list->get_merk->merk }}</td>
                 <td class="text-center">{{ $list->kemasan }}</td>
                 <td class="text-center">{{ $list->get_unit->unit }}</td>
-                <td class="text-right">{{ number_format($list->harga_toko, 0) }}</td>
-                <td class="text-right">{{ number_format($list->harga_eceran, 0) }}</td>
+                <td>{{ $list->keterangan }}</td>
                 <td>
                     <div class="input-group-prepend">
                     <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
                       Action
                     </button>
                     <div class="dropdown-menu">
+                        <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_sub_produk" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goSubProduk(this)"><i class="fa fa-plus"></i> Sub Produk</button>
                         <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goEdit(this)"><i class="fa fa-edit"></i> Edit</button>
                         <a href="{{ url('productDelete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
                     </div>
@@ -80,7 +79,36 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('assets/js/common/product.js') }}"></script>
+<script>
+    $(function() {
+        let APP_URL_ADD = route('productAdd');
+        window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
+        $("#tbl_tambah").on("click", function()
+        {
+            $("#frm_modal").load(APP_URL_ADD);
+            
+        });
+    });
+    var goEdit = function(el) {
+    $("#frm_modal").load(route('productEdit', $(el).val()));
+    }
+
+    var goSubProduk = function (el) {
+        $("#frm_modal").load(route('productSub', $(el).val()));
+    }
+
+    function konfirmHapus()
+    {
+        var psn = confirm("Delete Data ?");
+        if(psn==true)
+        {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+</script>
 @endsection
 
 

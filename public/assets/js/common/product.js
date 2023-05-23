@@ -11,6 +11,10 @@ var goEdit = function(el) {
     $("#frm_modal").load(route('productEdit', $(el).val()));
 }
 
+var goSubProduk = function (el) {
+    $("#frm_modal").load(route('productSub', $(el).val()));
+}
+
 function konfirmHapus()
 {
     var psn = confirm("Delete Data ?");

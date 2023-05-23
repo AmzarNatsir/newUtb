@@ -9,7 +9,7 @@
 <div class="modal-body">
         <div class="form-group">
             <label for="inp_kode">Kode</label>
-            <input type="text" name="inp_kode" id="inp_kode" class="form-control" maxlength="50" value="{{ $res->kode }}" required>
+            <input type="text" name="inp_kode" id="inp_kode" class="form-control" maxlength="50" value="{{ $res->kode }}" readonly>
         </div>
         <div class="form-group">
             <label for="inp_nama">Nama Produk</label>
@@ -49,19 +49,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inp_harga_toko">Harga Toko (Rp.)</label>
-                    <input type="text" name="inp_harga_toko" id="inp_harga_toko" class="form-control angka" value="{{ $res->harga_toko }}" style="text-align: right;" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inp_harga_eceran">Harga Eceran (Rp.)</label>
-                    <input type="text" name="inp_harga_eceran" id="inp_harga_eceran" class="form-control angka" value="{{ $res->harga_eceran }}" style="text-align: right;" required>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="inp_ket">Keterangan</label>
+            <input type="text" name="inp_ket" id="inp_ket" class="form-control" maxlength="100" value="{{ $res->keterangan }}">
         </div>
     </div>
     <div class="modal-footer justify-content-between">
