@@ -461,7 +461,9 @@ class PelaporanController extends Controller
         ";
         $nom_summary=1;
         $total_qty_summary=0;
-        $query_summary = \DB::table('jual_head')
+        if($result)
+        {
+            $query_summary = \DB::table('jual_head')
                         ->selectRaw('common_product.nama_produk, SUM(jual_detail.qty) as total')
                         ->join('jual_detail', 'jual_detail.head_id', '=', 'jual_head.id')
                         ->join('common_product', 'common_product.id', '=', 'jual_detail.produk_id')
@@ -476,17 +478,23 @@ class PelaporanController extends Controller
         foreach($query_summary as $summary)
         {
             $html_summary .="<tr>
-            <td style='text-align: center;'>".$nom_summary."</td>
-            <td>".$summary->nama_produk."</td>
-            <td style='text-align: center;'>".$summary->total."</td>
-            </tr>";
-            $nom_summary++;
-            $total_qty_summary+=$summary->total;
+                <td style='text-align: center;'>".$nom_summary."</td>
+                <td>".$summary->nama_produk."</td>
+                <td style='text-align: center;'>".$summary->total."</td>
+                </tr>";
+                $nom_summary++;
+                $total_qty_summary+=$summary->total;
+            }
+            $html_summary .= "<tr>
+                <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
+                <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
+            ";
+        } else {
+            $html_summary .= "<tr>
+                <td colspan='3' style='text-align: center;'><b>Data is empty</b></td>
+            ";
         }
-        $html_summary .= "<tr>
-            <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
-            <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
-        ";
+        
         return response()
             ->json([
                 'all_result' => $html,
