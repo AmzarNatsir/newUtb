@@ -68,7 +68,7 @@ class ReceivingController extends Controller
                 {
                     $newdetail = new ReceiveDetailModel();
                     $newdetail->head_id = $id_head;
-                    $newdetail->produk_id = $value['item_id'][$i];
+                    $newdetail->produk_id = $value['produk_id'][$i];
                     $newdetail->qty = $value['item_qty'][$i];
                     $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
                     $newdetail->diskitem_persen = $value['item_diskon'][$i];
@@ -77,7 +77,7 @@ class ReceivingController extends Controller
                     $newdetail->sub_total_net = str_replace(",","", $value['item_sub_total_net'][$i]);
                     $newdetail->save();
                     //Update Stok
-                    $update = ProductModel::find($value['item_id'][$i]);
+                    $update = ProductModel::find($value['produk_id'][$i]);
                     $update->stok_akhir = ((int)$update->stok_akhir +  (int)str_replace(",","", $value['item_qty'][$i]));
                     $update->harga_toko = str_replace(",","", $value['harga_satuan'][$i]);
                     $update->save();

@@ -25,7 +25,7 @@
 <tr>
     <td style="text-align: left;">
         <h5>LAPORAN STOK</h5>
-        <p <span class='badge bg-info' style='font-size: 9pt;'>Periode : {{ $periode }}</p>
+        <p <span class='badge bg-success' style='font-size: 9pt;'>Periode : {{ $periode }}</p>
     </td>
 </tr>
 </table>

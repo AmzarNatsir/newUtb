@@ -423,4 +423,101 @@ class PelaporanController extends Controller
         return $pdf->stream();
     }
 
+    //laporan pemberian sampel
+    public function laporan_pemberian_sampel()
+    {
+        return view('pelaporan.pemberian_sampel.index');
+    }
+
+    public function laporan_pemberian_sampel_filter(Request $request)
+    {
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+        $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
+                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)
+                            ->where('jenis_jual', 1)->get();
+        $nom=1;
+        $total = 0;
+        $html="";
+        $html_summary="";
+        foreach($result as $list)
+        {
+            $tot_qty = $list->get_detail->sum('qty');
+            $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
+
+            $html .= "<tr>
+            <td style='text-align: center;'>".$tbl_aksi."</td>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_invoice), 'd-m-Y')."</td>
+            <td>".$list->get_customer->nama_customer."</td>
+            <td style='text-align: center;'>".$tot_qty."</td>
+            </tr>";
+            $nom++;
+            $total+=$tot_qty;
+        }
+        $html .= "<tr>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: center;'>".$total."</td>
+        ";
+        $nom_summary=1;
+        $total_qty_summary=0;
+        $query_summary = \DB::table('jual_head')
+                        ->selectRaw('common_product.kode, common_product.nama_produk, SUM(jual_detail.qty) as total, SUM(jual_detail.sub_total_net) as harga')
+                        ->join('jual_detail', 'jual_detail.head_id', '=', 'jual_head.id')
+                        ->join('common_product', 'common_product.id', '=', 'jual_detail.produk_id')
+                        ->whereNull('jual_head.deleted_at')
+                        ->where('jual_head.jenis_jual', 1)
+                        // ->whereBetween('penjualan_head.tgl_trans', [$tgl_awal, $tgl_akhir])
+                         ->whereDate('jual_head.tgl_invoice', '>=', $tgl_awal)
+                        ->whereDate('jual_head.tgl_invoice', '<=', $tgl_akhir)
+                        ->groupBy('jual_detail.produk_id')
+                        ->orderByDesc('total')
+                        ->get();
+        foreach($query_summary as $summary)
+        {
+            $html_summary .="<tr>
+            <td style='text-align: center;'>".$nom_summary."</td>
+            <td>".$summary->nama_produk."</td>
+            <td style='text-align: center;'>".$summary->total."</td>
+            </tr>";
+            $nom_summary++;
+            $total_qty_summary+=$summary->total;
+        }
+        $html_summary .= "<tr>
+            <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
+        ";
+        return response()
+            ->json([
+                'all_result' => $html,
+                'result_summary' => $html_summary,
+                'periode' => "Periode : ".$request->ket_periode
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function laporan_pemberian_sampel_detail($id)
+    {
+        $data['head'] = JualHeadModel::find($id);
+        $data['all_detail'] = JualDetailModel::where('head_id', $id)->get();
+        return view('pelaporan.pemberian_sampel.detail', $data);
+    }
+
+    public function laporan_pemberian_sampel_print($tgl_1=null, $tgl_2=null, $view_detail=null)
+    {
+        $tgl_awal = $tgl_1;
+        $tgl_akhir = $tgl_2;
+        $ket_periode = $tgl_1." s/d ".$tgl_2;
+
+        $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
+                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)->where('jenis_jual', 1)->get();
+        
+        $pdf = PDF::loadview('pelaporan.pemberian_sampel.print', [
+            'list_data' => $result,
+            'periode' => $ket_periode,
+            'check_view_detail' => $view_detail
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+    }
+
 }

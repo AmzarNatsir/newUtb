@@ -149,6 +149,12 @@ Route::get('laporanPenjualanPrint/{param1}/{param2}/{param3}', [PelaporanControl
 
 Route::get('printInvoice/{id}', [PenjualanController::class, 'print_invoice'])->name('printInvoice');
 
+//pemberian sampel
+Route::get('laporanPemerianSampel', [PelaporanController::class, 'laporan_pemberian_sampel'])->name('laporanPemerianSampel');
+Route::post('laporanPemerianSampelFilter', [PelaporanController::class, 'laporan_pemberian_sampel_filter'])->name('laporanPemerianSampelFilter');
+Route::get('laporanPemerianSampelDetail/{id}', [PelaporanController::class, 'laporan_pemberian_sampel_detail'])->name('laporanPemerianSampelDetail');
+Route::get('laporanPemerianSampelPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_pemberian_sampel_print'])->name('laporanPemerianSampelPrint');
+
 //laporan stok
 Route::get('laporanStok', [PelaporanController::class, 'laporan_stok'])->name("laporanStok");
 Route::post('laporanStokFilter', [PelaporanController::class, 'laporan_stok_filter'])->name('laporanStokFilter');

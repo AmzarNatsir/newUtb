@@ -32,9 +32,9 @@
                 <th class="text-center" style="width: 15%;">Kode</th>
                 <th>Produk</th>
                 <th style="width: 15%;">Merk</th>
-                <th class="text-center" style="width: 15%;">Kemasan</th>
-                <th class="text-center" style="width: 15%;">Unit</th>
-                <td style="width: 20%;">Keterangan</td>
+                <th class="text-center" style="width: 10%;">Kemasan</th>
+                <th class="text-center" style="width: 10%;">Unit</th>
+                <td style="width: 15%;">Keterangan</td>
                 <th style="width: 10%;">Act</th>
             </tr>
             </thead>

@@ -48,7 +48,7 @@
                                             @foreach($resHead->get_detail as $list)
                                             <tr class="rows_item" name="rows_item[]">
                                                 <td><input type="hidden" name="id_row[]" value=""><button type="button" title="Hapus Baris" class="btn btn-danger btn-sm waves-effect waves-light" onclick="hapus_item(this)"><i class="fa fa-minus"></i></button></td>
-                                                <td><input type="hidden" name="item_id[]" value="{{ $list->id }}"><label style="color: blue; font-size: 11pt">{{ $list->get_produk->nama_produk }}</label></td>
+                                                <td><input type="hidden" name="item_id[]" value="{{ $list->id }}"><input type="hidden" name="produk_id[]" value="{{ $list->produk_id }}"><label style="color: blue; font-size: 11pt">{{ $list->get_produk->nama_produk }}</label></td>
                                                 <td style="text-align: center"><label style="color: blue; font-size: 11pt">{{ $list->get_produk->get_unit->unit }}</label></td>
                                                 <td align="center"><input type="text" min="1" max="1000" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="{{ $list->qty }}" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)"></td>
                                                 <td class="text-right"><input type="text" class="form-control form-control-sm angka" id="harga_satuan[]" name="harga_satuan[]" value="{{ $list->harga }}" style="text-align: right" onkeyup="hitSubTotal(this)" onblur="changeToNull(this)"></td>
@@ -108,7 +108,7 @@
                                 <div class="form-group">
                                     <label for="inp_tgl_invoice">Tanggal Invoice</label>
                                     <div class="input-group date" id="inp_tgl_invoice">
-                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inp_tgl_invoice" name="inp_tgl_invoice">
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inp_tgl_invoice" name="inp_tgl_invoice" required>
                                         <div class="input-group-append" >
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
