@@ -90,7 +90,7 @@ class PelaporanController extends Controller
             ";
         } else {
             $html_summary .= "<tr>
-                <td colspan='4' style='text-align: right;'><b>Data masih kosong</b></td>
+                <td colspan='4' style='text-align: center;'><b>Data masih kosong</b></td>
             ";
         }
 
@@ -206,7 +206,7 @@ class PelaporanController extends Controller
             ";
         } else {
             $html_summary .= "<tr>
-            <td colspan='4' style='text-align: right;'><b>Data masih kosong</b></td>
+            <td colspan='4' style='text-align: center;'><b>Data masih kosong</b></td>
         ";
         }
         return response()
