@@ -462,7 +462,7 @@ class PelaporanController extends Controller
         $nom_summary=1;
         $total_qty_summary=0;
         $query_summary = \DB::table('jual_head')
-                        ->selectRaw('common_product.kode, common_product.nama_produk, SUM(jual_detail.qty) as total, SUM(jual_detail.sub_total_net) as harga')
+                        ->selectRaw('common_product.kode, common_product.nama_produk, SUM(jual_detail.qty) as total')
                         ->join('jual_detail', 'jual_detail.head_id', '=', 'jual_head.id')
                         ->join('common_product', 'common_product.id', '=', 'jual_detail.produk_id')
                         ->whereNull('jual_head.deleted_at')
