@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <div class="card card-warning">
                     <div class="card-body">
-                        <table class="table table-bordered table-hover table-responsive" style="font-size: 12pt; width: 100%;" id="table_stok">
+                        <table class="table table-bordered table-hover table-responsive datatable" style="font-size: 12pt; width: 100%;" id="table_stok">
                             <thead>
                             <tr>
                                 <td style="text-align: left;" colspan="11"><h4>Laporan Stok</h4><p id="lbl_periode"></p></td>

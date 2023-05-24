@@ -133,7 +133,8 @@
             <a href="{{ route('purchaseOrder') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Purchase Order</p></a>
             <a href="{{ route('receiving') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Receiving</p></a>
             <a href="{{ route('penjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
-            
+            <a href="{{ route('returnPembelian') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Pembelian</p></a>
+            <a href="{{ route('returnPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Penjualan</p></a>
         </li>
     </ul>
 </li>

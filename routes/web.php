@@ -14,6 +14,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\Client\App;
 use App\Http\Controllers\DashbaordController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReturnController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Iterator\CustomFilterIterator;
@@ -135,6 +136,13 @@ Route::post('penerimaanPiutangStore', [PiutangController::class, 'bayar_store'])
 Route::get('penerimaanPiutangMutasi/{id}', [PiutangController::class, 'mutasi'])->name("penerimaanPiutangMutasi");
 Route::get('penerimaanPiutangMutasiPrint/{id}', [PiutangController::class, 'mutasi_print'])->name("penerimaanPiutangMutasiPrint");
 
+//Return
+//Pembelian
+Route::get('returnPembelian', [ReturnController::class, 'return_pembelian'])->name('returnPembelian');
+Route::get('returnPembelianFilter/{param}', [ReturnController::class, 'filter_invoice_pembelian'])->name('returnPembelianFilter');
+Route::get('returnPembelianDetailInvoice/{param}', [ReturnController::class, 'filter_invoice_pembelian_detail'])->name('returnPembelianDetailInvoice');
+//penjualan
+Route::get('returnPenjualan', [ReturnController::class, 'return_penjualan'])->name('returnPenjualan');
 //Pelaporan
 //Pembelian
 Route::get('laporanPembelian', [PelaporanController::class, 'laporan_pembelian'])->name("laporanPembelian");
