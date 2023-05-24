@@ -504,7 +504,7 @@ class PelaporanController extends Controller
             ";
         } else {
             $html_summary .= "<tr>
-                <td colspan='3' style='text-align: center;'><b>Data is empty</b></td>
+                <td colspan='3' style='text-align: center;'><b>Data masih kosong</b></td>
             ";
         }
         return response()
