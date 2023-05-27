@@ -33,6 +33,30 @@ class ReturnController extends Controller
         return view('return.pembelian.index', $data);
     }
 
+    public function search_invoice_pembelian(Request $request)
+    {
+        
+        $keyword = $request->search;
+        $result = ReceiveHeadModel::where('nomor_receive', $keyword)->first();
+        if(empty($result->id))
+        {
+            $response = [
+                'success' => 'false',
+                'message' => 'Nomor Invoice Tidak Ditemukan',
+                'data' => ''
+            ];
+        } else {
+            $response = [
+                'success' => 'true',
+                'message' => 'Nomor Invoice Ditemukan. Melanjutkan ke Form Return ?',
+                'data' => $result
+            ];
+        }
+        return response()
+            ->json($response)
+            ->withCallback($request->input('callback'));
+    }
+
     public function filter_invoice_pembelian($id_supplier)
     {
         $result = ReceiveHeadModel::where('supplier_id', $id_supplier)->orderby('tanggal_receive', 'desc')->get();
@@ -123,6 +147,30 @@ class ReturnController extends Controller
             'allCustomer' => CustomerModel::all()
         ];
         return view('return.penjualan.index', $data);
+    }
+
+    public function search_invoice_penjualan(Request $request)
+    {
+        
+        $keyword = $request->search;
+        $result = JualHeadModel::where('no_invoice', $keyword)->whereNull('jenis_jual')->first();
+        if(empty($result->id))
+        {
+            $response = [
+                'success' => 'false',
+                'message' => 'Nomor Invoice Tidak Ditemukan',
+                'data' => ''
+            ];
+        } else {
+            $response = [
+                'success' => 'true',
+                'message' => 'Nomor Invoice Ditemukan. Melanjutkan ke Form Return ?',
+                'data' => $result
+            ];
+        }
+        return response()
+            ->json($response)
+            ->withCallback($request->input('callback'));
     }
 
     public function filter_invoice_penjualan($id_customer)

@@ -140,14 +140,15 @@ Route::get('penerimaanPiutangMutasiPrint/{id}', [PiutangController::class, 'muta
 //Pembelian
 Route::get('returnPembelian', [ReturnController::class, 'return_pembelian'])->name('returnPembelian');
 Route::get('returnPembelianFilter/{param}', [ReturnController::class, 'filter_invoice_pembelian'])->name('returnPembelianFilter');
+Route::post('returnPembelianSearch', [ReturnController::class, 'search_invoice_pembelian'])->name('returnPembelianSearch');
 Route::get('returnPembelianDetailInvoice/{param}', [ReturnController::class, 'filter_invoice_pembelian_detail'])->name('returnPembelianDetailInvoice');
 Route::post('returnPembelianStore', [ReturnController::class, 'return_pembelian_store'])->name('returnPembelianStore');
 //penjualan
 Route::get('returnPenjualan', [ReturnController::class, 'return_penjualan'])->name('returnPenjualan');
 Route::get('returnPenjualanFilter/{param}', [ReturnController::class, 'filter_invoice_penjualan'])->name('returnPenjualanFilter');
+Route::post('returnPenjualanSearch', [ReturnController::class, 'search_invoice_penjualan'])->name('returnPenjualanSearch');
 Route::get('returnPenjualanDetailInvoice/{param}', [ReturnController::class, 'filter_invoice_penjualan_detail'])->name('returnPenjualanDetailInvoice');
 Route::post('returnPenjualanStore', [ReturnController::class, 'return_penjualan_store'])->name('returnPenjualanStore');
-//penjualan
 //Pelaporan
 //Pembelian
 Route::get('laporanPembelian', [PelaporanController::class, 'laporan_pembelian'])->name("laporanPembelian");

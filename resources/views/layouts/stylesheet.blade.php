@@ -14,6 +14,9 @@
 <link rel="stylesheet" href="{{asset('assets/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/sweetalert2/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/select2/css/select2.min.css') }}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/toastr/toastr.min.css') }}">
+
 <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }} ">
 <!-- daterange picker -->
 <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/daterangepicker/daterangepicker.css') }} ">

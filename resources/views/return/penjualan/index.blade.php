@@ -18,6 +18,14 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Input Nomor Invoice" name="Inpsearch" id="Inpsearch">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-success" onclick="goSearch()"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="sel_supplier">Customer</label>
                             <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>   
                                 @foreach($allCustomer as $customer)
@@ -70,6 +78,69 @@
     $(function(){
         window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
     });
+
+    var goSearch = function()
+    {
+        var keyWord = $("#Inpsearch").val();
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: route('returnPenjualanSearch'),
+            dataType: "json",
+            data: {
+                search: keyWord
+            },
+            success: function( data ) {
+                // alert(data.success);
+                if(data.success=='false')
+                {
+                    // alert(data.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hasil Pencarian',
+                        text: data.message,
+                    })
+                    $("#viewInvoice").empty();
+                    return false;
+                } else {
+                    const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                    })
+
+                    swalWithBootstrapButtons.fire({
+                    title: 'Hasil Pencarian',
+                    text: data.message,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    cancelButtonText: 'Tidak ! ',
+                    confirmButtonText: 'Ya ! ',
+                    reverseButtons: true
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        $("#viewInvoice").load("{{ url('returnPenjualanDetailInvoice') }}/"+data.data.id);
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        $("#viewInvoice").empty();
+                        return false
+                    }
+                    })
+                }
+            }
+
+        })
+        .done(function(e){
+            $('.angka').number( true, 0 );
+        });
+    }
+
     var goFilter = function()
     {
         var customer = $("#sel_customer").val();

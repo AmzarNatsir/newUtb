@@ -21,6 +21,8 @@
 <script src="{{asset('assets/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
 <script src="{{asset('assets/AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
 <script src="{{asset('assets/AdminLTE/plugins/sweetalert2/sweetalert2.min.js')}} "></script>
+<!-- Toastr -->
+<script src="{{asset('assets/AdminLTE/plugins/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('assets/AdminLTE/plugins/select2/js/select2.full.min.js')}} "></script>
 <script src="{{asset('assets/AdminLTE/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('assets/AdminLTE/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
