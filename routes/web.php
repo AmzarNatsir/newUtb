@@ -144,6 +144,10 @@ Route::get('returnPembelianDetailInvoice/{param}', [ReturnController::class, 'fi
 Route::post('returnPembelianStore', [ReturnController::class, 'return_pembelian_store'])->name('returnPembelianStore');
 //penjualan
 Route::get('returnPenjualan', [ReturnController::class, 'return_penjualan'])->name('returnPenjualan');
+Route::get('returnPenjualanFilter/{param}', [ReturnController::class, 'filter_invoice_penjualan'])->name('returnPenjualanFilter');
+Route::get('returnPenjualanDetailInvoice/{param}', [ReturnController::class, 'filter_invoice_penjualan_detail'])->name('returnPenjualanDetailInvoice');
+Route::post('returnPenjualanStore', [ReturnController::class, 'return_penjualan_store'])->name('returnPenjualanStore');
+//penjualan
 //Pelaporan
 //Pembelian
 Route::get('laporanPembelian', [PelaporanController::class, 'laporan_pembelian'])->name("laporanPembelian");

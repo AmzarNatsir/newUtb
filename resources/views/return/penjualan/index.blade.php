@@ -55,7 +55,7 @@
                         @endif
                         <form action="#" method="post" onsubmit="return konfirm()">
                         {{csrf_field()}}
-                            
+                        <div id="viewInvoice"></div>
                         </form>
                     </div>
                 </div>
@@ -66,13 +66,22 @@
     </div>
     <!-- /.card -->
 </section>
-<!-- Modal -->
-<div class="modal fade" id="modal-form" data-backdrop="false">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div id="frm_modal"></div>
-        </div>
-    </div>
-</div>
+<script>
+    $(function(){
+        window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
+    });
+    var goFilter = function()
+    {
+        var customer = $("#sel_customer").val();
+        $(".viewList").load("{{ url('returnPenjualanFilter') }}/"+customer);
+    }
+
+    var viewInvoice = function(el)
+    {
+        var id_invoice = el.id;
+        $("#viewInvoice").load("{{ url('returnPenjualanDetailInvoice') }}/"+id_invoice);
+        $('.angka').number( true, 0 );
+    }
+</script>
 @endsection
 

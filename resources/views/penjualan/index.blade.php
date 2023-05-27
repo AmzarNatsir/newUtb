@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Stock Keeper')
+@section('title', 'Transaksi')
 @section('breadcrumb', 'Penjualan')
 @section('content')
 @routes
@@ -41,9 +41,9 @@
                             <div class="row">
                                 <div class="col-sm-12" style="overflow-y: auto; max-height: 100vh">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-vcenter" id="list_item" style="font-size: 13px">
+                                        <table class="table-bordered table-vcenter" id="list_item" style="font-size: 13px">
                                             <tr>
-                                                <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
+                                                <th rowspan="2" class="text-center" style="width: 3%; vertical-align: middle;">Act</th>
                                                 <th rowspan="2" style="width: 16%; vertical-align: middle;">Nama Produk</th>
                                                 <th colspan="3" class="text-center">Satuan</th>
                                                 <th rowspan="2" class="text-right" style="width: 10%; vertical-align: middle;" >Sub Total (Rp.)</th>
@@ -104,8 +104,7 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-outline-danger" id="tbl_print" onclick="printInvoice()">Print</button>
-                            <button type="submit" class="btn btn-outline-success" id="tbl_submit">Save changes</button>
+                            <button type="submit" class="btn btn-outline-success btn-block btn-sm" id="tbl_submit">Simpan</button>
                         </div>
                     </div>
                 </div>
