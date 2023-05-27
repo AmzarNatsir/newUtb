@@ -173,3 +173,9 @@ Route::get('laporanPemerianSampelPrint/{param1}/{param2}/{param3}', [PelaporanCo
 Route::get('laporanStok', [PelaporanController::class, 'laporan_stok'])->name("laporanStok");
 Route::post('laporanStokFilter', [PelaporanController::class, 'laporan_stok_filter'])->name('laporanStokFilter');
 Route::get('laporanStokPrint/{param1}/{param2}', [PelaporanController::class, 'laporan_stok_print'])->name('laporanStokPrint');
+
+//laporan return pembelian
+Route::get('laporanReturnPembelian', [PelaporanController::class, 'laporan_return_pembelian'])->name("laporanReturnPembelian");
+
+//laporan return penjualan
+Route::get('laporanReturnPenjualan', [PelaporanController::class, 'laporan_return_penjualan'])->name("laporanReturnPenjualan");

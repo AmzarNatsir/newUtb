@@ -540,4 +540,14 @@ class PelaporanController extends Controller
         return $pdf->stream();
     }
 
+    public function laporan_return_pembelian()
+    {
+        return view('pelaporan.return_beli.index');
+    }
+
+    public function laporan_return_penjualan()
+    {
+        return view('pelaporan.return_jual.index');
+    }
+
 }
