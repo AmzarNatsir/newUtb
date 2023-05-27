@@ -141,6 +141,7 @@ Route::get('penerimaanPiutangMutasiPrint/{id}', [PiutangController::class, 'muta
 Route::get('returnPembelian', [ReturnController::class, 'return_pembelian'])->name('returnPembelian');
 Route::get('returnPembelianFilter/{param}', [ReturnController::class, 'filter_invoice_pembelian'])->name('returnPembelianFilter');
 Route::get('returnPembelianDetailInvoice/{param}', [ReturnController::class, 'filter_invoice_pembelian_detail'])->name('returnPembelianDetailInvoice');
+Route::post('returnPembelianStore', [ReturnController::class, 'return_pembelian_store'])->name('returnPembelianStore');
 //penjualan
 Route::get('returnPenjualan', [ReturnController::class, 'return_penjualan'])->name('returnPenjualan');
 //Pelaporan

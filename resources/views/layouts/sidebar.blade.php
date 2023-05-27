@@ -72,6 +72,12 @@
         <li class="nav-item">
             <a href="{{ route('laporanStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stok</p></a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('returnPembelian') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Pembelian</p></a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('returnPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Penjualan</p></a>
+        </li>
     </ul>
 </li>
 <li class="nav-item">
