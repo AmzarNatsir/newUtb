@@ -7,6 +7,8 @@ use App\Models\JualHeadModel;
 use App\Models\ProductModel;
 use App\Models\ReceiveDetailModel;
 use App\Models\ReceiveHeadModel;
+use App\Models\ReturnBeliHeadModel;
+use App\Models\ReturnJualHeadModel;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -539,15 +541,144 @@ class PelaporanController extends Controller
         ])->setPaper('A4', "Potrait");
         return $pdf->stream();
     }
-
+    //laporan return pembelian
     public function laporan_return_pembelian()
     {
         return view('pelaporan.return_beli.index');
     }
 
+    public function laporan_return_pembelian_filter(Request $request)
+    {
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+        $result = ReturnBeliHeadModel::whereDate('tgl_return', '>=', $tgl_awal)
+                            ->whereDate('tgl_return', '<=', $tgl_akhir)
+                            ->orderby('tgl_return', 'asc')->get();
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            $tot_qty = $list->get_detail->sum('qty');
+            $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
+
+            $html .= "<tr>
+            <td style='text-align: center;'>".$tbl_aksi."</td>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->no_return."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_return), 'd-m-Y')."</td>
+            <td>".$list->get_receive->get_supplier->nama_supplier."</td>
+            <td style='text-align: right;'><b>".number_format($list->total_return, 0)."</b></td>
+            </tr>";
+            $nom++;
+            $total+=$list->total_return;
+        }
+        $html .= "<tr>
+            <td colspan='5' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+        ";
+        
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function laporan_return_pembelian_detail($id)
+    {
+        $data['head'] = ReturnBeliHeadModel::find($id);
+        return view('pelaporan.return_beli.detail', $data);
+    }
+
+    public function laporan_return_pembelian_print($tgl_1=null, $tgl_2=null, $view_detail=null)
+    {
+        $arr_tgl_1 = explode('-', $tgl_1);
+        $ket_tgl_1 = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+        $arr_tgl_2 = explode('-', $tgl_2);
+        $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
+        
+        $result = ReturnBeliHeadModel::whereDate('tgl_return', '>=', $tgl_1)
+                        ->whereDate('tgl_return', '<=', $tgl_2)->get();
+
+        $pdf = PDF::loadview('pelaporan.return_beli.print', [
+            'list_data' => $result,
+            'periode' => $ket_periode,
+            'check_view_detail' => $view_detail
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+
+    }
+    //laporan return penjualan
     public function laporan_return_penjualan()
     {
         return view('pelaporan.return_jual.index');
     }
 
+    public function laporan_return_penjualan_filter(Request $request)
+    {
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+        $result = ReturnJualHeadModel::whereDate('tgl_return', '>=', $tgl_awal)
+                            ->whereDate('tgl_return', '<=', $tgl_akhir)
+                            ->orderby('tgl_return', 'asc')->get();
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            $tot_qty = $list->get_detail->sum('qty');
+            $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
+
+            $html .= "<tr>
+            <td style='text-align: center;'>".$tbl_aksi."</td>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->no_return."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_return), 'd-m-Y')."</td>
+            <td>".$list->get_invoice->get_customer->nama_customer."</td>
+            <td style='text-align: right;'><b>".number_format($list->total_return, 0)."</b></td>
+            </tr>";
+            $nom++;
+            $total+=$list->total_return;
+        }
+        $html .= "<tr>
+            <td colspan='5' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+        ";
+        
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function laporan_return_penjualan_detail($id)
+    {
+        $data['head'] = ReturnJualHeadModel::find($id);
+        return view('pelaporan.return_jual.detail', $data);
+    }
+
+    public function laporan_return_penjualan_print($tgl_1=null, $tgl_2=null, $view_detail=null)
+    {
+        $arr_tgl_1 = explode('-', $tgl_1);
+        $ket_tgl_1 = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+        $arr_tgl_2 = explode('-', $tgl_2);
+        $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
+        
+        $result = ReturnJualHeadModel::whereDate('tgl_return', '>=', $tgl_1)
+                        ->whereDate('tgl_return', '<=', $tgl_2)->get();
+
+        $pdf = PDF::loadview('pelaporan.return_jual.print', [
+            'list_data' => $result,
+            'periode' => $ket_periode,
+            'check_view_detail' => $view_detail
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+
+    }
 }

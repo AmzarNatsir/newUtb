@@ -78,6 +78,12 @@
         <li class="nav-item">
             <a href="{{ route('laporanReturnPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Penjualan</p></a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('laporanReturnPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang</p></a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('laporanReturnPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penerimaan Piutang</p></a>
+        </li>
     </ul>
 </li>
 <li class="nav-item">

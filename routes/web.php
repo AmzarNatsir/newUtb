@@ -176,6 +176,12 @@ Route::get('laporanStokPrint/{param1}/{param2}', [PelaporanController::class, 'l
 
 //laporan return pembelian
 Route::get('laporanReturnPembelian', [PelaporanController::class, 'laporan_return_pembelian'])->name("laporanReturnPembelian");
+Route::post('laporanReturnPembelianFilter', [PelaporanController::class, 'laporan_return_pembelian_filter'])->name("laporanReturnPembelianFilter");
+Route::get('laporanReturnPembelianDetail/{id}', [PelaporanController::class, 'laporan_return_pembelian_detail'])->name('laporanReturnPembelianDetail');
+Route::get('laporanReturnPembelianPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_return_pembelian_print'])->name('laporanReturnPembelianPrint');
 
 //laporan return penjualan
 Route::get('laporanReturnPenjualan', [PelaporanController::class, 'laporan_return_penjualan'])->name("laporanReturnPenjualan");
+Route::post('laporanReturnPenjualanFilter', [PelaporanController::class, 'laporan_return_penjualan_filter'])->name("laporanReturnPenjualanFilter");
+Route::get('laporanReturnPenjualanDetail/{id}', [PelaporanController::class, 'laporan_return_penjualan_detail'])->name('laporanReturnPenjualanDetail');
+Route::get('laporanReturnPenjualanPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_return_penjualan_print'])->name('laporanReturnPenjualanPrint');
