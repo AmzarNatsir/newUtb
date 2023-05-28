@@ -37,7 +37,7 @@
                 <th class="text-right">Harga Eceran</th>
                 <th class="text-right">Harga Eceran</th>
                 <th class="text-center">Stok Awal</th>
-                <th class="text-center">Stok Akhit</th>
+                <th class="text-center">Stok Akhir</th>
             </tr>
             </thead>
             <tbody>

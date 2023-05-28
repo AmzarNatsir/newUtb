@@ -11,6 +11,7 @@ use App\Models\UnitModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
+use Svg\Tag\Rect;
 
 class ProductController extends Controller
 {
@@ -262,7 +263,164 @@ class ProductController extends Controller
             ->withCallback($request->input('callback'));
 
     }
+    public function kartu_stok_filter(Request $request)
+    {
+        $id_stok = $request->id_stok;
+        $tgl_1 = $request->tgl_1;
+        $tgl_2 = $request->tgl_2;
+        $ket_periode = "PERIODE : ".$request->ket_periode;
+        $result = ProductModel::find($id_stok);
+        $qty_awal = $result->stok_awal;
+        //+
+        $qty_pembelian_awal = \DB::table('receive_head')
+                            ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
+                            ->whereDate('receive_head.tanggal_receive', '<', $tgl_1)
+                            ->where('receive_detail.produk_id', $id_stok)
+                            ->whereNull('receive_head.deleted_at')
+                            ->selectRaw('sum(receive_detail.qty) as t_pembelian_awal')
+                            ->pluck('t_pembelian_awal')->first();
+        $qty_return_jual_awal = \DB::table('return_jual_head')
+                            ->join('return_jual_detail', 'return_jual_head.id', '=', 'return_jual_detail.head_id')
+                            ->whereDate('return_jual_head.tgl_return', '<', $tgl_1)
+                            ->where('return_jual_detail.produk_id', $id_stok)
+                            ->whereNull('return_jual_head.deleted_at')
+                            ->selectRaw('sum(return_jual_detail.qty) as t_return_jual_awal')
+                            ->pluck('t_return_jual_awal')->first();
 
+        //-
+        $qty_penjualan_awal = \DB::table('jual_head')
+                            ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                            ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                            ->where('jual_detail.produk_id', $id_stok)
+                            ->whereNull('jual_head.deleted_at')
+                            ->whereNULL('jual_head.jenis_jual')
+                            ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
+                            ->pluck('t_penjualan_awal')->first();
+        $qty_return_beli_awal = \DB::table('return_beli_head')
+                            ->join('return_beli_detail', 'return_beli_head.id', '=', 'return_beli_detail.head_id')
+                            ->whereDate('return_beli_head.tgl_return', '<', $tgl_1)
+                            ->where('return_beli_detail.produk_id', $id_stok)
+                            ->whereNull('return_beli_head.deleted_at')
+                            ->selectRaw('sum(return_beli_detail.qty) as t_return_beli_awal')
+                            ->pluck('t_return_beli_awal')->first();
+
+        $qty_pemberian_sampel = \DB::table('jual_head')
+                            ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                            ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                            ->where('jual_detail.produk_id', $id_stok)
+                            ->whereNull('jual_head.deleted_at')
+                            ->where('jual_head.jenis_jual', 1)
+                            ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
+                            ->pluck('t_penjualan_awal')->first();
+
+        $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
+
+        //range date selected
+        //stok masuk
+        $qty_pembelian = \DB::table('receive_head')
+                ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
+                ->whereDate('receive_head.tanggal_receive', '>=', $tgl_1)
+                ->whereDate('receive_head.tanggal_receive', '<=', $tgl_2)
+                ->where('receive_detail.produk_id', $id_stok)
+                ->whereNull('receive_head.deleted_at')
+                ->selectRaw('sum(receive_detail.qty) as t_pembelian')
+                ->pluck('t_pembelian')->first();
+        $qty_return_jual = \DB::table('return_jual_head')
+                ->join('return_jual_detail', 'return_jual_head.id', '=', 'return_jual_detail.head_id')
+                ->whereDate('return_jual_head.tgl_return', '>=', $tgl_1)
+                ->whereDate('return_jual_head.tgl_return', '<=', $tgl_2)
+                ->where('return_jual_detail.produk_id', $id_stok)
+                ->whereNull('return_jual_head.deleted_at')
+                ->selectRaw('sum(return_jual_detail.qty) as t_return_jual')
+                ->pluck('t_return_jual')->first();
+        //stok keluar
+        $qty_penjualan = \DB::table('jual_head')
+                ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
+                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                ->where('jual_detail.produk_id', $id_stok)
+                ->whereNull('jual_head.deleted_at')
+                ->whereNull('jual_head.jenis_jual')
+                ->selectRaw('sum(jual_detail.qty) as t_penjualan')
+                ->pluck('t_penjualan')->first();
+        $qty_pemberian_sampel = \DB::table('jual_head')
+                ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
+                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                ->where('jual_detail.produk_id', $id_stok)
+                ->whereNull('jual_head.deleted_at')
+                ->where('jual_head.jenis_jual', 1)
+                ->selectRaw('sum(jual_detail.qty) as t_penjualan')
+                ->pluck('t_penjualan')->first();
+        $qty_return_beli = \DB::table('return_beli_head')
+                ->join('return_beli_detail', 'return_beli_head.id', '=', 'return_beli_detail.head_id')
+                ->whereDate('return_beli_head.tgl_return', '>=', $tgl_1)
+                ->whereDate('return_beli_head.tgl_return', '<=', $tgl_2)
+                ->where('return_beli_detail.produk_id', $id_stok)
+                ->whereNull('return_beli_head.deleted_at')
+                ->selectRaw('sum(return_beli_detail.qty) as t_return_beli')
+                ->pluck('t_return_beli')->first();
+        //rincian
+        //masuk
+        $rincian_pembelian = \DB::table('receive_head')
+                ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
+                ->whereDate('receive_head.tanggal_receive', '>=', $tgl_1)
+                ->whereDate('receive_head.tanggal_receive', '<=', $tgl_2)
+                ->where('receive_detail.produk_id', $id_stok)
+                ->whereNull('receive_head.deleted_at')
+                ->get();
+        $rincian_return_jual = \DB::table('return_jual_head')
+                ->join('return_jual_detail', 'return_jual_head.id', '=', 'return_jual_detail.head_id')
+                ->whereDate('return_jual_head.tgl_return', '>=', $tgl_1)
+                ->whereDate('return_jual_head.tgl_return', '<=', $tgl_2)
+                ->where('return_jual_detail.produk_id', $id_stok)
+                ->whereNull('return_jual_head.deleted_at')
+                ->get();
+        //keluar
+        $rincian_penjualan = \DB::table('jual_head')
+                ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
+                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                ->where('jual_detail.produk_id', $id_stok)
+                ->whereNull('jual_head.deleted_at')
+                ->whereNull('jual_head.jenis_jual')
+                ->get();
+        $rincian_return_beli = \DB::table('return_beli_head')
+                ->join('return_beli_detail', 'return_beli_head.id', '=', 'return_beli_detail.head_id')
+                ->whereDate('return_beli_head.tgl_return', '>=', $tgl_1)
+                ->whereDate('return_beli_head.tgl_return', '<=', $tgl_2)
+                ->where('return_beli_detail.produk_id', $id_stok)
+                ->whereNull('return_beli_head.deleted_at')
+                ->get();
+        $rincian_pemberian_sampel = \DB::table('jual_head')
+                ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
+                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
+                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                ->where('jual_detail.produk_id', $id_stok)
+                ->whereNull('jual_head.deleted_at')
+                ->where('jual_head.jenis_jual', 1)
+                ->get();
+        //summary
+        $stok_masuk = $qty_pembelian + $qty_return_jual;
+        $stok_keluar = $qty_penjualan + $qty_return_beli + $qty_pemberian_sampel;
+        //stok akhir
+        $current_qty = ($stok_awal + $stok_masuk) - $stok_keluar;
+        return response()
+            ->json([
+                'periode' => $ket_periode,
+                'stok_awal' => (!empty($stok_awal)) ? $stok_awal : 0,
+                'stok_masuk' => (!empty($stok_masuk)) ? $stok_masuk : 0,
+                'stok_keluar' => (!empty($stok_keluar)) ? $stok_keluar : 0,
+                'stok_akhir' => (!empty($current_qty)) ? $current_qty : 0,
+                'rincian_beli' => $rincian_pembelian,
+                'rincian_return_jual' => $rincian_return_jual,
+                'rincian_jual' => $rincian_penjualan,
+                'rincian_return_beli' => $rincian_return_beli,
+                'rincian_sampel' => $rincian_pemberian_sampel
+            ]);
+    }
+
+    //pemberian sampel
     public function pemberian_sampel()
     {
         $data = [

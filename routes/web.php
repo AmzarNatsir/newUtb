@@ -94,6 +94,7 @@ Route::post('settingStokStore', [ProductController::class, 'setting_stok_store']
 //kartu stok
 Route::get('kartuStok', [ProductController::class, 'kartu_stok'])->name('kartuStok');
 Route::post('searchItemKartuStok', [ProductController::class, 'searchItemKartuStok'])->name('searchItemKartuStok');
+Route::post('KartuStokFilter', [ProductController::class, 'kartu_stok_filter'])->name('KartuStokFilter');
 //Purchase Order
 Route::get('purchaseOrder', [POController::class, 'index'])->name('purchaseOrder');
 Route::get('purchaseOrderAdd', [POController::class, 'add'])->name('purchaseOrderAdd');
