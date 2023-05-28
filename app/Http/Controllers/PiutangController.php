@@ -132,6 +132,7 @@ class PiutangController extends Controller
             $save->no_bayar = $this->create_no_bayar();
             $save->tgl_bayar = ($request->inpTglBayar=="") ? NULL : date("Y-m-d", strtotime(str_replace("/", "-", $request->inpTglBayar)));
             $save->jual_id = $request->id_invoice;
+            $save->customer_id = $request->sel_customer;
             $save->metode_bayar = $request->selCaraBayar;
             $save->nominal = str_replace(",","", $request->inpBayar);
             $save->keterangan = $request->inpKeterangan;

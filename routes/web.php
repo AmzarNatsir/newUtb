@@ -185,3 +185,13 @@ Route::get('laporanReturnPenjualan', [PelaporanController::class, 'laporan_retur
 Route::post('laporanReturnPenjualanFilter', [PelaporanController::class, 'laporan_return_penjualan_filter'])->name("laporanReturnPenjualanFilter");
 Route::get('laporanReturnPenjualanDetail/{id}', [PelaporanController::class, 'laporan_return_penjualan_detail'])->name('laporanReturnPenjualanDetail');
 Route::get('laporanReturnPenjualanPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_return_penjualan_print'])->name('laporanReturnPenjualanPrint');
+
+//laporan hutang
+Route::get('laporanHutang', [PelaporanController::class, 'laporan_hutang'])->name("laporanHutang");
+Route::post('laporanHutangFilter', [PelaporanController::class, 'laporan_hutang_filter'])->name("laporanHutangFilter");
+Route::get('laporanHutangPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_hutang_print'])->name('laporanHutangPrint');
+
+//laporan piutang
+Route::get('laporanPiutang', [PelaporanController::class, 'laporan_piutang'])->name("laporanPiutang");
+Route::post('laporanPiutangFilter', [PelaporanController::class, 'laporan_piutang_filter'])->name("laporanPiutangFilter");
+Route::get('laporanPiutangPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_piutang_print'])->name('laporanPiutangPrint');

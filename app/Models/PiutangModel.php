@@ -15,6 +15,7 @@ class PiutangModel extends Model
     protected $fillable = [
         'no_bayar',
         'tgl_bayar',
+        'customer_id',
         'jual_id',
         'metode_bayar',
         'nominal',
@@ -27,5 +28,10 @@ class PiutangModel extends Model
     public function get_penjualan()
     {
         return $this->hasMany(JualHeadModel::class, 'jual_id', 'id');
+    }
+
+    public function get_customer()
+    {
+        return $this->belongsTo(CustomerModel::class, 'customer_id', 'id');
     }
 }

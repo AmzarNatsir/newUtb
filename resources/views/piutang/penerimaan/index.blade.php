@@ -10,6 +10,9 @@
         <h3 class="card-title">Penerimaan Piutang</h3>
     </div>
     <div class="card-body">
+        <form action="{{ route('penerimaanPiutangStore') }}" method="post" onsubmit="return konfirm()">
+        {{csrf_field()}}
+        <input type="hidden" name="id_invoice" id="id_invoice">
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
@@ -94,9 +97,6 @@
                             {!! session('message') !!}
                         </div>
                         @endif
-                        <form action="{{ route('penerimaanPiutangStore') }}" method="post" onsubmit="return konfirm()">
-                        {{csrf_field()}}
-                            <input type="hidden" name="id_invoice" id="id_invoice">
                             <div class="form-group row">
                                 <label for="inpPembayaranKe" class="col-sm-4 col-form-label">Pembayaran Ke</label>
                                 <div class="col-sm-8">
@@ -162,11 +162,11 @@
                             <div class="modal-footer justify-content-between">
                                 <button type="submit" class="btn btn-outline-primary btn-block btn-sm" id="tbl_submit" disabled >Bayar</button>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
     </div>
     <!-- /.card-body -->
     </div>

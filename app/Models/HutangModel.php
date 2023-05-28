@@ -15,6 +15,7 @@ class HutangModel extends Model
     protected $fillable = [
         'no_bayar',
         'tgl_bayar',
+        'supplier_id',
         'receive_id',
         'metode_bayar',
         'nominal',
@@ -27,5 +28,10 @@ class HutangModel extends Model
     public function get_receive()
     {
         return $this->hasMany(ReceiveHeadModel::class, 'receive_id', 'id');
+    }
+
+    public function get_supplier()
+    {
+        return $this->belongsTo(SupplierModel::class, 'supplier_id', 'id');
     }
 }

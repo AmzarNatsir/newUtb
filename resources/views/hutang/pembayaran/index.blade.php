@@ -10,6 +10,9 @@
         <h3 class="card-title">Pembayaran Hutang</h3>
     </div>
     <div class="card-body">
+        <form action="{{ route('pembayaranHutangStore') }}" method="post" onsubmit="return konfirm()">
+        {{csrf_field()}}
+        <input type="hidden" name="id_receive" id="id_receive">
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
@@ -94,79 +97,76 @@
                             {!! session('message') !!}
                         </div>
                         @endif
-                        <form action="{{ route('pembayaranHutangStore') }}" method="post" onsubmit="return konfirm()">
-                        {{csrf_field()}}
-                            <input type="hidden" name="id_receive" id="id_receive">
-                            <div class="form-group row">
-                                <label for="inpPpembayaranKe" class="col-sm-4 col-form-label">Pembayaran Ke</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="inpPembayaranKe" id="inpPembayaranKe" readonly>
-                                </div>
+                        <div class="form-group row">
+                            <label for="inpPpembayaranKe" class="col-sm-4 col-form-label">Pembayaran Ke</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="inpPembayaranKe" id="inpPembayaranKe" readonly>
                             </div>
-                            <div class="form-group row">
-                                <label for="inpNoInvoice" class="col-sm-4 col-form-label">Nomor Invoice</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="inpNoInvoice" id="inpNoInvoice" readonly>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inpNoInvoice" class="col-sm-4 col-form-label">Nomor Invoice</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="inpNoInvoice" id="inpNoInvoice" readonly>
                             </div>
-                            <div class="form-group row">
-                                <label for="inpTotalInvoice" class="col-sm-4 col-form-label">Total Invoice</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control angka" name="inpTotalInvoice" id="inpTotalInvoice" style="text-align: right" value="0" readonly>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inpTotalInvoice" class="col-sm-4 col-form-label">Total Invoice</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control angka" name="inpTotalInvoice" id="inpTotalInvoice" style="text-align: right" value="0" readonly>
                             </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="form-group row">
-                                <label for="inpTglBayar" class="col-sm-4 col-form-label">Tgl. Bayar</label>
-                                <div class="col-sm-8">
-                                    <div class="input-group date" id="inp_tgl_jatuh_tempo">
-                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglBayar" name="inpTglBayar" value="{{ date('d/m/Y') }}" disabled />
-                                        <div class="input-group-append" >
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="form-group row">
+                            <label for="inpTglBayar" class="col-sm-4 col-form-label">Tgl. Bayar</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date" id="inp_tgl_jatuh_tempo">
+                                    <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglBayar" name="inpTglBayar" value="{{ date('d/m/Y') }}" disabled />
+                                    <div class="input-group-append" >
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="selCaraBayar" class="col-sm-4 col-form-label">Metode Pembayaran</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control select2bs4" name="selCaraBayar" id="selCaraBayar" style="width: 100%;" disabled>
-                                        <option value="1">Tunai</option>
-                                        <option value="2">Transfer</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="selCaraBayar" class="col-sm-4 col-form-label">Metode Pembayaran</label>
+                            <div class="col-sm-8">
+                                <select class="form-control select2bs4" name="selCaraBayar" id="selCaraBayar" style="width: 100%;" disabled>
+                                    <option value="1">Tunai</option>
+                                    <option value="2">Transfer</option>
+                                </select>
                             </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="form-group row">
-                                <label for="inpTerhutang" class="col-sm-4 col-form-label">Terhutang</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control angka" name="inpTerhutang" id="inpTerhutang" style="text-align: right" value="0" readonly>
-                                </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="form-group row">
+                            <label for="inpTerhutang" class="col-sm-4 col-form-label">Terhutang</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control angka" name="inpTerhutang" id="inpTerhutang" style="text-align: right" value="0" readonly>
                             </div>
-                            <div class="form-group row">
-                                <label for="inpBayar" class="col-sm-4 col-form-label">Nilai Pembayaran</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control angka" name="inpBayar" id="inpBayar" style="text-align: right" value="0" onkeyup="getSisaHutang(this)" onblur="changeToNull(this)" disabled />
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inpBayar" class="col-sm-4 col-form-label">Nilai Pembayaran</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control angka" name="inpBayar" id="inpBayar" style="text-align: right" value="0" onkeyup="getSisaHutang(this)" onblur="changeToNull(this)" disabled />
                             </div>
-                            <div class="form-group row">
-                                <label for="inpSisaHutang" class="col-sm-4 col-form-label">Sisa Hutang</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control angka" name="inpSisaHutang" id="inpSisaHutang" style="text-align: right" value="0" readonly>
-                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inpSisaHutang" class="col-sm-4 col-form-label">Sisa Hutang</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control angka" name="inpSisaHutang" id="inpSisaHutang" style="text-align: right" value="0" readonly>
                             </div>
-                            <div class="form-group">
-                                <label for="inpKeterangan">Keterangan</label>
-                                <textarea class="form-control" name="inpKeterangan" id="inpKeterangan" disabled></textarea>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="submit" class="btn btn-outline-primary btn-block btn-sm" id="tbl_submit" disabled >Bayar</button>
-                            </div>
-                        </form>
+                        </div>
+                        <div class="form-group">
+                            <label for="inpKeterangan">Keterangan</label>
+                            <textarea class="form-control" name="inpKeterangan" id="inpKeterangan" disabled></textarea>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="submit" class="btn btn-outline-primary btn-block btn-sm" id="tbl_submit" disabled >Bayar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
     </div>
     <!-- /.card-body -->
     </div>

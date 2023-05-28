@@ -133,6 +133,7 @@ class HutangController extends Controller
             $save->no_bayar = $this->create_no_bayar();
             $save->tgl_bayar = ($request->inpTglBayar=="") ? NULL : date("Y-m-d", strtotime(str_replace("/", "-", $request->inpTglBayar)));
             $save->receive_id = $request->id_receive;
+            $save->supplier_id = $request->sel_supplier;
             $save->metode_bayar = $request->selCaraBayar;
             $save->nominal = str_replace(",","", $request->inpBayar);
             $save->keterangan = $request->inpKeterangan;

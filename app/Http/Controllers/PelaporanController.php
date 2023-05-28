@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerModel;
+use App\Models\HutangModel;
 use App\Models\JualDetailModel;
 use App\Models\JualHeadModel;
+use App\Models\PiutangModel;
 use App\Models\ProductModel;
 use App\Models\ReceiveDetailModel;
 use App\Models\ReceiveHeadModel;
 use App\Models\ReturnBeliHeadModel;
 use App\Models\ReturnJualHeadModel;
+use App\Models\SupplierModel;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -680,5 +684,187 @@ class PelaporanController extends Controller
         ])->setPaper('A4', "Potrait");
         return $pdf->stream();
 
+    }
+
+    //laporan hutang
+    public function laporan_hutang()
+    {
+        $data = [
+            'allSupplier' => SupplierModel::all()
+        ];
+        return view('pelaporan.hutang.index', $data);
+    }
+
+    public function laporan_hutang_filter(Request $request)
+    {
+        $supplier = $request->selSupplier;
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+
+        if($supplier==null)
+        {
+            $ket_supplier = 'Semua Supplier';
+            $result = HutangModel::whereDate('tgl_bayar', '>=', $tgl_awal)
+                            ->whereDate('tgl_bayar', '<=', $tgl_akhir)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        } else {
+            $ket_supplier = SupplierModel::find($supplier)->nama_supplier;
+            $result = HutangModel::whereDate('tgl_bayar', '>=', $tgl_awal)
+                            ->whereDate('tgl_bayar', '<=', $tgl_akhir)
+                            ->where('supplier_id', $supplier)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        }
+        
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            $ket = ($list->metode_bayar==1) ? 'Tunai' : 'Transfer';
+            $html .= "<tr>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->no_bayar."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_bayar), 'd-m-Y')."</td>
+            <td>".$list->get_supplier->nama_supplier."</td>
+            <td style='text-align: right;'><b>".number_format($list->nominal, 0)."</b></td>
+            <td style='text-align: center;'>".$ket."</td>
+            </tr>";
+            $nom++;
+            $total+=$list->nominal;
+        }
+        $html .= "<tr>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+            <td></td>
+        ";
+        
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode,
+                'supplier' => "Supplier : ".$ket_supplier
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function laporan_hutang_print($tgl_1=null, $tgl_2=null, $supplier_id=null)
+    {
+        $arr_tgl_1 = explode('-', $tgl_1);
+        $ket_tgl_1 = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+        $arr_tgl_2 = explode('-', $tgl_2);
+        $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
+        
+        if($supplier_id=='null')
+        {
+            $ket_supplier = 'Semua Supplier';
+            $result = HutangModel::whereDate('tgl_bayar', '>=', $tgl_1)
+                            ->whereDate('tgl_bayar', '<=', $tgl_2)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        } else {
+            $ket_supplier = SupplierModel::find($supplier_id)->nama_supplier;
+            $result = HutangModel::whereDate('tgl_bayar', '>=', $tgl_1)
+                            ->whereDate('tgl_bayar', '<=', $tgl_2)
+                            ->where('supplier_id', $supplier_id)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        }
+
+        $pdf = PDF::loadview('pelaporan.hutang.print', [
+            'list_data' => $result,
+            'periode' => $ket_periode,
+            'supplier' => $ket_supplier
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+    }
+
+    //laporan piutang
+    public function laporan_piutang()
+    {
+        $data = [
+            'allCustomer' => CustomerModel::all()
+        ];
+        return view('pelaporan.piutang.index', $data);
+    }
+
+    public function laporan_piutang_filter(Request $request)
+    {
+        $customer = $request->selCustomer;
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+
+        if($customer==null)
+        {
+            $ket_customer = 'Semua Customer';
+            $result = PiutangModel::whereDate('tgl_bayar', '>=', $tgl_awal)
+                            ->whereDate('tgl_bayar', '<=', $tgl_akhir)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        } else {
+            $ket_customer = CustomerModel::find($customer)->nama_customer;
+            $result = PiutangModel::whereDate('tgl_bayar', '>=', $tgl_awal)
+                            ->whereDate('tgl_bayar', '<=', $tgl_akhir)
+                            ->where('customer_id', $customer)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        }
+        
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            $ket = ($list->metode_bayar==1) ? 'Tunai' : 'Transfer';
+            $html .= "<tr>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->no_bayar."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_bayar), 'd-m-Y')."</td>
+            <td>".$list->get_customer->nama_customer."</td>
+            <td style='text-align: right;'><b>".number_format($list->nominal, 0)."</b></td>
+            <td style='text-align: center;'>".$ket."</td>
+            </tr>";
+            $nom++;
+            $total+=$list->nominal;
+        }
+        $html .= "<tr>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+            <td></td>
+        ";
+        
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode,
+                'customer' => "Customer : ".$ket_customer
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function laporan_piutang_print($tgl_1=null, $tgl_2=null, $customer_id=null)
+    {
+        $arr_tgl_1 = explode('-', $tgl_1);
+        $ket_tgl_1 = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+        $arr_tgl_2 = explode('-', $tgl_2);
+        $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
+        
+        if($customer_id=='null')
+        {
+            $ket_customer = 'Semua Customer';
+            $result = PiutangModel::whereDate('tgl_bayar', '>=', $tgl_1)
+                            ->whereDate('tgl_bayar', '<=', $tgl_2)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        } else {
+            $ket_customer = CustomerModel::find($customer_id)->nama_customer;
+            $result = PiutangModel::whereDate('tgl_bayar', '>=', $tgl_1)
+                            ->whereDate('tgl_bayar', '<=', $tgl_2)
+                            ->where('customer_id', $customer_id)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        }
+
+        $pdf = PDF::loadview('pelaporan.piutang.print', [
+            'list_data' => $result,
+            'periode' => $ket_periode,
+            'customer' => $ket_customer
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
     }
 }
