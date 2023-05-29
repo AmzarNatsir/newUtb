@@ -183,7 +183,7 @@ class ProductController extends Controller
         foreach($result as $item){
             $response[] = array(
                 "value"=>$item->id, 
-                "label"=> "[".$item->nama_produk." | Stok : ".$item->stok_akhir." ".$item->get_unit->unit."]",
+                "label"=> "[".$item->kode." | ".$item->nama_produk." | Stok : ".$item->stok_akhir." ".$item->get_unit->unit."]",
                 "kode"=>$item->kode,
                 "satuan"=>$item->get_unit->unit,
                 "harga_toko"=>$item->harga_toko,
