@@ -67,6 +67,10 @@ class ProductController extends Controller
             $new_data->merk_id = $request->sel_merk;
             $new_data->unit_id = $request->sel_satuan;
             $new_data->kemasan = $request->inp_kemasan;
+            if(isset($request->inp_ket))
+            {
+                $new_data->keterangan = $request->inp_ket;
+            }
             $new_data->harga_toko = 0;
             $new_data->harga_eceran = 0;
             $exec = $new_data->save();

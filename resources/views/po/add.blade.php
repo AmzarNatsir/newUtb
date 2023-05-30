@@ -36,10 +36,10 @@
                         <div class="row">
                             <div class="col-sm-12" style="overflow-y: auto; max-height: 100vh">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-vcenter" id="list_item" style="font-size: 13px">
+                                    <table class="table-bordered table-vcenter" id="list_item" style="font-size: 13px; width: 100%" cellpadding="10">
                                         <tr>
-                                            <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
-                                            <th rowspan="2" style="width: 16%; vertical-align: middle;">Nama Produk</th>
+                                            <th rowspan="2" class="text-center" style="width: 3%; vertical-align: middle;">#</th>
+                                            <th rowspan="2" style="vertical-align: middle;">Nama Produk</th>
                                             <th colspan="3" class="text-center">Satuan</th>
                                             <th rowspan="2" class="text-right" style="width: 12%; vertical-align: middle;" >Sub Total (Rp.)</th>
                                             <th colspan="2" class="text-center">Potongan</th>
@@ -47,9 +47,9 @@
                                         </tr>
                                         <tr>
                                             <th class="text-center" style="width: 10%">Satuan</th>
-                                            <th class="text-center" style="width: 12%">Qty</th>
+                                            <th class="text-center" style="width: 10%">Qty</th>
                                             <th class="text-center" style="width: 10%">Harga Satuan</th>
-                                            <th class="text-center" style="width: 6%">%</th>
+                                            <th class="text-center" style="width: 5%">%</th>
                                             <th class="text-center" style="width: 9%">Nilai</th>
                                         </tr>
                                         <tbody class="row_baru"></tbody>
@@ -162,7 +162,7 @@
             },
             select: function(event, ui) {
                 $("#inputSearch").val(ui.item.label);
-                var content_item = '<tr class="rows_item" name="rows_item[]"><td><input type="hidden" name="id_row[]" value=""><button type="button" title="Hapus Baris" class="btn btn-danger btn-sm waves-effect waves-light" onclick="hapus_item(this)"><i class="fa fa-minus"></i></button></td>'+'<td><input type="hidden" name="item_id[]" value="'+ui.item.value+'"><label style="color: blue; font-size: 11pt">'+ui.item.label+'</label></td>'+'<td style="text-align: center"><label style="color: blue; font-size: 11pt">'+ui.item.kemasan+" "+ui.item.satuan+'</label></td>'+'<td align="center"><input type="text" min="1" max="1000" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="1" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)"></td>'+'<td class="text-right"><input type="text" class="form-control form-control-sm angka" id="harga_satuan[]" name="harga_satuan[]" value="'+ui.item.harga_toko+'" style="text-align: right" onkeyup="hitSubTotal(this)" onblur="changeToNull(this)" readonly></td>'+'<td class="text-right"><input type="text" name="item_sub_total[]" value="'+ui.item.harga_toko+'" class="form-control form-control-sm text-right angka" readonly></td>'+'<td class="text-right"><input type="text" name="item_diskon[]" value="0" class="form-control form-control-sm text-right angka_dec" onkeyup="hitDiskon(this)" onblur="changeToNull(this)" readonly></td>'+'<td class="text-right"><input type="text" name="item_diskonrp[]" value="0" class="form-control form-control-sm text-right angka" readonly></td>'+'<td class="text-right"><input type="text" name="item_sub_total_net[]" value="'+ui.item.harga_toko+'" class="form-control form-control-sm text-right angka" readonly></td>'+'</tr>';
+                var content_item = '<tr class="rows_item" name="rows_item[]"><td><input type="hidden" name="id_row[]" value=""><button type="button" title="Hapus Baris" class="btn btn-danger btn-sm waves-effect waves-light" onclick="hapus_item(this)"><i class="fa fa-minus"></i></button></td>'+'<td><input type="hidden" name="item_id[]" value="'+ui.item.value+'"><label style="color: blue; font-size: 11pt">'+ui.item.label+'</label></td>'+'<td style="text-align: center"><label style="color: blue; font-size: 11pt">'+ui.item.kemasan+" "+ui.item.satuan+'</label></td>'+'<td align="center"><input type="text" min="1" max="1000" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="1" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)"></td>'+'<td class="text-right"><input type="text" class="form-control form-control-sm angka" id="harga_satuan[]" name="harga_satuan[]" value="'+ui.item.harga_toko+'" style="text-align: right" onkeyup="hitSubTotal(this)" onblur="changeToNull(this)"></td>'+'<td class="text-right"><input type="text" name="item_sub_total[]" value="'+ui.item.harga_toko+'" class="form-control form-control-sm text-right angka" readonly></td>'+'<td class="text-right"><input type="text" name="item_diskon[]" value="0" class="form-control form-control-sm text-right angka_dec" onkeyup="hitDiskon(this)" onblur="changeToNull(this)" readonly></td>'+'<td class="text-right"><input type="text" name="item_diskonrp[]" value="0" class="form-control form-control-sm text-right angka" readonly></td>'+'<td class="text-right"><input type="text" name="item_sub_total_net[]" value="'+ui.item.harga_toko+'" class="form-control form-control-sm text-right angka" readonly></td>'+'</tr>';
                 $(".row_baru").after(content_item);
                 $('.angka').number( true, 0 );
                 $("#inputSearch").val("");
@@ -184,6 +184,11 @@
         {
             $(el).val("1");
         }
+        hitungSubTotal(el);
+    }
+
+    var hitSubTotal = function(el)
+    {
         hitungSubTotal(el);
     }
     

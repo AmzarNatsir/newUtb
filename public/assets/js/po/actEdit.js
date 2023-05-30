@@ -81,41 +81,41 @@ var changeToNull = function(el)
 {
     if($(el).val()=="")
     {
-        $(el).val("0");
+        $(el).val("1");
     }
 }
 
-var add_qty = function(el)
-{
-    var input = $(el).parent().parent().find('input[name="item_qty[]"]'),
-        min = input.attr("min"),
-        max = input.attr("max");
-    var oldValue = parseFloat(input.val());
-    if (oldValue >= max) {
-      var newVal = oldValue;
-    } else {
-      var newVal = oldValue + 1;
-    }
-    // input.val(newVal);
-    $(el).parent().parent().find('input[name="item_qty[]"]').val(newVal);
-    hitungSubTotal(el);
-}
+// var add_qty = function(el)
+// {
+//     var input = $(el).parent().parent().find('input[name="item_qty[]"]'),
+//         min = input.attr("min"),
+//         max = input.attr("max");
+//     var oldValue = parseFloat(input.val());
+//     if (oldValue >= max) {
+//       var newVal = oldValue;
+//     } else {
+//       var newVal = oldValue + 1;
+//     }
+//     // input.val(newVal);
+//     $(el).parent().parent().find('input[name="item_qty[]"]').val(newVal);
+//     hitungSubTotal(el);
+// }
 
-var min_qty = function(el)
-{
-    var input = $(el).parent().parent().find('input[name="item_qty[]"]'),
-        min = input.attr("min"),
-        max = input.attr("max");
-    var oldValue = parseFloat(input.val());
-    if (oldValue <= min) {
-      var newVal = oldValue;
-    } else {
-      var newVal = oldValue - 1;
-    }
-    //input.val(newVal);
-    $(el).parent().parent().find('input[name="item_qty[]"]').val(newVal);
-    hitungSubTotal(el);
-}
+// var min_qty = function(el)
+// {
+//     var input = $(el).parent().parent().find('input[name="item_qty[]"]'),
+//         min = input.attr("min"),
+//         max = input.attr("max");
+//     var oldValue = parseFloat(input.val());
+//     if (oldValue <= min) {
+//       var newVal = oldValue;
+//     } else {
+//       var newVal = oldValue - 1;
+//     }
+//     //input.val(newVal);
+//     $(el).parent().parent().find('input[name="item_qty[]"]').val(newVal);
+//     hitungSubTotal(el);
+// }
 
 var hitungSubTotal = function(el){
     var currentRow=$(el).closest("tr");
@@ -123,9 +123,9 @@ var hitungSubTotal = function(el){
     var harga = currentRow.find('td:eq(4) input[name="harga_satuan[]"]').val();
     var sub_total = parseFloat(jumlah) * parseFloat(harga);
     currentRow.find('td:eq(5) input[name="item_sub_total[]"]').val(sub_total);
-    var hasil_diskon = currentRow.find('td:eq(7) input[name="item_diskonrp[]"]').val();
-    var sub_total_setelah_diskon = sub_total - hasil_diskon;
-    currentRow.find('td:eq(8) input[name="item_sub_total_net[]"]').val(sub_total_setelah_diskon);
+    // var hasil_diskon = currentRow.find('td:eq(7) input[name="item_diskonrp[]"]').val();
+    // var sub_total_setelah_diskon = sub_total - hasil_diskon;
+    // currentRow.find('td:eq(8) input[name="item_sub_total_net[]"]').val(sub_total_setelah_diskon);
     total();
 }  
 
@@ -133,7 +133,7 @@ var total = function(){
     
     var total = 0;
     var sub_total = 0;
-    $.each($('input[name="item_sub_total_net[]"]'),function(key, value){
+    $.each($('input[name="item_sub_total[]"]'),function(key, value){
         sub_total = $(value).val() ?  $(value).val() : 0;
         total += parseFloat($(value).val());
     })
