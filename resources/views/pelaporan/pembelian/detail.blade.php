@@ -16,16 +16,16 @@
     <table class="table table-bordered table-hover" style="width: 100%;">
     <thead>
         <tr>
-        <th style="width: 50%;">No. Receive : {{ $head->nomor_receive }}</th>
-        <th style="width: 50%;">Tgl. Receive : {{ $head->tanggal_receive }}</th>
-        </tr>
-        <tr>
-        <th>No. Invoice : {{ $head->no_invoice }}</th>
-        <th>Tgl. Invoice : {{ $head->tgl_invoice }}</th>
+        <th style="width: 50%;">Receiving Nomor : {{ $head->nomor_receive }} - Tanggal : {{ date_format(date_create($head->tanggal_receive), 'd-m-Y') }}</th>
+        <th style="width: 50%;">Invoice Supplier Nomor : {{ $head->no_invoice }} - Tanggal : {{ date_format(date_create($head->tgl_invoice), 'd-m-Y') }}</th>
         </tr>
         <tr>
             <th>Customer : {{ $head->get_supplier->nama_supplier }}</th>
             <th>Pembayaran Via : {{ $ket_cara_bayar }}</th>
+        </tr>
+        <tr>
+            <th>Kontainer Nomor : {{ $head->invoice_kontainer }} - Rp. {{ number_format($head->nilai_kontainer, 0) }}</th>
+            <th>Tanggal Jatuh Tempo : {{ (!empty($head->tgl_jatuh_tempo)) ? date_format(date_create($head->tgl_jatuh_tempo), 'd-m-Y') : "" }}</th>
         </tr>
     </thead>
     </table>

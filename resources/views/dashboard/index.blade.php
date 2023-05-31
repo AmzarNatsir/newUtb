@@ -59,62 +59,57 @@
         <!-- Info boxes -->
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card card-success">
                     <div class="card-header">
-                        <h5 class="card-title">Summary Periode :</h5>
+                        <h5 class="card-title">Grafik Penjualan</h5>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body row">
-                        <div class="col-lg-4">
-                            <!-- small box -->
-                            <div class="small-box bg-info">
-                                <div class="description-block border-right inner">
-                                    <span class="description-header"> 0 Items</span>
-                                    <h5 class="description-header">Rp. 0</h5>
-                                    <span class="description-text">Penjualan Tunai</span>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Pembelian</span>
+                                    <span class="info-box-number">760</span>
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <!-- /.info-box-content -->
                             </div>
+                            <!-- /.info-box -->
                         </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4">
-                            <!-- small box -->
-                            <div class="small-box bg-warning">
-                                <div class="description-block border-right inner">
-                                    <span class="description-header"> 0 Items</span>
-                                    <h5 class="description-header">Rp. 0</h5>
-                                    <span class="description-text">Penjualan Kredit</span>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Penjualan</span>
+                                    <span class="info-box-number">760</span>
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <!-- /.info-box-content -->
                             </div>
+                            <!-- /.info-box -->
                         </div>
-                        <!-- ./col -->
-                        <div class="col-lg-4">
-                            <!-- small box -->
-                            <div class="small-box bg-success">
-                                <div class="description-block border-right inner">
-                                    <span class="description-header"> 0</span>
-                                    <h5 class="description-header">Rp. </h5>
-                                    <span class="description-text">GRAND TOTAL</span>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Return Pembelian</span>
+                                    <span class="info-box-number">760</span>
                                 </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
+                            <!-- /.info-box-content -->
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                            </div>
+                            <!-- /.info-box -->
                         </div>
-
-                        
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Return Penjualan</span>
+                                    <span class="info-box-number">760</span>
+                                </div>
+                            <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
                     </div>
-
-                    
-
                 </div>
             </div>
           <!-- ./col -->
@@ -122,87 +117,68 @@
         
         <div class="row">
         <!-- /.col -->
-            <div class="col-md-8">
-                <div class="card card-warning">
+            <div class="col-md-12">
+                <div class="card card-info">
                     <div class="card-header">
-                        <h5 class="card-title">Summary Periode {{ date('Y') }}</h5>
+                        <h5 class="card-title">Grafik Pembelian</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-4">
-                                <!-- small box -->
-                                <div class="small-box bg-info">
-                                    <div class="description-block border-right inner">
-                                        <span class="description-percentage"> 0 Items</span>
-                                        <h5 class="description-header">Rp. 0</h5>
-                                        <span class="description-text">Penjualan Tunai</span>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-stats-bars"></i>
-                                    </div>
-                                    <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <!-- small box -->
-                                <div class="small-box bg-warning">
-                                    <div class="description-block border-right inner">
-                                        <span class="description-percentage"> 0 Items</span>
-                                        <h5 class="description-header">Rp. 0</h5>
-                                        <span class="description-text">Penjualan Kredit</span>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-stats-bars"></i>
-                                    </div>
-                                    <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
-                                </div>
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-lg-4">
-                                <!-- small box -->
-                                <div class="small-box bg-success">
-                                    <div class="description-block border-right inner">
-                                        <span class="description-percentage"> 0 Items</span>
-                                        <h5 class="description-header">Rp. 0</h5>
-                                        <span class="description-text">GRAND TOTAL</span>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-stats-bars"></i>
-                                    </div>
-                                    <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
-                                </div>
-                            </div>
-                            <!-- ./col -->
-                        </div>
-                        <div class="card-footer">
-                        <div class="row"></div>
-                        <!-- /.row -->
+                            
                         </div>
                     </div>
                 </div>
-                <div class="card card-info">
-                    <div class="card-header">
-                        <h5 class="card-title">Penjualan Periode Tahun {{ date('Y') }}</h5>
-                    </div>
-                    <div class="card-body">
-                        <!-- <div class="chart">
-                            <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                        </div> -->
-                        <figure class="highcharts-figure">
-                        <div id="container"></div>
-                        </figure>
-                    </div>
-                </div>
-
             </div>
-            <div class="col-md-4">
-                <div class="card card-danger">
-                    <div class="card-header border-0">
-                        <h3 class="card-title"><strong>10 Produk Terlaris Periode {{ date('Y') }}</strong></h3>
+        <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+        <!-- /.col -->
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h5 class="card-title">Grafik Stok</h5>
                     </div>
                     <div class="card-body">
+                        <div class="row">
+                            
+                        </div>
                     </div>
-                </div> 
+                </div>
+            </div>
+        <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+        <!-- /.col -->
+            <div class="col-md-12">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h5 class="card-title">Grafik Hutang</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+        <!-- /.col -->
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h5 class="card-title">Grafik Piutang</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         <!-- /.col -->
         </div>

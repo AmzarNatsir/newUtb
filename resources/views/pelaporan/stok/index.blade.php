@@ -51,16 +51,15 @@
                             <tr>
                                 <th style="width: 5%; text-align: center;" rowspan="2">No.</th>
                                 <th style="width: 10%; text-align: center;" rowspan="2">Kode</th>
-                                <th style="width: 20%;" rowspan="2">Nama Produk</th>
+                                <th rowspan="2">Nama Produk</th>
+                                <th style="width: 10%; text-align: center;" rowspan="2">Merk</th>
+                                <th style="width: 10%; text-align: center;" rowspan="2">Kemasan</th>
                                 <th style="width: 5%; text-align: center;" rowspan="2">Stok Awal</th>
-                                <th style="width: 10%; text-align: center;" rowspan="2">Harga Barang</th>
+                                <th style="width: 10%; text-align: center;" rowspan="2">Harga</th>
                                 <th style="text-align: center;" colspan="2">Mutasi</th>
-                                <th style="text-align: center;" colspan="2">Batal</th>
                                 <th style="width: 5%; text-align: center;" rowspan="2">Stok Akhir</th>
                             </tr>
                             <tr>
-                                <th style="width: 5%; text-align: center;">Masuk</th>
-                                <th style="width: 5%; text-align: center;">Keluar</th>
                                 <th style="width: 5%; text-align: center;">Masuk</th>
                                 <th style="width: 5%; text-align: center;">Keluar</th>
                             </tr>

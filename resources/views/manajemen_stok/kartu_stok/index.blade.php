@@ -185,7 +185,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                         <tbody>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <table style="font-size: 10pt; width: 100%;" border='1'>
+                                                    <table class="table" style="font-size: 10pt; width: 100%;" border='1'>
                                                     <thead>
                                                         <th style="width: 5%;">No.</th>
                                                         <th style="width: 25%;">Tanggal</th>

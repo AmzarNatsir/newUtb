@@ -24,52 +24,62 @@
   </style>
 </head>
 <body>
-  <table style="width: 100%; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">
+<table style="width: 100%;">
   <tr>
-      <td colspan="5" style="text-align: center;">
+      <td colspan="2" style="text-align: center;">
           <h3>INVOICE PENJUALAN</h3>
       </td>
   </tr>
   <tr>
-    <td colspan="5" style="height: 35px;"></td>
-  </tr>
-  <tr>
-    <td style="width: 18%;">No. Invoice</td>
-    <td style="width: 2%;">:</td>
-    <td style="width: 40%;">{{ $dt_head->no_invoice }}</td>
-    <td style="width: 10%;" rowspan="4"><img src="{{ asset('assets/AdminLTE/dist/img/utb_logo.png')}}" alt="UTB Logo" style="width: 120px;  height: auto;"></td>
-    <td style="width: 30%" rowspan="4"><h5><strong>PT. USAHA TANI BERSAMA</strong></h5></td>
-  </tr>
-  <tr>
-    <td>Tanggal. Inv</td>
-    <td>:</td>
-    <td>{{ date_format(date_create($dt_head->tgl_invoice), 'd-M-Y') }}</td>
-  </tr>
-  <tr>
-    <td>Jatuh Tempo</td>
-    <td>:</td>
-    <td>{{ ($dt_head->bayar_via==1) ? '' : date_format(date_create($dt_head->tgl_jatuh_tempo), 'd-M-Y') }}</td>
-  </tr>
-  <tr>
-    <td>Salesman</td>
-    <td>:</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td style="width: 18%;">Pembayaran Via</td>
-    <td style="width: 2%;">:</td>
-    <td style="width: 40%;">{{ ($dt_head->bayar_via==1) ? 'Tunai' : 'Kredit' }}</td>
-    <td style="width: 40%; vertical-align: top;" rowspan="2" colspan="2">Jl. Sorumba No. 79, Wowawanggu, Kec. Kedia, Kota Kendari, Sulawesi Tenggara 93117<br>Telepon : 0401-3092867</td>
-  </tr>
-  <tr>
-    <td style="vertical-align: top;">Customer</td>
-    <td style="vertical-align: top;">:</td>
-    <td style="vertical-align: top;"><b>{{ $dt_head->get_customer->nama_customer }}</b><br>{{ $dt_head->get_customer->alamat }} <br>Kota {{ $dt_head->get_customer->kota }} Telepon {{ $dt_head->get_customer->no_telepon }}</td>
-  </tr>
-  <tr>
-    <td colspan="5" style="height: 35px;"></td>
+      <td style="width: 50%; vertical-align: top;">
+      <table style="width: 100%; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">
+          <tr>
+              <td style="width: 28%;">No. Invoice</td>
+              <td style="width: 2%;">:</td>
+              <td style="width: 70%;">{{ $dt_head->no_invoice }}</td>
+          </tr>
+          <tr>
+              <td>Tanggal. Inv</td>
+              <td>:</td>
+              <td>{{ date_format(date_create($dt_head->tgl_invoice), 'd-M-Y') }}</td>
+          </tr>
+          <tr>
+            <td>Jatuh Tempo</td>
+            <td>:</td>
+            <td>{{ ($dt_head->bayar_via==1) ? '' : date_format(date_create($dt_head->tgl_jatuh_tempo), 'd-M-Y') }}</td>
+          </tr>
+          <tr>
+            <td>Salesman</td>
+            <td>:</td>
+            <td></td>
+          </tr>
+          <tr>
+              <td>Pembayaran Via</td>
+              <td>:</td>
+              <td>{{ ($dt_head->bayar_via==1) ? 'Tunai' : 'Kredit' }}</td>
+          </tr>
+          <tr>
+              <td style="vertical-align: top;">Customer</td>
+              <td style="vertical-align: top;">:</td>
+              <td><b>{{ $dt_head->get_customer->nama_customer }}</b><br>{{ $dt_head->get_customer->alamat }} <br>Kota {{ $dt_head->get_customer->kota }} Telepon {{ $dt_head->get_customer->no_telepon }}</td>
+          </tr>
+      </table>
+      </td>
+      <td style="width: 50%;">
+          <table style="width: 100%; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">
+          <tr>
+              <td style="width: 30%;"><img src="{{ asset('assets/AdminLTE/dist/img/utb_logo.png')}}" alt="UTB Logo" style="width: 120px;  height: auto;"></td>
+              <td style="width: 70%"><h5><strong>PT. USAHA TANI BERSAMA</strong></h5></td>
+          </tr>
+          <tr>
+              <td colspan="2">Jl. Sorumba No. 79, Wowawanggu, Kec. Kedia, Kota Kendari, Sulawesi Tenggara 93117<br>Telepon : 0401-3092867</td>
+          </tr></td>
+          </tr>
+          </table>
+      </td>
   </tr>
   </table>
+<br>
   <table style="width: 100%; font-size: 9pt; font-family: Arial, Helvetica, sans-serif;  border-collapse: collapse;" border="1" cellpadding="4">
     <tr style="background-color: gray; color: white;">
         <th style="width: 3%; text-align: center;">No</th>
@@ -138,7 +148,7 @@
         <td colspan="4">
           <table style="width: 100%; font-size: 9pt; font-family: Arial, Helvetica, sans-serif;">
             <tr>
-              <td style="width: 50%; border: 1px; border-style: solid; height: 100px;"></td>
+              <td style="width: 50%; border: 1px; border-style: solid; height: 100px; text-align: center"><img src="{{ asset('assets/AdminLTE/dist/img/qr_sample.png')}}" alt="UTB Logo" style="width: 100px;  height: auto;"></td>
               <td style="width: 50%; border: 1px; border-style: solid; height: 100px;"></td>
             </tr>
             <tr>

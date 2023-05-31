@@ -29,21 +29,20 @@
     </td>
 </tr>
 </table>
-<table style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
+<table style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1" cellpadding='10'>
     <thead>
     <tr style="background-color: #808080; color:azure">
         <th style="width: 5%; text-align: center; height: 30px" rowspan="2">No.</th>
         <th style="width: 10%; text-align: center;" rowspan="2">Kode</th>
         <th rowspan="2">Nama Produk</th>
-        <th style="width: 12%; text-align: center;" rowspan="2">Harga Barang</th>
+        <th style="width: 10%; text-align: center;" rowspan="2">Merk</th>
+        <th style="width: 10%; text-align: center;" rowspan="2">Kemasan</th>
+        <th style="width: 12%; text-align: center;" rowspan="2">Harga</th>
         <th style="width: 8%; text-align: center;" rowspan="2">Stok Awal</th>
         <th style="text-align: center;" colspan="2">Mutasi</th>
-        <th style="text-align: center;" colspan="2">Batal</th>
         <th style="width: 8%; text-align: center;" rowspan="2">Stok Akhir</th>
     </tr>
     <tr style="background-color: #808080; color:azure">
-        <th style="width: 8%; text-align: center;">Masuk</th>
-        <th style="width: 8%; text-align: center;">Keluar</th>
         <th style="width: 8%; text-align: center;">Masuk</th>
         <th style="width: 8%; text-align: center;">Keluar</th>
     </tr>
@@ -55,20 +54,18 @@
     $t_stok_masuk=0;
     $t_stok_keluar=0;
     $t_stok_akhir=0;
-    $t_stok_beli_cancel=0;
-    $t_stok_jual_cancel=0;
     @endphp
     @foreach($list_data as $list)
     <tr>
         <td style='text-align: center; height: 25px;'>{{ $list['no_urut'] }}</td>
         <td style='text-align: center;'>{{ $list['kode'] }}</td>
         <td>{{ $list['nama_produk'] }}</td>
+        <td style='text-align: center;'>{{ $list['merk'] }}</td>
+        <td style='text-align: center;'>{{ $list['kemasan'] }} {{ $list['satuan'] }}</td>
         <td style='text-align: right;'>{{ number_format($list['harga_jual'], 0) }}&nbsp;</td>
         <td style='text-align: center;'>{{ number_format($list['stok_awal'], 0) }}</td>
         <td style='text-align: center;'>{{ number_format($list['stok_masuk'], 0) }}</td>
         <td style='text-align: center;'>{{ number_format($list['stok_keluar'], 0) }}</td>
-        <td style='text-align: center;'>{{ number_format($list['beli_cancel'], 0) }}</td>
-        <td style='text-align: center;'>{{ number_format($list['jual_cancel'], 0) }}</td>
         <td style='text-align: center;'>{{ number_format($list['stok_akhir'], 0) }}</td>
     </tr>";
     @php 
@@ -77,18 +74,14 @@
     $t_stok_masuk+=$list['stok_masuk'];
     $t_stok_keluar+=$list['stok_keluar'];
     $t_stok_akhir+=$list['stok_akhir'];
-    $t_stok_beli_cancel+=$list['beli_cancel'];
-    $t_stok_jual_cancel+=$list['jual_cancel'];
     @endphp
     @endforeach
     <tr style="background-color: #808080; color:azure">
-        <td colspan="3" class="text-center" style="height: 30px"><b>TOTAL</b></td>
+        <td colspan="5" class="text-center" style="height: 30px"><b>TOTAL</b></td>
         <td class="text-right"><b>{{ number_format($t_harga, 0) }}&nbsp;</b></td>
         <td class="text-center"><b>{{ number_format($t_stok_awal, 0) }}</b></td>
         <td class="text-center"><b>{{ number_format($t_stok_masuk, 0) }}</b></td>
         <td class="text-center"><b>{{ number_format($t_stok_keluar, 0) }}</b></td>
-        <td class="text-center"><b>{{ number_format($t_stok_beli_cancel, 0) }}</b></td>
-        <td class="text-center"><b>{{ number_format($t_stok_jual_cancel, 0) }}</b></td>
         <td class="text-center"><b>{{ number_format($t_stok_akhir, 0) }}</b></td>
     </tr>
     </tbody>

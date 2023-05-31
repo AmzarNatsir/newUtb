@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerModel;
+use App\Models\JualHeadModel;
 use App\Models\POHeadModel;
 use App\Models\ReceiveHeadModel;
 use App\Models\SupplierModel;
@@ -157,4 +159,70 @@ class InvoiceController extends Controller
 
     }
 
+    public function invoice_penjualan()
+    {
+        $data = [
+            'allCustomer' => CustomerModel::all()
+        ];
+        return view('invoice.penjualan.index', $data);
+    }
+
+    public function invoice_penjualan_filter(Request $request)
+    {
+        $customer = $request->selCustomer;
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+
+        if($customer==null)
+        {
+            $ket_customer = 'Semua Customer';
+            $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
+                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)
+                            ->whereNull('jenis_jual')
+                            ->orderby('tgl_invoice', 'asc')->get();
+        } else {
+            $ket_customer = CustomerModel::find($customer)->nama_supplier;
+            $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
+                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)
+                            ->whereNull('jenis_jual')
+                            ->where('customer_id', $customer)
+                            ->orderby('tgl_invoice', 'asc')->get();
+        }
+        
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            if($list->bayar_via==1){
+                $ket_bayar = "<span class='badge bg-success'>Cash</span>";
+            } else {
+                $ket_bayar = " <span class='badge bg-danger'>Credit</span>";
+            }
+            $html .= "<tr>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->no_invoice."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_invoice), 'd-m-Y')."</td>
+            <td>".$list->get_customer->nama_customer."</td>
+            <td style='text-align: right;'><b>".number_format($list->total_invoice_net, 0)."</b></td>
+            <td style='text-align: center;'>".$ket_bayar."</td>
+            <td style='text-align: center;'><button type='button' class='btn btn-success' value=".$list->id." onClick='goPrint(this)'><i class='fa fa-print'></i></button></td>
+            </tr>";
+            $nom++;
+            $total+=$list->total_invoice_net;
+        }
+        $html .= "<tr>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+            <td></td>
+        ";
+        
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode,
+                'customer' => "Customer : ".$ket_customer
+            ])
+            ->withCallback($request->input('callback'));
+    }
 }
