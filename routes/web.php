@@ -205,3 +205,5 @@ Route::post('invoicePOFilter', [InvoiceController::class, 'invoice_po_filter'])-
 
 //Receiving
 Route::get('invoiceReceiving', [InvoiceController::class, 'invoice_receiving'])->name('invoiceReceiving');
+Route::post('invoiceReceivingFilter', [InvoiceController::class, 'invoice_receive_filter'])->name('invoiceReceivingFilter');
+Route::get('invoiceReceivingPrint/{param1}', [InvoiceController::class, 'invoice_receiving_print'])->name('invoiceReceivingPrint');

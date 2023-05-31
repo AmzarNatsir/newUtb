@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\POHeadModel;
+use App\Models\ReceiveHeadModel;
 use App\Models\SupplierModel;
 use Illuminate\Http\Request;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -86,4 +88,73 @@ class InvoiceController extends Controller
         ];
         return view('invoice.receiving.index', $data);
     }
+
+    public function invoice_receive_filter(Request $request)
+    {
+        $supplier = $request->selSupplier;
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+
+        if($supplier==null)
+        {
+            $ket_supplier = 'Semua Supplier';
+            $result = ReceiveHeadModel::whereDate('tanggal_receive', '>=', $tgl_awal)
+                            ->whereDate('tanggal_receive', '<=', $tgl_akhir)
+                            ->orderby('tanggal_receive', 'asc')->get();
+        } else {
+            $ket_supplier = SupplierModel::find($supplier)->nama_supplier;
+            $result = ReceiveHeadModel::whereDate('tanggal_receive', '>=', $tgl_awal)
+                            ->whereDate('tanggal_receive', '<=', $tgl_akhir)
+                            ->where('supplier_id', $supplier)
+                            ->orderby('tanggal_receive', 'asc')->get();
+        }
+        
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            if($list->cara_bayar==1){
+                $ket_bayar = "<span class='badge bg-success'>Cash</span>";
+            } else {
+                $ket_bayar = " <span class='badge bg-danger'>Credit</span>";
+            }
+            $html .= "<tr>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->nomor_receive."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tanggal_receive), 'd-m-Y')."</td>
+            <td>".$list->get_supplier->nama_supplier."</td>
+            <td style='text-align: right;'><b>".number_format($list->total_receive_net, 0)."</b></td>
+            <td style='text-align: center;'>".$ket_bayar."</td>
+            <td style='text-align: center;'><button type='button' class='btn btn-success' value=".$list->id." onClick='goPrint(this)'><i class='fa fa-print'></i></button></td>
+            </tr>";
+            $nom++;
+            $total+=$list->total_receive_net;
+        }
+        $html .= "<tr>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+            <td></td>
+        ";
+        
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode,
+                'supplier' => "Supplier : ".$ket_supplier
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function invoice_receiving_print($invoice_id)
+    {
+        $result = ReceiveHeadModel::find($invoice_id);
+        
+        $pdf = PDF::loadview('invoice.receiving.print', [
+            'main' => $result
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+
+    }
+
 }

@@ -45,14 +45,15 @@
 <table style="font-size: 8pt; width: 100%; border-collapse: collapse;" border='1' cellpadding="3" cellspacing="0">
   <tr>
       <th rowspan="2" class="text-center" style="width: 5%;">No.</th>
-      <th colspan="2" class="text-center">Keterangan</th>
-      <th rowspan="2" class="text-center" style="width: 15%;">Jumlah Kg</th>
+      <th colspan="3" class="text-center">Keterangan</th>
+      <th rowspan="2" class="text-center" style="width: 10%;">Jumlah</th>
       <th rowspan="2" class="text-center" style="width: 15%;" >Harga Satuan</th>
       <th rowspan="2" class="text-center" style="width: 15%;" >Total</th>
   </tr>
   <tr>
       <th style="width: 30%;" class="text-center">Jenis Pupuk</th>
       <th style="width: 20%;" class="text-center">Merek</th>
+      <th style="width: 10%;" class="text-center">Kemasan</th>
   </tr>
   <tbody>
   @php $nom=1 @endphp
@@ -61,14 +62,15 @@
       <td style="height: 30px;" class="text-center">{{ $nom }}</td>
       <td>{{ $list->get_produk->nama_produk }}</td>
       <td>{{ $list->get_produk->get_merk->merk }}</td>
-      <td style='text-align: right'>{{ $list->qty }}</td>
+      <td style='text-align: center'>{{ $list->get_produk->kemasan }} {{ $list->get_produk->get_unit->unit }}</td>
+      <td style='text-align: center'>{{ $list->qty }}</td>
       <td style='text-align: right'>{{ number_format($list->harga, 0, ",", ".") }}</td>
       <td style='text-align: right'>{{ number_format($list->sub_total, 0, ",", ".") }}</td>
       </tr>
       @php $nom++ @endphp
   @endforeach
   <tr>
-    <td colspan="5" class="text-right"><b>Total Harga</b></td>
+    <td colspan="6" class="text-right"><b>Total Harga</b></td>
     <td style='text-align: right; height:30px'><b>{{ number_format($resHead->total_po, 0, ",", ".") }}</b></td>
   </tr>
   </tbody>
