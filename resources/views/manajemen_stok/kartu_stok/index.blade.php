@@ -185,7 +185,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                         <tbody>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <table class="table" style="font-size: 10pt; width: 100%;">
+                                                    <table style="font-size: 10pt; width: 100%;" border='1'>
                                                     <thead>
                                                         <th style="width: 5%;">No.</th>
                                                         <th style="width: 25%;">Tanggal</th>
@@ -195,7 +195,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table class="table" style="font-size: 10pt; width: 100%;">
+                                                    <table class="table" style="font-size: 10pt; width: 100%;" border='1'>
                                                     <thead>
                                                         <th style="width: 5%;">No.</th>
                                                         <th style="width: 25%;">Tanggal</th>
@@ -230,7 +230,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                         <tbody>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <table class="table" style="font-size: 10pt; width: 100%;">
+                                                    <table class="table" style="font-size: 10pt; width: 100%;" border='1'>
                                                     <thead>
                                                         <th style="width: 5%;">No.</th>
                                                         <th style="width: 25%;">Tanggal</th>
@@ -240,7 +240,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table class="table" style="font-size: 10pt; width: 100%;">
+                                                    <table class="table" style="font-size: 10pt; width: 100%;" border='1'>
                                                     <thead>
                                                         <th style="width: 5%;">No.</th>
                                                         <th style="width: 25%;">Tanggal</th>
@@ -250,7 +250,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table class="table" style="font-size: 10pt; width: 100%;">
+                                                    <table class="table" style="font-size: 10pt; width: 100%;" border='1'>
                                                     <thead>
                                                         <th style="width: 5%;">No.</th>
                                                         <th style="width: 25%;">Tanggal</th>
@@ -348,7 +348,10 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
             beforeSend: function()
             {
                 $(".all_items_beli").empty();
+                $(".all_items_return_jual").empty();
                 $(".all_items_jual").empty();
+                $(".all_items_pemberian_sampel").empty();
+                $(".all_items_return_beli").empty();
             },
             success: function(response)
             {
@@ -371,7 +374,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                     nom++;
                 });
                 $(".all_items_beli").append("<tr style='background: #ffecb3'>\
-                    <td colspan='2'><b>TOTAL</b></td>\
+                    <td colspan='2'><b>Total Receiving</b></td>\
                     <td style='text-align: center'><b>"+total_1+"</b></td>\
                 </tr>");
                 //return jual
@@ -389,7 +392,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                     nom++;
                 });
                 $(".all_items_return_jual").append("<tr style='background: #ffecb3'>\
-                    <td colspan='2'><b>TOTAL</b></td>\
+                    <td colspan='2'><b>Total Return</b></td>\
                     <td style='text-align: center'><b>"+total_2+"</b></td>\
                 </tr>");
                 $(".total_masuk").html("TOTAL STOK MASUK : "+ (total_1 + total_2));
@@ -409,7 +412,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                     nom++;
                 });
                 $(".all_items_jual").append("<tr style='background: #99ffbb'>\
-                    <td colspan='2'><b>TOTAL</b></td>\
+                    <td colspan='2'><b>Total Penjualan</b></td>\
                     <td style='text-align: center'><b>"+total_3+"</b></td>\
                 </tr>");
                 //pemberian sampel
@@ -428,7 +431,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                     nom++;
                 });
                 $(".all_items_pemberian_sampel").append("<tr style='background: #99ffbb'>\
-                    <td colspan='2'><b>TOTAL</b></td>\
+                    <td colspan='2'><b>Total Pembr. Sampel</b></td>\
                     <td style='text-align: center'><b>"+total_4+"</b></td>\
                 </tr>");
                 //return beli
@@ -447,7 +450,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                     nom++;
                 });
                 $(".all_items_return_beli").append("<tr style='background: #99ffbb'>\
-                    <td colspan='2'><b>TOTAL</b></td>\
+                    <td colspan='2'><b>Total Return</b></td>\
                     <td style='text-align: center'><b>"+total_5+"</b></td>\
                 </tr>");
                 $(".total_keluar").html("TOTAL STOK KELUAR : "+ (total_3 + total_4 + total_5));

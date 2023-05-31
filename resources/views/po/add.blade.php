@@ -66,6 +66,25 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inp_nomor">Nomor PO</label>
+                                    <input type="text" class="form-control" name="inpNomor" id="inpNomor" value="{{ $no_po }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inp_kemasan">Tanggal PO</label>
+                                    <div class="input-group date" id="inp_tgl_po">
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inp_tgl_po" name="inp_tgl_po" value="{{ date('d/m/Y') }}" />
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="sel_supplier">Supplier</label>
                             <select class="form-control select2bs4" name="sel_supplier" id="sel_supplier" style="width: 100%;" required>   
@@ -136,6 +155,9 @@
 <script type="text/javascript" src="{{ asset('assets/js/initAll.js') }}"></script>
 <script>
     $(function(){
+        $('.datepicker').datepicker({
+            autoclose: true
+        });
         var total_net = $("#inputTotalNet").val();
         if(total_net==0)
         {

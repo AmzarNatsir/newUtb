@@ -14,6 +14,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\Client\App;
 use App\Http\Controllers\DashbaordController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReturnController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
@@ -196,3 +197,11 @@ Route::get('laporanHutangPrint/{param1}/{param2}/{param3}', [PelaporanController
 Route::get('laporanPiutang', [PelaporanController::class, 'laporan_piutang'])->name("laporanPiutang");
 Route::post('laporanPiutangFilter', [PelaporanController::class, 'laporan_piutang_filter'])->name("laporanPiutangFilter");
 Route::get('laporanPiutangPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_piutang_print'])->name('laporanPiutangPrint');
+
+//Invoice
+//PO
+Route::get('invoicePO', [InvoiceController::class, 'invoice_po'])->name('invoicePO');
+Route::post('invoicePOFilter', [InvoiceController::class, 'invoice_po_filter'])->name('invoicePOFilter');
+
+//Receiving
+Route::get('invoiceReceiving', [InvoiceController::class, 'invoice_receiving'])->name('invoiceReceiving');

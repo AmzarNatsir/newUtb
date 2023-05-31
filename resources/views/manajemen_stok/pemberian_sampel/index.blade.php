@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Stock Keeper')
+@section('title', 'Transaksi')
 @section('breadcrumb', 'Pemberian Sampel')
 @section('content')
 @routes

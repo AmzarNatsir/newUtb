@@ -133,6 +133,19 @@
         </li>
     </ul>
 </li>
+<li class="nav-item">
+    <a href="#" class="nav-link">
+        <i class="nav-icon far fa-plus-square"></i>
+        <p>Daftar Invoice<i class="fas fa-angle-left right"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('invoicePO') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Purchase Order</p></a>
+            <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Receiving</p></a>
+            <a href="{{ route('kartuStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
+        </li>
+    </ul>
+</li>
 <li class="nav-header">TRANSAKSI</li>
 <li class="nav-item">
     <a href="#" class="nav-link">

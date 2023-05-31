@@ -706,12 +706,14 @@ class PelaporanController extends Controller
             $ket_supplier = 'Semua Supplier';
             $result = HutangModel::whereDate('tgl_bayar', '>=', $tgl_awal)
                             ->whereDate('tgl_bayar', '<=', $tgl_akhir)
+                            ->whereIn('status_po', [1, 2])
                             ->orderby('tgl_bayar', 'asc')->get();
         } else {
             $ket_supplier = SupplierModel::find($supplier)->nama_supplier;
             $result = HutangModel::whereDate('tgl_bayar', '>=', $tgl_awal)
                             ->whereDate('tgl_bayar', '<=', $tgl_akhir)
                             ->where('supplier_id', $supplier)
+                            ->whereIn('status_po', [1, 2])
                             ->orderby('tgl_bayar', 'asc')->get();
         }
         

@@ -60,7 +60,9 @@
         });
         $('.angka').number( true, 0 );
         $('.angka_dec').number( true, 2);
-        $('.datepicker').datepicker();
+        $('.datepicker').datepicker({
+            autoclose: true
+        });
         $('.reservation').daterangepicker({
             locale: {
                 format: 'DD-MM-YYYY'

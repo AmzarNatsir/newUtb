@@ -34,7 +34,7 @@
                 <th>Merk</th>
                 <th class="text-center">Kemasan</th>
                 <th class="text-center">Unit</th>
-                <th class="text-right">Harga Eceran</th>
+                <th class="text-right">Harga Toko</th>
                 <th class="text-right">Harga Eceran</th>
                 <th class="text-center">Stok Awal</th>
                 <th class="text-center">Stok Akhir</th>

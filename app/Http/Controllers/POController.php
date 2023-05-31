@@ -21,7 +21,7 @@ class POController extends Controller
 
     public function index()
     {
-        $q_po = POHeadModel::orderby('tanggal_po', 'desc')->get();
+        $q_po = POHeadModel::whereNull('status_po')->orderby('tanggal_po', 'desc')->get();
         $data = [
             'all_po' => $q_po
         ];
@@ -32,7 +32,8 @@ class POController extends Controller
     {
         $q_supplier = SupplierModel::all();
         $data = [
-            'allSupplier' => $q_supplier
+            'allSupplier' => $q_supplier,
+            'no_po' => $this->create_no_po()
         ];
 
         return view('po.add', $data);
@@ -44,8 +45,8 @@ class POController extends Controller
             $save_head = new POHeadModel();
             //store header
             $save_head->supplier_id = $request->sel_supplier;
-            $save_head->nomor_po = $this->create_no_po();
-            $save_head->tanggal_po = $this->datetimeStore;
+            $save_head->nomor_po = $request->inpNomor;
+            $save_head->tanggal_po = date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_po)));
             $save_head->keterangan = $request->inp_keterangan;
             $save_head->ppn_persen = $request->inputTotal_PpnPersen;
             $save_head->ppn_rupiah = str_replace(",","", $request->inputTotal_DiskRupiah);
@@ -118,6 +119,7 @@ class POController extends Controller
         try {
             $update_head = POHeadModel::find($id);
             //store header
+            $update_head->tanggal_po = date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_po)));
             $update_head->supplier_id = $request->sel_supplier;
             $update_head->keterangan = $request->inp_keterangan;
             $update_head->ppn_persen = $request->inputTotal_PpnPersen;
