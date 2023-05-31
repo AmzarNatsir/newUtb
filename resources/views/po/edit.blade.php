@@ -127,7 +127,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inp_keterangan">Keterangan</label>
-                            <textarea class="form-control" name="inp_keterangan" id="inp_keterangan" required>{{ $resHead->keterangan }}</textarea>
+                            <textarea class="form-control" name="inp_keterangan" id="inp_keterangan">{{ $resHead->keterangan }}</textarea>
                         </div>
                     </div>
                 </div>

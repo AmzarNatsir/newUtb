@@ -102,7 +102,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inp_keterangan">Keterangan</label>
-                            <textarea class="form-control" name="inp_keterangan" id="inp_keterangan" required></textarea>
+                            <textarea class="form-control" name="inp_keterangan" id="inp_keterangan"></textarea>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Stock Keeper')
+@section('title', 'Manajemen Stok')
 @section('breadcrumb', 'Daftar Stok')
 @section('content')
 @routes

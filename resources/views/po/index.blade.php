@@ -47,7 +47,7 @@
                         <td>{{ $nom }}</td>
                         <td class="text-center">{{ $list->nomor_po }}</td>
                         <td class="text-center">{{ date_format(date_create($list->tanggal_po), 'd-m-Y') }}</td>
-                        <th>{{ $list->get_supplier->nama_supplier }}</th>
+                        <td>{{ $list->get_supplier->nama_supplier }}</td>
                         <th class="text-right">{{ number_format($list->total_po, 0) }}</th>
                         <td class="text-center">
                             @if(empty($list->status_po)) 
