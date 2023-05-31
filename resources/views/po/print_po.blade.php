@@ -70,7 +70,7 @@
       @php $nom++ @endphp
   @endforeach
   <tr>
-    <td colspan="6" class="text-right"><b>Total Harga</b></td>
+    <td colspan="6" style="text-align: right"><b>Total Harga</b></td>
     <td style='text-align: right; height:30px'><b>{{ number_format($resHead->total_po, 0, ",", ".") }}</b></td>
   </tr>
   </tbody>
@@ -80,22 +80,20 @@
     <td style="height: 40px;" colspan="2"></td>
   </tr>
   <tr>
-    <td style="width: 70%;">
-    <p><strong>Note :</strong><br>
+    <td style="width: 70%; vertical-align: top;" rowspan="2"><p><strong>Note :</strong><br>
     - Harap pengiriman barang disertakan nota/kwitansi<br>
     - Nomor pesanan pembelian harap dicantumkan dalam nota/kwitansi<br>
     - Barang akan kami kembalikan bila tidak sesuai pesanan<br>
     - Setiap pengiriman barang harap disertakan salinan pesanan pembelian
-    </p>
-    </td>
+    </p></td>
     <td class="text-center" style="vertical-align: top;">Disetujui Oleh</td>
   </tr>
   <tr>
-    <td style="height: 30px;" colspan="2"></td>
+    <td><img src="{{ asset('assets/AdminLTE/dist/img/qr_sample.png')}}" alt="UTB Logo" style="width: 100px;  height: auto;"></td>
   </tr>
   <tr>
     <td></td>
-    <td class="text-center">MUH. HASBI<br>Direktur</td>
+    <td class="text-center"><u>MUH. HASBI</u><br>Direktur</td>
   </tr>
 </table>
 <footer><div class="dropdown-divider"></div><div class="text-center"><span class='badge' style='font-size: 8pt;'>Alamat : Jl. Sorumba No. 79, Wowawanggu, Kec. Kedia, Kota Kendari, Sulawesi Tenggara 93117<br>Telp. +62 401 3092867 Email : usahatanibersama21@gmail.com</span></div></footer>
