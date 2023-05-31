@@ -21,7 +21,7 @@ class POController extends Controller
 
     public function index()
     {
-        $q_po = POHeadModel::whereNull('status_po')->orderby('tanggal_po', 'desc')->get();
+        $q_po = POHeadModel::whereNull('status_po')->orWhere('status_po', 1)->orderby('tanggal_po', 'desc')->get();
         $data = [
             'all_po' => $q_po
         ];

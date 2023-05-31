@@ -58,6 +58,8 @@ class ReceivingController extends Controller
             $save_head->total_receive_net = str_replace(",","", $request->inputTotalNet);
             $save_head->cara_bayar = $request->inp_carabayar;
             $save_head->user_id = auth()->user()->id;
+            $save_head->invoice_kontainer = $request->inp_invoice_kontainer;
+            $save_head->nilai_kontainer = str_replace(",","", $request->inp_ongkir_kontainer);
             $save_head->save();
             $id_head = $save_head->id;
             //store detail

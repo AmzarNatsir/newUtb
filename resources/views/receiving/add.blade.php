@@ -184,6 +184,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inp_nomor">Nomor Invoice Kontainer</label>
+                                    <input type="text" class="form-control" name="inp_invoice_kontainer" id="inp_invoice_kontainer" maxlength="50">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inp_ongkir_kontainer">Ongkir Kontainer</label>
+                                    <input type="text" class="form-control angka" id="inp_ongkir_kontainer" name="inp_ongkir_kontainer" value="0" style="text-align: right;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
