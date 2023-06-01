@@ -191,7 +191,7 @@
                                 <div class="form-group">
                                     <label for="inpTglTiba">Tanggal Tiba</label>
                                     <div class="input-group date" id="inpTglTiba">
-                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglTiba" name="inpTglTiba" />
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglTiba" name="inpTglTiba" required />
                                         <div class="input-group-append" >
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>

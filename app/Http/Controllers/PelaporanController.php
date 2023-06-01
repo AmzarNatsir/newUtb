@@ -61,43 +61,43 @@ class PelaporanController extends Controller
             <td colspan='8' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total_net, 0)."</b></td>
         ";
-        if(count($result_receive)>0)
-        {
-            $nom_summary=1;
-            $total_qty_summary=0;
-            $total_harga_summary=0;
-            $query_summary = \DB::table('receive_head')
-                            ->selectRaw('common_product.kode, common_product.nama_produk, SUM(receive_detail.qty) as total, SUM(receive_detail.sub_total_net) as harga')
-                            ->join('receive_detail', 'receive_detail.head_id', '=', 'receive_head.id')
-                            ->join('common_product', 'common_product.id', '=', 'receive_detail.produk_id')
-                            ->whereNull('receive_head.deleted_at')
-                            ->whereDate('receive_head.tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('receive_head.tgl_invoice', '<=', $tgl_akhir)
-                            ->groupBy('receive_detail.produk_id')
-                            ->orderByDesc('total')
-                            ->get();
-            foreach($query_summary as $summary)
-            {
-                $html_summary .="<tr>
-                <td style='text-align: center;'>".$nom_summary."</td>
-                <td>".$summary->nama_produk."</td>
-                <td style='text-align: center;'>".$summary->total."</td>
-                <td style='text-align: right;'><b>".number_format($summary->harga, 0)."</b></td>
-                </tr>";
-                $nom_summary++;
-                $total_qty_summary+=$summary->total;
-                $total_harga_summary+=$summary->harga;
-            }
-            $html_summary .= "<tr>
-                <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
-                <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
-                <td style='text-align: right;'><b>".number_format($total_harga_summary, 0)."</b></td>
-            ";
-        } else {
-            $html_summary .= "<tr>
-                <td colspan='4' style='text-align: center;'><b>Data masih kosong</b></td>
-            ";
-        }
+        // if(count($result_receive)>0)
+        // {
+        //     $nom_summary=1;
+        //     $total_qty_summary=0;
+        //     $total_harga_summary=0;
+        //     $query_summary = \DB::table('receive_head')
+        //                     ->selectRaw('common_product.kode, common_product.nama_produk, SUM(receive_detail.qty) as total, SUM(receive_detail.sub_total_net) as harga')
+        //                     ->join('receive_detail', 'receive_detail.head_id', '=', 'receive_head.id')
+        //                     ->join('common_product', 'common_product.id', '=', 'receive_detail.produk_id')
+        //                     ->whereNull('receive_head.deleted_at')
+        //                     ->whereDate('receive_head.tgl_invoice', '>=', $tgl_awal)
+        //                     ->whereDate('receive_head.tgl_invoice', '<=', $tgl_akhir)
+        //                     ->groupBy('receive_detail.produk_id')
+        //                     ->orderByDesc('total')
+        //                     ->get();
+        //     foreach($query_summary as $summary)
+        //     {
+        //         $html_summary .="<tr>
+        //         <td style='text-align: center;'>".$nom_summary."</td>
+        //         <td>".$summary->nama_produk."</td>
+        //         <td style='text-align: center;'>".$summary->total."</td>
+        //         <td style='text-align: right;'><b>".number_format($summary->harga, 0)."</b></td>
+        //         </tr>";
+        //         $nom_summary++;
+        //         $total_qty_summary+=$summary->total;
+        //         $total_harga_summary+=$summary->harga;
+        //     }
+        //     $html_summary .= "<tr>
+        //         <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
+        //         <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
+        //         <td style='text-align: right;'><b>".number_format($total_harga_summary, 0)."</b></td>
+        //     ";
+        // } else {
+        //     $html_summary .= "<tr>
+        //         <td colspan='4' style='text-align: center;'><b>Data masih kosong</b></td>
+        //     ";
+        // }
 
         return response()
             ->json([
