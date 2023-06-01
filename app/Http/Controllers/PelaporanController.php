@@ -100,13 +100,13 @@ class PelaporanController extends Controller
     //         ";
     //     }
 
-    //     return response()
-    //         ->json([
-    //             'all_result' => $html,
-    //             'result_summary' => $html_summary,
-    //             'periode' => "Periode : ".$request->ket_periode
-    //         ])
-    //         ->withCallback($request->input('callback'));
+        return response()
+            ->json([
+                'all_result' => $html,
+                'result_summary' => $html_summary,
+                'periode' => "Periode : ".$request->ket_periode
+            ])
+            ->withCallback($request->input('callback'));
         
     }
 
