@@ -50,52 +50,30 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-12">
                 <div class="card card-warning">
                     <div class="card-body">
                         <table class="table table-bordered table-hover table-responsive" style="font-size: 10pt; width: 100%;">
                             <thead>
                             <tr>
-                                <td style="text-align: left;" colspan="9"><h4>Laporan Pembelian</h4>
+                                <td style="text-align: left;" colspan="10"><h4>Laporan Pembelian</h4>
                                 <p class="lbl_periode"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <th style="width: 5%; text-align: center;">Act</th>
                                 <th style="width: 5%; text-align: center;">No.</th>
-                                <th style="width: 10%; text-align: center;">No.Invoce</th>
+                                <th style="width: 15%; text-align: center;">No.Invoce</th>
                                 <th style="width: 10%; text-align: center;">Tgl.Invoce</th>
                                 <th style="width: 10%; text-align: center;">Tgl.Tiba</th>
                                 <th>Supplier</th>
                                 <th style="width: 15%; text-align: center;">Total</th>
                                 <th style="width: 5%; text-align:right">Diskon</th>
                                 <th style="width: 5%; text-align:right">Ppn</th>
-                                <th style="width: 15%; text-align:right">Total Net</th>
+                                <th style="width: 10%; text-align:right">Total Net</th>
                             </tr>
                             </thead>
                             <tbody class="viewList"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="card card-warning">
-                    <div class="card-body">
-                        <table class="table table-bordered table-hover  table-responsive" style="font-size: 10pt; width: 100%;" id="table_pembelian">
-                            <thead>
-                            <tr>
-                                <td style="text-align: left;" colspan="9"><h4>Summary Pembelian</h4>
-                                <p class="lbl_periode_summary"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th style="width: 5%; text-align: center;">No.</th>
-                                <th>Nama Produk</th>
-                                <th style="width: 10%; text-align: center;">Qty</th>
-                                <th style="width: 20%; text-align:right">Harga</th>
-                            </tr>
-                            </thead>
-                            <tbody class="viewListSummary"></tbody>
                         </table>
                     </div>
                 </div>
@@ -143,15 +121,12 @@
                 beforeSend: function()
                 {
                     $(".viewList").empty();
-                    $(".viewListSummary").empty();
                     $("#loaderDiv").show();
                 },
                 success: function(response)
                 {
                     $(".viewList").html(response.all_result);
-                    $(".viewListSummary").html(response.result_summary);
                     $(".lbl_periode").html(response.periode);
-                    $(".lbl_periode_summary").html(response.periode);
                     $("#loaderDiv").hide();
                 }
             });

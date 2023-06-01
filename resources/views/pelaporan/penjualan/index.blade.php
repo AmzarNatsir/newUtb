@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8  ">
+            <div class="col-md-12">
                 <div class="card card-warning">
                     <div class="card-body">
                         <table class="table table-bordered table-hover  table-responsive" style="font-size: 10pt; width: 100%;" id="table_penjualan">
@@ -74,28 +74,6 @@
                             </tr>
                             </thead>
                             <tbody class="viewList"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-warning">
-                    <div class="card-body">
-                        <table class="table table-bordered table-hover  table-responsive" style="font-size: 10pt; width: 100%;" id="table_penjualan">
-                            <thead>
-                            <tr>
-                                <td style="text-align: left;" colspan="9"><h4>Summary Penjualan</h4>
-                                <p class="lbl_periode_summary"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th style="width: 5%; text-align: center;">No.</th>
-                                <th>Nama Produk</th>
-                                <th style="width: 10%; text-align: center;">Qty</th>
-                                <th style="width: 20%; text-align:right">Harga</th>
-                            </tr>
-                            </thead>
-                            <tbody class="viewListSummary"></tbody>
                         </table>
                     </div>
                 </div>
@@ -141,15 +119,12 @@
             beforeSend: function()
             {
                 $(".viewList").empty();
-                $(".viewListSummary").empty();
                 $("#loaderDiv").show();
             },
             success: function(response)
             {
                 $(".viewList").html(response.all_result);
-                $(".viewListSummary").html(response.result_summary);
                 $(".lbl_periode").html(response.periode);
-                $(".lbl_periode_summary").html(response.periode);
                 $("#loaderDiv").hide();
             }
         });

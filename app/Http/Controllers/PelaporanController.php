@@ -38,7 +38,7 @@ class PelaporanController extends Controller
         $nom=1;
         $total_net = 0;
         $html="";
-        $html_summary="";
+        // $html_summary="";
         foreach($result_receive as $list)
         {
             $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
@@ -59,51 +59,12 @@ class PelaporanController extends Controller
             $total_net+=$list->total_receive_net;
         }
         $html .= "<tr>
-            <td colspan='8' style='text-align: right;'><b>TOTAL</b></td>
+            <td colspan='9' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total_net, 0)."</b></td>
         ";
-    //     if(count($result_receive)>0)
-    //     {
-    //         $nom_summary=1;
-    //         $total_qty_summary=0;
-    //         $total_harga_summary=0;
-    //         $query_summary = \DB::table('receive_head')
-    //                         ->selectRaw('common_product.kode, common_product.nama_produk, SUM(receive_detail.qty) as total, SUM(receive_detail.sub_total_net) as harga')
-    //                         ->join('receive_detail', 'receive_detail.head_id', '=', 'receive_head.id')
-    //                         ->join('common_product', 'common_product.id', '=', 'receive_detail.produk_id')
-    //                         ->whereNull('receive_head.deleted_at')
-    //                         ->whereDate('receive_head.tgl_tiba', '>=', $tgl_awal)
-    //                         ->whereDate('receive_head.tgl_tiba', '<=', $tgl_akhir)
-    //                         ->groupBy('receive_detail.produk_id')
-    //                         ->orderByDesc('total')
-    //                         ->get();
-    //         foreach($query_summary as $summary)
-    //         {
-    //             $html_summary .="<tr>
-    //             <td style='text-align: center;'>".$nom_summary."</td>
-    //             <td>".$summary->nama_produk."</td>
-    //             <td style='text-align: center;'>".$summary->total."</td>
-    //             <td style='text-align: right;'><b>".number_format($summary->harga, 0)."</b></td>
-    //             </tr>";
-    //             $nom_summary++;
-    //             $total_qty_summary+=$summary->total;
-    //             $total_harga_summary+=$summary->harga;
-    //         }
-    //         $html_summary .= "<tr>
-    //             <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
-    //             <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
-    //             <td style='text-align: right;'><b>".number_format($total_harga_summary, 0)."</b></td>
-    //         ";
-    //     } else {
-    //         $html_summary .= "<tr>
-    //             <td colspan='4' style='text-align: center;'><b>Data masih kosong</b></td>
-    //         ";
-    //     }
-
         return response()
             ->json([
                 'all_result' => $html,
-                'result_summary' => $html_summary,
                 'periode' => "Periode : ".$request->ket_periode
             ])
             ->withCallback($request->input('callback'));
@@ -125,8 +86,8 @@ class PelaporanController extends Controller
         $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
         $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
         
-        $result = ReceiveHeadModel::whereDate('tgl_invoice', '>=', $tgl_1)
-                        ->whereDate('tgl_invoice', '<=', $tgl_2)->get();
+        $result = ReceiveHeadModel::whereDate('tgl_tiba', '>=', $tgl_1)
+                        ->whereDate('tgl_tiba', '<=', $tgl_2)->get();
 
         $pdf = PDF::loadview('pelaporan.pembelian.print', [
             'list_data' => $result,
@@ -151,10 +112,9 @@ class PelaporanController extends Controller
         $nom=1;
         $total_net = 0;
         $html="";
-        $html_summary="";
         foreach($result as $list)
         {
-            $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button><button type="button" class="btn btn-block btn-outline-success btn-sm" name="tbl-invoice[]" id="tbl-invoice" title="Klik untuk melihat detail" onClick="goPrintInvoice(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-print"></i></button>';
+            $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
 
             $html .= "<tr>
             <td style='text-align: center;'>".$tbl_aksi."</td>
@@ -175,49 +135,9 @@ class PelaporanController extends Controller
             <td colspan='9' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'>".number_format($total_net, 0)."</td>
         ";
-        if(count($result)>0)
-        {
-            $nom_summary=1;
-            $total_qty_summary=0;
-            $total_harga_summary=0;
-            $query_summary = \DB::table('jual_head')
-                            ->selectRaw('common_product.kode, common_product.nama_produk, SUM(jual_detail.qty) as total, SUM(jual_detail.sub_total_net) as harga')
-                            ->join('jual_detail', 'jual_detail.head_id', '=', 'jual_head.id')
-                            ->join('common_product', 'common_product.id', '=', 'jual_detail.produk_id')
-                            ->whereNull('jual_head.deleted_at')
-                            ->whereNULL('jual_head.jenis_jual')
-                            // ->whereBetween('penjualan_head.tgl_trans', [$tgl_awal, $tgl_akhir])
-                            ->whereDate('jual_head.tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('jual_head.tgl_invoice', '<=', $tgl_akhir)
-                            ->groupBy('jual_detail.produk_id')
-                            ->orderByDesc('total')
-                            ->get();
-            foreach($query_summary as $summary)
-            {
-                $html_summary .="<tr>
-                <td style='text-align: center;'>".$nom_summary."</td>
-                <td>".$summary->nama_produk."</td>
-                <td style='text-align: center;'>".$summary->total."</td>
-                <td style='text-align: right;'>".number_format($summary->harga, 0)."</td>
-                </tr>";
-                $nom_summary++;
-                $total_qty_summary+=$summary->total;
-                $total_harga_summary+=$summary->harga;
-            }
-            $html_summary .= "<tr>
-                <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
-                <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
-                <td style='text-align: right;'><b>".number_format($total_harga_summary, 0)."</b></td>
-            ";
-        } else {
-            $html_summary .= "<tr>
-            <td colspan='4' style='text-align: center;'><b>Data masih kosong</b></td>
-        ";
-        }
         return response()
             ->json([
                 'all_result' => $html,
-                'result_summary' => $html_summary,
                 'periode' => "Periode : ".$request->ket_periode
             ])
             ->withCallback($request->input('callback'));

@@ -33,8 +33,9 @@
     <thead>
     <tr style="background-color: #808080; color:azure">
         <th style="width: 5%; text-align: center; height: 30px">No.</th>
-        <th style="width: 10%; text-align: center;">Tgl.Invoce</th>
         <th style="width: 10%; text-align: center;">No.Invoce</th>
+        <th style="width: 10%; text-align: center;">Tgl.Invoce</th>
+        <th style="width: 10%; text-align: center;">Tgl.Tiba</th>
         <th>Supplier</th>
         <th style="width: 12%; text-align: center;">Total (Rp)</th>
         <th style="width: 8%; text-align:right">Diskon&nbsp;(%)</th>
@@ -49,8 +50,9 @@
     @foreach($list_data as $list)
     <tr>
         <td style='text-align: center; height: 25px;'>{{ $no_urut }}</td>
-        <td style='text-align: center;'>{{ $list->tanggal_receive }}</td>
-        <td style='text-align: center;'>{{ $list->nomor_receive }}</td>
+        <td style='text-align: center;'>{{ $list->no_invoice }}</td>
+        <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
+        <td style='text-align: center;'>{{ date_format(date_create($list->tgl_tiba), 'd-m-Y') }}</td>
         <td>{{ $list->get_supplier->nama_supplier }}</td>
         <td style='text-align: right;'>{{ number_format($list->total_receice, 0, ",", ".") }}</td>
         <td style='text-align: right;'>{{ $list->diskon_persen }}</td>
@@ -58,7 +60,7 @@
         <td style='text-align: right;'>{{ number_format($list->total_receive_net, 0, ",", ".") }}</td>
     </tr>
     <tr>
-        <td colspan="8">
+        <td colspan="9">
             <table style="width: 100%; border-collapse: collapse;" border="1">
             <tr style="background-color: #D3D3D3;">
                 <th style="width: 30%;">Cara Bayar</th>
@@ -75,7 +77,7 @@
     </tr>
     @if($check_view_detail=='true')
     <tr>
-        <td colspan="8">
+        <td colspan="9">
         <table class="table-bordered table-vcenter"style="font-size: 8pt; width: 100%;">
             <tr>
                 <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
@@ -118,7 +120,7 @@
     $total+=$list->total_receive_net; @endphp
     @endforeach
     <tr style="background-color: #808080; color:azure">
-        <td colspan="7" class="text-right"><b>TOTAL</b></td>
+        <td colspan="8" class="text-right"><b>TOTAL</b></td>
         <td style='text-align: right; height:30px'><b>{{ number_format($total, 0, ",", ".") }}</b></td>
     </tr>
     </tbody>
