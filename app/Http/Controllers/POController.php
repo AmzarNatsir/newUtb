@@ -25,6 +25,7 @@ class POController extends Controller
         $data = [
             'all_po' => $q_po
         ];
+
         return view('po.index', $data);
     }
 

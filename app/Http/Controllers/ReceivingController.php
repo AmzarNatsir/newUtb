@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KontainerModel;
 use App\Models\POHeadModel;
 use App\Models\ProductModel;
 use App\Models\ReceiveDetailModel;
@@ -31,8 +32,10 @@ class ReceivingController extends Controller
     public function add($id)
     {
         $q_head = POHeadModel::find($id);
+        $allKontainer = KontainerModel::all();
         $data = [
-            'resHead' => $q_head
+            'resHead' => $q_head,
+            'listKontainer' => $allKontainer
         ];
         return view('receiving.add', $data);
     }
@@ -58,6 +61,7 @@ class ReceivingController extends Controller
             $save_head->total_receive_net = str_replace(",","", $request->inputTotalNet);
             $save_head->cara_bayar = $request->inp_carabayar;
             $save_head->user_id = auth()->user()->id;
+            $save_head->kontainer_id = $request->sel_kontainer;
             $save_head->invoice_kontainer = $request->inp_invoice_kontainer;
             $save_head->nilai_kontainer = str_replace(",","", $request->inp_ongkir_kontainer);
             $save_head->tgl_tiba = ($request->inpTglTiba=="") ? NULL : date("Y-m-d", strtotime(str_replace("/", "-", $request->inpTglTiba)));

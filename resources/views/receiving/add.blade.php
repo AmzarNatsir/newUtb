@@ -186,18 +186,13 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="inpTglTiba">Tanggal Tiba</label>
-                                    <div class="input-group date" id="inpTglTiba">
-                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglTiba" name="inpTglTiba" required />
-                                        <div class="input-group-append" >
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="sel_kontainer">Kontainer</label>
+                            <select class="form-control select2bs4" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" placeholder="Pilihan Kontainer" required>   
+                                @foreach($listKontainer as $kontainer)
+                                <option value="{{ $kontainer->id }}">{{ $kontainer->nama_kontainer }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -213,6 +208,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inpTglTiba">Tanggal Tiba</label>
+                                    <div class="input-group date" id="inpTglTiba">
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglTiba" name="inpTglTiba" required />
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

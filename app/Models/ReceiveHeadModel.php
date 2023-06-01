@@ -31,7 +31,8 @@ class ReceiveHeadModel extends Model
         'user_id',
         'invoice_kontainer',
         'nilai_kontainer',
-        'tgl_tiba'
+        'tgl_tiba',
+        'kontainer_id'
     ];
 
     public function get_supplier()
