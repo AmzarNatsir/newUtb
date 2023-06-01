@@ -13,7 +13,7 @@ class GlobalServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       //  require_once app_path() . '/Helpers/GlobalHelp.php';
+        // require_once app_path() . '/Helpers/helper.php';
     }
 
     /**

@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-// use App\Helpers\Helper;
 use Illuminate\Http\Request;
+use App\Helpers\Helper;
 
 class DashbaordController extends Controller
 {
@@ -14,9 +13,9 @@ class DashbaordController extends Controller
 
     public function index()
     {
+        // Helper::getUser(1);
         // $data = [
-        //     'hari_ini' => Helper::getHariIndonesia(date('D')),
-        //     'bulan_ini' => Helper::getBulanIndonesia(date('m'))
+        //     'hari_ini' => AllHelper::getUser(1)
         // ];
         return view('dashboard.index');
     }

@@ -50,7 +50,7 @@ class POController extends Controller
             $save_head->keterangan = $request->inp_keterangan;
             $save_head->ppn_persen = $request->inputTotal_PpnPersen;
             $save_head->ppn_rupiah = str_replace(",","", $request->inputTotal_DiskRupiah);
-            $save_head->diskon_persen = $request->inputKeterangan;
+            $save_head->diskon_persen = $request->inputTotal_DiskPersen;
             $save_head->diskon_rupiah = str_replace(",","", $request->inputTotal_PpnRupiah);
             $save_head->total_po = str_replace(",","", $request->inputTotal);
             $save_head->total_po_net = str_replace(",","", $request->inputTotalNet);
@@ -124,7 +124,7 @@ class POController extends Controller
             $update_head->keterangan = $request->inp_keterangan;
             $update_head->ppn_persen = $request->inputTotal_PpnPersen;
             $update_head->ppn_rupiah = str_replace(",","", $request->inputTotal_DiskRupiah);
-            $update_head->diskon_persen = $request->inputKeterangan;
+            $update_head->diskon_persen = $request->inputTotal_DiskPersen;
             $update_head->diskon_rupiah = str_replace(",","", $request->inputTotal_PpnRupiah);
             $update_head->total_po = str_replace(",","", $request->inputTotal);
             $update_head->total_po_net = str_replace(",","", $request->inputTotalNet);

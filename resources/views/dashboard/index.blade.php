@@ -61,7 +61,7 @@
             <div class="col-md-12">
                 <div class="card card-success">
                     <div class="card-header">
-                        <h5 class="card-title">Grafik Penjualan</h5>
+                        <h5 class="card-title">Aktifitas hari ini</h5>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body row">
@@ -70,7 +70,7 @@
                                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Pembelian</span>
-                                    <span class="info-box-number">760</span>
+                                    <span class="info-box-number">760 | Rp. </span>
                                 </div>
                             <!-- /.info-box-content -->
                             </div>
@@ -81,7 +81,7 @@
                                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Penjualan</span>
-                                    <span class="info-box-number">760</span>
+                                    <span class="info-box-number">760 | Rp. </span>
                                 </div>
                             <!-- /.info-box-content -->
                             </div>
@@ -92,7 +92,7 @@
                                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Return Pembelian</span>
-                                    <span class="info-box-number">760</span>
+                                    <span class="info-box-number">760 | Rp. </span>
                                 </div>
                             <!-- /.info-box-content -->
                             </div>
@@ -103,12 +103,26 @@
                                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Return Penjualan</span>
-                                    <span class="info-box-number">760</span>
+                                    <span class="info-box-number">760 | Rp. </span>
                                 </div>
                             <!-- /.info-box-content -->
                             </div>
                             <!-- /.info-box -->
                         </div>
+                    </div>
+                </div>
+            </div>
+          <!-- ./col -->
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h5 class="card-title">Grafik Penjualan</h5>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body row">
+                        
                     </div>
                 </div>
             </div>

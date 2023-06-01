@@ -214,7 +214,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        // 'GlobalHelp' => App\Helpers\Helper::class,
+
+        'Helper' => App\Helpers\Helper::class,
+
     ])->toArray(),
 
 ];
