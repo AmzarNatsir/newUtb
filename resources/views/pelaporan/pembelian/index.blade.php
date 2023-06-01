@@ -65,6 +65,7 @@
                                 <th style="width: 5%; text-align: center;">No.</th>
                                 <th style="width: 10%; text-align: center;">No.Invoce</th>
                                 <th style="width: 10%; text-align: center;">Tgl.Invoce</th>
+                                <th style="width: 10%; text-align: center;">Tgl.Tiba</th>
                                 <th>Supplier</th>
                                 <th style="width: 15%; text-align: center;">Total</th>
                                 <th style="width: 5%; text-align:right">Diskon</th>

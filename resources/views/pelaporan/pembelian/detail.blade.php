@@ -20,7 +20,7 @@
         <th style="width: 50%;">Invoice Supplier Nomor : {{ $head->no_invoice }} - Tanggal : {{ date_format(date_create($head->tgl_invoice), 'd-m-Y') }}</th>
         </tr>
         <tr>
-            <th>Customer : {{ $head->get_supplier->nama_supplier }}</th>
+            <th>Supplier : {{ $head->get_supplier->nama_supplier }}</th>
             <th>Pembayaran Via : {{ $ket_cara_bayar }}</th>
         </tr>
         <tr>
