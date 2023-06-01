@@ -15,6 +15,7 @@ use App\Http\Controllers\Client\App;
 use App\Http\Controllers\DashbaordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\KontainerController;
 use App\Http\Controllers\ReturnController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
@@ -87,6 +88,14 @@ Route::post('customerStore', [CustomerController::class, 'store'])->name("custom
 Route::get('customerEdit/{id}', [CustomerController::class, 'edit'])->name("customerEdit");
 Route::put('customerUpdate/{id}', [CustomerController::class, 'update'])->name('customerUpdate');
 Route::get('customerDelete/{id}', [CustomerController::class, 'delete'])->name('customerDelete');
+
+//Common Kontainer
+Route::get('kontainer', [KontainerController::class, 'index'])->name('kontainer');
+Route::get('kontainerAdd', [KontainerController::class, 'add'])->name("kontainerAdd");
+Route::post('kontainerStore', [KontainerController::class, 'store'])->name("kontainerStore");
+Route::get('kontainerEdit/{id}', [KontainerController::class, 'edit'])->name("kontainerEdit");
+Route::put('kontainerUpdate/{id}', [KontainerController::class, 'update'])->name('kontainerUpdate');
+Route::get('kontainerDelete/{id}', [KontainerController::class, 'delete'])->name('kontainerDelete');
 
 //Manajemen Stok
 Route::get('daftarStok', [ProductController::class, 'list_stok'])->name('daftarStok');
