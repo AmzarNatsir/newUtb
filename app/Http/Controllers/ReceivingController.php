@@ -60,6 +60,7 @@ class ReceivingController extends Controller
             $save_head->user_id = auth()->user()->id;
             $save_head->invoice_kontainer = $request->inp_invoice_kontainer;
             $save_head->nilai_kontainer = str_replace(",","", $request->inp_ongkir_kontainer);
+            $save_head->tgl_tiba = ($request->inpTglTiba=="") ? NULL : date("Y-m-d", strtotime(str_replace("/", "-", $request->inpTglTiba)));
             $save_head->save();
             $id_head = $save_head->id;
             //store detail

@@ -189,6 +189,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="inpTglTiba">Tanggal Tiba</label>
+                                    <div class="input-group date" id="inpTglTiba">
+                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglTiba" name="inpTglTiba" />
+                                        <div class="input-group-append" >
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="inp_nomor">Nomor Invoice Kontainer</label>
                                     <input type="text" class="form-control" name="inp_invoice_kontainer" id="inp_invoice_kontainer" maxlength="50">
                                 </div>

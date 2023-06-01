@@ -30,7 +30,8 @@ class ReceiveHeadModel extends Model
         'tgl_jatuh_tempo',
         'user_id',
         'invoice_kontainer',
-        'nilai_kontainer'
+        'nilai_kontainer',
+        'tgl_tiba'
     ];
 
     public function get_supplier()
