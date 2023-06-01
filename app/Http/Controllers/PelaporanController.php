@@ -32,8 +32,8 @@ class PelaporanController extends Controller
     {
         $tgl_awal = $request->tgl_1;
         $tgl_akhir = $request->tgl_2;
-        $result_receive = ReceiveHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-        ->whereDate('tgl_invoice', '<=', $tgl_akhir)->get();
+        $result_receive = ReceiveHeadModel::whereDate('tgl_tiba', '>=', $tgl_awal)
+        ->whereDate('tgl_tiba', '<=', $tgl_akhir)->get();
 
         $nom=1;
         $total_net = 0;
@@ -48,6 +48,7 @@ class PelaporanController extends Controller
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".$list->no_invoice."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_invoice), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_tiba), 'd-m-Y')."</td>
             <td>".$list->get_supplier->nama_supplier."</td>
             <td style='text-align: right;'>".number_format($list->total_receice, 0)."</td>
             <td style='text-align: right;'>".$list->diskon_persen."</td>
@@ -61,43 +62,43 @@ class PelaporanController extends Controller
             <td colspan='8' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total_net, 0)."</b></td>
         ";
-        // if(count($result_receive)>0)
-        // {
-        //     $nom_summary=1;
-        //     $total_qty_summary=0;
-        //     $total_harga_summary=0;
-        //     $query_summary = \DB::table('receive_head')
-        //                     ->selectRaw('common_product.kode, common_product.nama_produk, SUM(receive_detail.qty) as total, SUM(receive_detail.sub_total_net) as harga')
-        //                     ->join('receive_detail', 'receive_detail.head_id', '=', 'receive_head.id')
-        //                     ->join('common_product', 'common_product.id', '=', 'receive_detail.produk_id')
-        //                     ->whereNull('receive_head.deleted_at')
-        //                     ->whereDate('receive_head.tgl_invoice', '>=', $tgl_awal)
-        //                     ->whereDate('receive_head.tgl_invoice', '<=', $tgl_akhir)
-        //                     ->groupBy('receive_detail.produk_id')
-        //                     ->orderByDesc('total')
-        //                     ->get();
-        //     foreach($query_summary as $summary)
-        //     {
-        //         $html_summary .="<tr>
-        //         <td style='text-align: center;'>".$nom_summary."</td>
-        //         <td>".$summary->nama_produk."</td>
-        //         <td style='text-align: center;'>".$summary->total."</td>
-        //         <td style='text-align: right;'><b>".number_format($summary->harga, 0)."</b></td>
-        //         </tr>";
-        //         $nom_summary++;
-        //         $total_qty_summary+=$summary->total;
-        //         $total_harga_summary+=$summary->harga;
-        //     }
-        //     $html_summary .= "<tr>
-        //         <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
-        //         <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
-        //         <td style='text-align: right;'><b>".number_format($total_harga_summary, 0)."</b></td>
-        //     ";
-        // } else {
-        //     $html_summary .= "<tr>
-        //         <td colspan='4' style='text-align: center;'><b>Data masih kosong</b></td>
-        //     ";
-        // }
+        if(count($result_receive)>0)
+        {
+            $nom_summary=1;
+            $total_qty_summary=0;
+            $total_harga_summary=0;
+            $query_summary = \DB::table('receive_head')
+                            ->selectRaw('common_product.kode, common_product.nama_produk, SUM(receive_detail.qty) as total, SUM(receive_detail.sub_total_net) as harga')
+                            ->join('receive_detail', 'receive_detail.head_id', '=', 'receive_head.id')
+                            ->join('common_product', 'common_product.id', '=', 'receive_detail.produk_id')
+                            ->whereNull('receive_head.deleted_at')
+                            ->whereDate('receive_head.tgl_tiba', '>=', $tgl_awal)
+                            ->whereDate('receive_head.tgl_tiba', '<=', $tgl_akhir)
+                            ->groupBy('receive_detail.produk_id')
+                            ->orderByDesc('total')
+                            ->get();
+            foreach($query_summary as $summary)
+            {
+                $html_summary .="<tr>
+                <td style='text-align: center;'>".$nom_summary."</td>
+                <td>".$summary->nama_produk."</td>
+                <td style='text-align: center;'>".$summary->total."</td>
+                <td style='text-align: right;'><b>".number_format($summary->harga, 0)."</b></td>
+                </tr>";
+                $nom_summary++;
+                $total_qty_summary+=$summary->total;
+                $total_harga_summary+=$summary->harga;
+            }
+            $html_summary .= "<tr>
+                <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
+                <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
+                <td style='text-align: right;'><b>".number_format($total_harga_summary, 0)."</b></td>
+            ";
+        } else {
+            $html_summary .= "<tr>
+                <td colspan='4' style='text-align: center;'><b>Data masih kosong</b></td>
+            ";
+        }
 
         return response()
             ->json([
@@ -269,7 +270,7 @@ class PelaporanController extends Controller
             //+
             $qty_pembelian_awal = \DB::table('receive_head')
                                 ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
-                                ->whereDate('receive_head.tgl_invoice', '<', $tgl_1)
+                                ->whereDate('receive_head.tgl_tiba', '<', $tgl_1)
                                 ->where('receive_detail.produk_id', $list->id)
                                 ->whereNull('receive_head.deleted_at')
                                 ->selectRaw('sum(receive_detail.qty) as t_pembelian_awal')
@@ -315,8 +316,8 @@ class PelaporanController extends Controller
             //stok masuk
             $qty_pembelian = \DB::table('receive_head')
                     ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
-                    ->whereDate('receive_head.tgl_invoice', '>=', $tgl_1)
-                    ->whereDate('receive_head.tgl_invoice', '<=', $tgl_2)
+                    ->whereDate('receive_head.tgl_tiba', '>=', $tgl_1)
+                    ->whereDate('receive_head.tgl_tiba', '<=', $tgl_2)
                     ->where('receive_detail.produk_id', $list->id)
                     ->whereNull('receive_head.deleted_at')
                     ->selectRaw('sum(receive_detail.qty) as t_pembelian')
