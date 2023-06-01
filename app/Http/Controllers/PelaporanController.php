@@ -32,8 +32,8 @@ class PelaporanController extends Controller
     {
         $tgl_awal = $request->tgl_1;
         $tgl_akhir = $request->tgl_2;
-        $result_receive = ReceiveHeadModel::whereDate('tanggal_receive', '>=', $tgl_awal)
-        ->whereDate('tanggal_receive', '<=', $tgl_akhir)->get();
+        $result_receive = ReceiveHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
+        ->whereDate('tgl_invoice', '<=', $tgl_akhir)->get();
 
         $nom=1;
         $total_net = 0;
@@ -71,8 +71,8 @@ class PelaporanController extends Controller
                             ->join('receive_detail', 'receive_detail.head_id', '=', 'receive_head.id')
                             ->join('common_product', 'common_product.id', '=', 'receive_detail.produk_id')
                             ->whereNull('receive_head.deleted_at')
-                            ->whereDate('receive_head.tanggal_receive', '>=', $tgl_awal)
-                            ->whereDate('receive_head.tanggal_receive', '<=', $tgl_akhir)
+                            ->whereDate('receive_head.tgl_invoice', '>=', $tgl_awal)
+                            ->whereDate('receive_head.tgl_invoice', '<=', $tgl_akhir)
                             ->groupBy('receive_detail.produk_id')
                             ->orderByDesc('total')
                             ->get();
@@ -269,7 +269,7 @@ class PelaporanController extends Controller
             //+
             $qty_pembelian_awal = \DB::table('receive_head')
                                 ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
-                                ->whereDate('receive_head.tanggal_receive', '<', $tgl_1)
+                                ->whereDate('receive_head.tgl_invoice', '<', $tgl_1)
                                 ->where('receive_detail.produk_id', $list->id)
                                 ->whereNull('receive_head.deleted_at')
                                 ->selectRaw('sum(receive_detail.qty) as t_pembelian_awal')
@@ -315,8 +315,8 @@ class PelaporanController extends Controller
             //stok masuk
             $qty_pembelian = \DB::table('receive_head')
                     ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
-                    ->whereDate('receive_head.tanggal_receive', '>=', $tgl_1)
-                    ->whereDate('receive_head.tanggal_receive', '<=', $tgl_2)
+                    ->whereDate('receive_head.tgl_invoice', '>=', $tgl_1)
+                    ->whereDate('receive_head.tgl_invoice', '<=', $tgl_2)
                     ->where('receive_detail.produk_id', $list->id)
                     ->whereNull('receive_head.deleted_at')
                     ->selectRaw('sum(receive_detail.qty) as t_pembelian')
@@ -402,7 +402,7 @@ class PelaporanController extends Controller
             //+
             $qty_pembelian_awal = \DB::table('receive_head')
                                 ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
-                                ->whereDate('receive_head.tanggal_receive', '<', $tgl_1)
+                                ->whereDate('receive_head.tgl_invoice', '<', $tgl_1)
                                 ->where('receive_detail.produk_id', $list->id)
                                 ->whereNull('receive_head.deleted_at')
                                 ->selectRaw('sum(receive_detail.qty) as t_pembelian_awal')
@@ -448,8 +448,8 @@ class PelaporanController extends Controller
             //stok masuk
             $qty_pembelian = \DB::table('receive_head')
                     ->join('receive_detail', 'receive_head.id', '=', 'receive_detail.head_id')
-                    ->whereDate('receive_head.tanggal_receive', '>=', $tgl_1)
-                    ->whereDate('receive_head.tanggal_receive', '<=', $tgl_2)
+                    ->whereDate('receive_head.tgl_invoice', '>=', $tgl_1)
+                    ->whereDate('receive_head.tgl_invoice', '<=', $tgl_2)
                     ->where('receive_detail.produk_id', $list->id)
                     ->whereNull('receive_head.deleted_at')
                     ->selectRaw('sum(receive_detail.qty) as t_pembelian')
