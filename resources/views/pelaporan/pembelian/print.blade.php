@@ -78,7 +78,7 @@
     @if($check_view_detail=='true')
     <tr>
         <td colspan="9">
-        <table class="table-bordered table-vcenter"style="font-size: 8pt; width: 100%;">
+        <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
             <tr>
                 <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
                 <th rowspan="2" style="vertical-align: middle;">Nama Produk</th>

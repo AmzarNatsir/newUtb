@@ -29,11 +29,11 @@
     </td>
 </tr>
 </table>
-<table style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1" cellpadding='10'>
+<table style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1" cellpadding='5'>
     <thead>
     <tr style="background-color: #808080; color:azure">
-        <th style="width: 5%; text-align: center; height: 30px" rowspan="2">No.</th>
-        <th style="width: 10%; text-align: center;" rowspan="2">Kode</th>
+        <th style="width: 5%; text-align: center; height: 25px" rowspan="2">No.</th>
+        <th style="width: 13%; text-align: center;" rowspan="2">Kode</th>
         <th rowspan="2">Nama Produk</th>
         <th style="width: 10%; text-align: center;" rowspan="2">Merk</th>
         <th style="width: 10%; text-align: center;" rowspan="2">Kemasan</th>

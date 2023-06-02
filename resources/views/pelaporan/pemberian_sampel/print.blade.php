@@ -36,6 +36,7 @@
         <th style="width: 10%; text-align: center;">Tgl.Invoice</th>
         <th>Customer</th>
         <th style="width: 15%; text-align: center;">Total Produk</th>
+        <th style="width: 25%; text-align: center;">Keterangan</th>
     </tr>
     </thead>
     <tbody>
@@ -49,10 +50,11 @@
         <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
         <td>{{ $list->get_customer->nama_customer }}</td>
         <td style='text-align: center;'>{{ $tot_qty }}</td>
+        <td>{{ $list->keterangan }}</td>
     </tr>
     @if($check_view_detail=='true')
     <tr>
-        <td colspan="4">
+        <td colspan="5">
         <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
             <tr>
                 <th class="text-center" style="width: 5%;">#</th>
@@ -80,7 +82,13 @@
         </td>
     </tr>
     @endif
+    $total+=$tot_qty; @endphp
     @endforeach
+    <tr style="background-color: #808080; color:azure">
+        <td colspan="3" class="text-right"><b>TOTAL</b></td>
+        <td style='text-align: center; height:30px'><b>{{ $total }}</b></td>
+        <td></td>
+    </tr>
     </tbody>
 </table>
 </main>

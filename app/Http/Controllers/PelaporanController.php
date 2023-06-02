@@ -468,6 +468,7 @@ class PelaporanController extends Controller
             <td style='text-align: center;'>".date_format(date_create($list->tgl_invoice), 'd-m-Y')."</td>
             <td>".$list->get_customer->nama_customer."</td>
             <td style='text-align: center;'>".$tot_qty."</td>
+            <td style='text-align: center;'>".$list->keterangan."</td>
             </tr>";
             $nom++;
             $total+=$tot_qty;
@@ -475,46 +476,12 @@ class PelaporanController extends Controller
         $html .= "<tr>
             <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: center;'>".$total."</td>
+            <td></td>
         ";
-        $nom_summary=1;
-        $total_qty_summary=0;
-        if(count($result)>0)
-        {
-            $query_summary = \DB::table('jual_head')
-                        ->selectRaw('common_product.nama_produk, SUM(jual_detail.qty) as total')
-                        ->join('jual_detail', 'jual_detail.head_id', '=', 'jual_head.id')
-                        ->join('common_product', 'common_product.id', '=', 'jual_detail.produk_id')
-                        ->whereNull('jual_head.deleted_at')
-                        ->where('jual_head.jenis_jual', 1)
-                        // ->whereBetween('penjualan_head.tgl_trans', [$tgl_awal, $tgl_akhir])
-                         ->whereDate('jual_head.tgl_invoice', '>=', $tgl_awal)
-                        ->whereDate('jual_head.tgl_invoice', '<=', $tgl_akhir)
-                        ->groupBy('jual_detail.produk_id')
-                        ->orderByDesc('total')
-                        ->get();
-        foreach($query_summary as $summary)
-        {
-            $html_summary .="<tr>
-                <td style='text-align: center;'>".$nom_summary."</td>
-                <td>".$summary->nama_produk."</td>
-                <td style='text-align: center;'>".$summary->total."</td>
-                </tr>";
-                $nom_summary++;
-                $total_qty_summary+=$summary->total;
-            }
-            $html_summary .= "<tr>
-                <td colspan='2' style='text-align: right;'><b>TOTAL</b></td>
-                <td style='text-align: center;'><b>".$total_qty_summary."</b></td>
-            ";
-        } else {
-            $html_summary .= "<tr>
-                <td colspan='3' style='text-align: center;'><b>Data masih kosong</b></td>
-            ";
-        }
+        
         return response()
             ->json([
                 'all_result' => $html,
-                'result_summary' => $html_summary,
                 'periode' => "Periode : ".$request->ket_periode
             ])
             ->withCallback($request->input('callback'));
@@ -704,14 +671,12 @@ class PelaporanController extends Controller
             $ket_supplier = 'Semua Supplier';
             $result = HutangModel::whereDate('tgl_bayar', '>=', $tgl_awal)
                             ->whereDate('tgl_bayar', '<=', $tgl_akhir)
-                            ->whereIn('status_po', [1, 2])
                             ->orderby('tgl_bayar', 'asc')->get();
         } else {
             $ket_supplier = SupplierModel::find($supplier)->nama_supplier;
             $result = HutangModel::whereDate('tgl_bayar', '>=', $tgl_awal)
                             ->whereDate('tgl_bayar', '<=', $tgl_akhir)
                             ->where('supplier_id', $supplier)
-                            ->whereIn('status_po', [1, 2])
                             ->orderby('tgl_bayar', 'asc')->get();
         }
         

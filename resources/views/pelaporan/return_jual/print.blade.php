@@ -86,7 +86,7 @@
     @endif
     @php 
     $no_urut++;
-    $total+=$list->sub_total; @endphp
+    $total+=$list->total_return; @endphp
     @endforeach
     <tr style="background-color: #808080; color:azure">
         <td colspan="4" class="text-right"><b>TOTAL</b></td>

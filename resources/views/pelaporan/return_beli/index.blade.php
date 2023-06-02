@@ -5,7 +5,7 @@
 @routes
 <section class="content">
     <!-- Default box -->
-    <div class="card card-success">
+    <div class="card card-danger">
     <div class="card-header">
         <h3 class="card-title">Laporan Return Pembelian</h3>
     </div>
@@ -17,25 +17,40 @@
                         <h3 class="card-title"><i class="fa fa-search"></i> Filter Data</h3>
                     </div>
                     <div class="card-body">
-                        <div class="form-group row">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
-                                </span>
+                        <div class="form-group">
+                            <label for="searchTglTrans">Periode</label>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        </div>
+                                        <input class="form-control dtpicker input-sm" id="searchTglTrans_1" name="searchTglTrans_1" type="text" placeholder="Tanggal Awal">
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm float-right reservation" id="searchTglTrans" name="searchTglTrans">
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        </div>
+                                        <input class="form-control dtpicker input-sm" id="searchTglTrans_2" name="searchTglTrans_2" type="text" placeholder="Tanggal Akhir">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <button type="button" class="btn btn-success btn-sm" name="tbl-filter" id="tbl-filter" onclick="goFilter()"><i class="fa fa-search"></i> Filter</button>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="goPrint()"><i class="fa fa-print"></i> Print</button>
-                            <button class="btn btn-primary btn-sm" name="tbl-export" id="tbl-export" onclick="goExport('table_penjualan', 'laporan_penjualan')"><i class="fa fa-table"></i> Export</button>
-                            <button class="btn btn-danger btn-sm" type="button" id="loaderDiv" style="display: none">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" name="tbl-filter" id="tbl-filter" onclick="goFilter()"><i class="fa fa-search"></i> Filter</button>
+                            <button type="button" class="btn btn-danger" onclick="goPrint()"><i class="fa fa-print"></i> Print</button>
+                            <button class="btn btn-primary" name="tbl-export" id="tbl-export" onclick="goExport('table_penjualan', 'laporan_penjualan')"><i class="fa fa-table"></i> Export</button>
+                            <button class="btn btn-danger" type="button" id="loaderDiv" style="display: none">
                                 <i class="fa fa-asterisk fa-spin text-info"></i>
                             </button>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group">
                             <div class="form-group clearfix">
                                 <div class="icheck-success d-inline">
                                     <input type="checkbox" id="checkPpnPersen">
@@ -89,12 +104,11 @@
     $(function(){});
     var goFilter = function()
     {
-        var tgl_transaksi = $("#searchTglTrans").val().split(' - ');
-        var arr_tgl_1 = tgl_transaksi[0].split('-');
+        var arr_tgl_1 = $("#searchTglTrans_1").val().split('/');
         var tgl_1 = arr_tgl_1[2]+"-"+arr_tgl_1[1]+"-"+arr_tgl_1[0];
-        var arr_tgl_2 = tgl_transaksi[1].split('-');
+        var arr_tgl_2 = $("#searchTglTrans_2").val().split('/');
         var tgl_2 = arr_tgl_2[2]+"-"+arr_tgl_2[1]+"-"+arr_tgl_2[0];
-        var ket_periode = tgl_transaksi[0]+" s/d "+tgl_transaksi[1];
+        var ket_periode = $("#searchTglTrans_1").val()+" s/d "+$("#searchTglTrans_2").val();
         var obj = {};
         obj.tgl_1 = tgl_1;
         obj.tgl_2 = tgl_2;
@@ -131,10 +145,9 @@
 
     var goPrint = function ()
     {
-        var tgl_transaksi = $("#searchTglTrans").val().split(' - ');
-        var arr_tgl_1 = tgl_transaksi[0].split('-');
+        var arr_tgl_1 = $("#searchTglTrans_1").val().split('/');
         var tgl_1 = arr_tgl_1[2]+"-"+arr_tgl_1[1]+"-"+arr_tgl_1[0];
-        var arr_tgl_2 = tgl_transaksi[1].split('-');
+        var arr_tgl_2 = $("#searchTglTrans_2").val().split('/');
         var tgl_2 = arr_tgl_2[2]+"-"+arr_tgl_2[1]+"-"+arr_tgl_2[0];
         if($("#checkPpnPersen").prop('checked')){
             var check_detail = 'true';
