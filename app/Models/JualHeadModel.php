@@ -28,7 +28,10 @@ class JualHeadModel extends Model
         'total_invoice_net',
         'status_invoice',
         'user_id',
-        'jenis_jual' //NULL: penjualan, 1. pemberian sample
+        'jenis_jual', //NULL: penjualan, 1. pemberian sample
+        'approved', //NULL : belum di approve, 1. Approved
+        'approved_by',
+        'approved_date'
     ];
 
     public function get_customer()
