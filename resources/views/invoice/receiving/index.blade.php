@@ -63,7 +63,7 @@
             <div class="col-md-8">
                 <div class="card card-warning">
                     <div class="card-body">
-                        <table class="table table-bordered table-hover  table-responsive" style="font-size: 11pt; width: 100%;" id="table_penjualan">
+                        <table class="table table-bordered table-hover table-responsive datatable" style="font-size: 11pt; width: 100%;" id="table_penjualan">
                             <thead>
                             <tr>
                                 <td style="text-align: left;" colspan="10"><h4>Daftar Invoice</h4>
