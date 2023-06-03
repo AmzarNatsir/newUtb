@@ -20,8 +20,8 @@
 <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }} ">
 <!-- daterange picker -->
 <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/daterangepicker/daterangepicker.css') }} ">
-<!-- <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/datepicker/datepicker.css') }} "> -->
+<link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/datepicker/datepicker.css') }} ">
 <!-- iCheck for checkboxes and radio inputs -->
 <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 <!-- <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/pace-progress/themes/black/pace-theme-flat-top.css') }}"> -->
-<link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/datepicker/dcalendar.picker.css') }} ">
+<!-- <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/datepicker/dcalendar.picker.css') }} "> -->

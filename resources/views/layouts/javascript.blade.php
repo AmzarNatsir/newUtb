@@ -28,9 +28,9 @@
 <script src="{{asset('assets/AdminLTE/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
 <!-- date-range-picker -->
 <script src="{{asset('assets/AdminLTE/plugins/daterangepicker/daterangepicker.js')}}"></script>
-<!-- <script src="{{asset('assets/AdminLTE/plugins/datepicker/bootstrap-datepicker.js')}}"></script> -->
+<script src="{{asset('assets/AdminLTE/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
 <script src="{{asset('assets/AdminLTE/plugins/number/jquery.number.js')}}"></script>
-<script src="{{asset('assets/AdminLTE/plugins/datepicker/dcalendar.picker.js')}}"></script>
+<!-- <script src="{{asset('assets/AdminLTE/plugins/datepicker/dcalendar.picker.js')}}"></script> -->
 <!-- ChartJS -->
 <script src="{{asset('assets/AdminLTE/plugins/chart.js/Chart.min.js')}}"></script>
 <!-- <script src="{{asset('assets/AdminLTE/plugins/pace-progress/pace.min.js') }}"></script> -->
