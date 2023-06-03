@@ -44,4 +44,9 @@ class ReceiveHeadModel extends Model
     {
         return $this->hasMany(ReceiveDetailModel::class, 'head_id', 'id');
     }
+
+    public function get_kontainer()
+    {
+        return $this->belongsTo(KontainerModel::class, 'kontainer_id', 'id');
+    }
 }

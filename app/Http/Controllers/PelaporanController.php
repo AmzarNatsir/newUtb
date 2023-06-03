@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomerModel;
+use App\Models\HutangKontainerModel;
 use App\Models\HutangModel;
 use App\Models\JualDetailModel;
 use App\Models\JualHeadModel;
+use App\Models\KontainerModel;
 use App\Models\PiutangModel;
 use App\Models\ProductModel;
 use App\Models\ReceiveDetailModel;
@@ -829,6 +831,97 @@ class PelaporanController extends Controller
             'list_data' => $result,
             'periode' => $ket_periode,
             'customer' => $ket_customer
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+    }
+
+    //laporan hutang kontainer
+    public function laporan_hutang_kontainer()
+    {
+        $data = [
+            'allKontainer' => KontainerModel::all()
+        ];
+        return view('pelaporan.hutang_kontainer.index', $data);
+    }
+
+    public function laporan_hutang_kontainer_filter(Request $request)
+    {
+        $kontainer = $request->selKontainer;
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+
+        if($kontainer==null)
+        {
+            $ket_kontainer = 'Semua Kontainer';
+            $result = HutangKontainerModel::whereDate('tgl_bayar', '>=', $tgl_awal)
+                            ->whereDate('tgl_bayar', '<=', $tgl_akhir)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        } else {
+            $ket_kontainer = KontainerModel::find($kontainer)->nama_kontainer;
+            $result = HutangKontainerModel::whereDate('tgl_bayar', '>=', $tgl_awal)
+                            ->whereDate('tgl_bayar', '<=', $tgl_akhir)
+                            ->where('kontainer_id', $kontainer)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        }
+        
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            $ket = ($list->metode_bayar==1) ? 'Tunai' : 'Transfer';
+            $html .= "<tr>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->no_bayar."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_bayar), 'd-m-Y')."</td>
+            <td>".$list->get_kontainer->nama_kontainer."</td>
+            <td style='text-align: right;'><b>".number_format($list->nominal, 0)."</b></td>
+            <td style='text-align: center;'>".$ket."</td>
+            </tr>";
+            $nom++;
+            $total+=$list->nominal;
+        }
+        $html .= "<tr>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+            <td></td>
+        ";
+        
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode,
+                'kontainer' => "Kontainer : ".$ket_kontainer
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function laporan_hutang_kontainer_print($tgl_1=null, $tgl_2=null, $kontainer_id=null)
+    {
+        $arr_tgl_1 = explode('-', $tgl_1);
+        $ket_tgl_1 = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+        $arr_tgl_2 = explode('-', $tgl_2);
+        $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
+        
+        if($kontainer_id=='null')
+        {
+            $ket_kontainer = 'Semua Kontainer';
+            $result = HutangKontainerModel::whereDate('tgl_bayar', '>=', $tgl_1)
+                            ->whereDate('tgl_bayar', '<=', $tgl_2)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        } else {
+            $ket_kontainer = KontainerModel::find($kontainer_id)->nama_kontainer;
+            $result = HutangKontainerModel::whereDate('tgl_bayar', '>=', $tgl_1)
+                            ->whereDate('tgl_bayar', '<=', $tgl_2)
+                            ->where('kontainer_id', $kontainer_id)
+                            ->orderby('tgl_bayar', 'asc')->get();
+        }
+
+        $pdf = PDF::loadview('pelaporan.hutang_kontainer.print', [
+            'list_data' => $result,
+            'periode' => $ket_periode,
+            'kontainer' => $ket_kontainer
         ])->setPaper('A4', "Potrait");
         return $pdf->stream();
     }

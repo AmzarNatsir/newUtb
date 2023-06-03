@@ -62,7 +62,7 @@
         $('.angka_dec').number( true, 2);
         $('.dtpicker').datepicker({
             autoclose: true,
-            format: 'dd/mm/yyyy'
+            format: 'dd/mm/yyyy',
         });
         $('.reservation').daterangepicker({
             locale: {
