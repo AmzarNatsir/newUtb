@@ -33,8 +33,8 @@ class POController extends Controller
     {
         $q_supplier = SupplierModel::all();
         $data = [
-            'allSupplier' => $q_supplier,
-            'no_po' => $this->create_no_po()
+            'allSupplier' => $q_supplier
+            // 'no_po' => $this->create_no_po()
         ];
 
         return view('po.add', $data);
@@ -46,7 +46,7 @@ class POController extends Controller
             $save_head = new POHeadModel();
             //store header
             $save_head->supplier_id = $request->sel_supplier;
-            $save_head->nomor_po = $request->inpNomor;
+            $save_head->nomor_po = $this->create_no_po(date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_po))));
             $save_head->tanggal_po = date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_po)));
             $save_head->keterangan = $request->inp_keterangan;
             $save_head->ppn_persen = $request->inputTotal_PpnPersen;
@@ -87,14 +87,15 @@ class POController extends Controller
         }
     }
 
-    public function create_no_po()
+    public function create_no_po($tgl_po)
     {
+        $arr_tgl_po = explode("-", $tgl_po);
         $no_urut = 1;
         $kd="PO";
-        $bulan = sprintf('%02s', date('m'));
-        $tahun = date('Y');
+        $bulan = sprintf('%02s', $arr_tgl_po[1]);
+        $tahun = $arr_tgl_po[0];
         
-        $result = POHeadModel::whereYear('tanggal_po', $tahun)->orderby('id', 'desc')->first();
+        $result = POHeadModel::orderby('id', 'desc')->first();
         if(empty($result->nomor_po)) {
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
         } else {
@@ -121,6 +122,7 @@ class POController extends Controller
             $update_head = POHeadModel::find($id);
             //store header
             $update_head->tanggal_po = date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_po)));
+            $update_head->nomor_po = $this->edit_no_po(date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_po))), $update_head->nomor_po);
             $update_head->supplier_id = $request->sel_supplier;
             $update_head->keterangan = $request->inp_keterangan;
             $update_head->ppn_persen = $request->inputTotal_PpnPersen;
@@ -162,6 +164,17 @@ class POController extends Controller
         {
             return redirect('purchaseOrder')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
         }
+    }
+
+    public function edit_no_po($tgl_po, $nomor)
+    {
+        $arr_tgl_po = explode("-", $tgl_po);
+        $no_urut = substr($nomor, 9, 4);
+        $kd="PO";
+        $bulan = sprintf('%02s', $arr_tgl_po[1]);
+        $tahun = $arr_tgl_po[0];
+        $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
+        return $no_baru;
     }
 
     public function delete_items(Request $request)

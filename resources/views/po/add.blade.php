@@ -69,12 +69,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="inp_nomor">Nomor PO</label>
-                                    <input type="text" class="form-control" name="inpNomor" id="inpNomor" value="{{ $no_po }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="inp_kemasan">Tanggal PO</label>
                                     <div class="input-group date" id="inp_tgl_po">
                                         <input type="text" class="form-control datetimepicker-input datepicker" id="inp_tgl_po" name="inp_tgl_po" value="{{ date('d/m/Y') }}" />

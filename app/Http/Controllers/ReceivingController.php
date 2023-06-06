@@ -68,7 +68,7 @@ class ReceivingController extends Controller
             $save_head->save();
             $id_head = $save_head->id;
             //store detail
-            $jml_item = count($request->item_id);
+            $jml_item = count($request->produk_id);
             foreach(array($request) as $key => $value)
             {
                 for($i=0; $i<$jml_item; $i++)
