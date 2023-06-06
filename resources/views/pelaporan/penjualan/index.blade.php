@@ -25,7 +25,7 @@
                                         <i class="far fa-calendar-alt"></i>
                                     </span>
                                     </div>
-                                    <input class="form-control dtpicker input-sm" id="searchTglTrans_1" name="searchTglTrans_1" type="text" placeholder="Tanggal Awal">
+                                    <input class="form-control dtpicker input-sm" id="searchTglTrans_1" name="searchTglTrans_1" type="text" placeholder="Tanggal Awal" value="{{ date('d/m/Y') }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-2">
@@ -35,7 +35,7 @@
                                         <i class="far fa-calendar-alt"></i>
                                     </span>
                                     </div>
-                                    <input class="form-control dtpicker input-sm" id="searchTglTrans_2" name="searchTglTrans_2" type="text" placeholder="Tanggal Akhir">
+                                    <input class="form-control dtpicker input-sm" id="searchTglTrans_2" name="searchTglTrans_2" type="text" placeholder="Tanggal Akhir" value="{{ date('d/m/Y') }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
