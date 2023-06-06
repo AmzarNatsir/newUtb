@@ -27,11 +27,8 @@
     <table style="width: 100%;">
     <tr>
         <td colspan="2" style="text-align: center;">
-            <h4><u>BUKTI SERAH TERIMA BARANG</u></h4>
+            <h3><u>BUKTI SERAH TERIMA BARANG</u></h3>
         </td>
-    </tr>
-    <tr>
-        <td colspan="2" height="25px"></td>
     </tr>
     <tr>
         <td style="width: 50%; vertical-align: top;">
