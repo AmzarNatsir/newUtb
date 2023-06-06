@@ -16,6 +16,7 @@ use App\Http\Controllers\DashbaordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KontainerController;
+use App\Http\Controllers\PersetujuanController;
 use App\Http\Controllers\ReturnController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
@@ -235,3 +236,8 @@ Route::get('invoiceReceivingPrint/{param1}', [InvoiceController::class, 'invoice
 //Penjualan
 Route::get('invoicePenjualan', [InvoiceController::class, 'invoice_penjualan'])->name('invoicePenjualan');
 Route::post('invoicePenjualanFilter', [InvoiceController::class, 'invoice_penjualan_filter'])->name('invoicePenjualanFilter');
+
+//Persetujuan
+//penjualan
+Route::get('persetujuanPenjualan', [PersetujuanController::class, 'persetujuan_penjualan'])->name('persetujuanPenjualan');
+Route::get('persetujuanPenjualanFilter/{param1}/{param2}', [PersetujuanController::class, 'persetujuan_penjualan_filter'])->name('persetujuanPenjualanFilter');

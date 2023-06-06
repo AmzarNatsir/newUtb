@@ -91,7 +91,7 @@
                                 <label for="inpJatuhTempo" class="col-sm-3 col-form-label">Jatuh Tempo</label>
                                 <div class="col-sm-3">
                                     <div class="input-group date" id="reservationdate">
-                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inpTglJatuhTempo" name="inpTglJatuhTempo">
+                                        <input type="text" class="form-control datetimepicker-input dtpicker" id="inpTglJatuhTempo" name="inpTglJatuhTempo">
                                         <div class="input-group-append" >
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>

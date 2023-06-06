@@ -1,13 +1,13 @@
 @extends('layouts.app')
-@section('title', 'Invoice')
-@section('breadcrumb', 'Receive')
+@section('title', 'Daftar Transaksi')
+@section('breadcrumb', 'Receiving')
 @section('content')
 @routes
 <section class="content">
     <!-- Default box -->
     <div class="card card-success">
     <div class="card-header">
-        <h3 class="card-title">Invoice Receive</h3>
+        <h3 class="card-title">Daftar Penerimaan Barang</h3>
     </div>
     <div class="card-body">
         <div class="row">
@@ -27,7 +27,7 @@
                                             <i class="far fa-calendar-alt"></i>
                                         </span>
                                         </div>
-                                        <input class="form-control dtpicker input-sm" id="searchTglTrans_1" name="searchTglTrans_1" type="text" placeholder="Tanggal Awal">
+                                        <input class="form-control dtpicker input-sm" id="searchTglTrans_1" name="searchTglTrans_1" type="text" value="{{ date('d/m/Y') }}" placeholder="Tanggal Awal">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -37,7 +37,7 @@
                                             <i class="far fa-calendar-alt"></i>
                                         </span>
                                         </div>
-                                        <input class="form-control dtpicker input-sm" id="searchTglTrans_2" name="searchTglTrans_2" type="text" placeholder="Tanggal Akhir">
+                                        <input class="form-control dtpicker input-sm" id="searchTglTrans_2" name="searchTglTrans_2" type="text" value="{{ date('d/m/Y') }}" placeholder="Tanggal Akhir">
                                     </div>
                                 </div>
                             </div>
@@ -66,15 +66,16 @@
                         <table class="table table-bordered table-hover table-responsive" style="font-size: 11pt; width: 100%;" id="table_penjualan">
                             <thead>
                             <tr>
-                                <td style="text-align: left;" colspan="10"><h4>Daftar Invoice</h4>
+                                <td style="text-align: left;" colspan="8"><h4>Daftar Penerimaan Barang</h4>
                                 <p class="lbl_periode"></p>
                                 <p class="lbl_supplier"></p>
                                 </td>
                             </tr>
                             <tr>
                                 <th style="width: 5%; text-align: center;">No.</th>
+                                <th style="width: 10%; text-align: center;">No.Bukti</th>
+                                <th style="width: 10%; text-align: center;">Tgl.Tiba</th>
                                 <th style="width: 10%; text-align: center;">No.Invoice</th>
-                                <th style="width: 10%; text-align: center;">Tgl.Invoice</th>
                                 <th>Supplier</th>
                                 <th style="width: 15%; text-align: center;">Nominal</th>
                                 <th style="width: 15%; text-align: center;">Cara Bayar</th>

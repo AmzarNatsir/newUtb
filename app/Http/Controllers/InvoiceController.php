@@ -124,7 +124,8 @@ class InvoiceController extends Controller
             $html .= "<tr>
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".$list->nomor_receive."</td>
-            <td style='text-align: center;'>".date_format(date_create($list->tanggal_receive), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_tiba), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$list->no_invoice."</td>
             <td>".$list->get_supplier->nama_supplier."</td>
             <td style='text-align: right;'><b>".number_format($list->total_receive_net, 0)."</b></td>
             <td style='text-align: center;'>".$ket_bayar."</td>
@@ -134,7 +135,7 @@ class InvoiceController extends Controller
             $total+=$list->total_receive_net;
         }
         $html .= "<tr>
-            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td colspan='5' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total, )."</b></td>
             <td></td>
         ";

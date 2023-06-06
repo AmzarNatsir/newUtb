@@ -78,9 +78,9 @@ class PenjualanController extends Controller
                     $newdetail->sub_total_net = str_replace(",","", $value['item_sub_total_net'][$i]);
                     $newdetail->save();
                     //Update Stok
-                    $update = ProductModel::find($value['item_id'][$i]);
-                    $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['item_qty'][$i]));
-                    $update->save();
+                    // $update = ProductModel::find($value['item_id'][$i]);
+                    // $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['item_qty'][$i]));
+                    // $update->save();
                 }
             }
             if($id_head)
