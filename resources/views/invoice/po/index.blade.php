@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Invoice')
+@section('title', 'Daftar Transaksi')
 @section('breadcrumb', 'Purchase Order')
 @section('content')
 @routes
@@ -7,7 +7,7 @@
     <!-- Default box -->
     <div class="card card-success">
     <div class="card-header">
-        <h3 class="card-title">Invoice Purchase Order</h3>
+        <h3 class="card-title">Purchase Order</h3>
     </div>
     <div class="card-body">
         <div class="row">
