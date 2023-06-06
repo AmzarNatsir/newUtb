@@ -27,31 +27,29 @@
     <table style="width: 100%;">
     <tr>
         <td colspan="2" style="text-align: center;">
-            <h3>INVOICE RECEIVE</h3>
+            <h4><u>BUKTI SERAH TERIMA BARANG</u></h4>
         </td>
+    </tr>
+    <tr>
+        <td colspan="2" height="25px"></td>
     </tr>
     <tr>
         <td style="width: 50%; vertical-align: top;">
         <table style="width: 100%; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">
             <tr>
-                <td style="width: 28%;">No. Invoice</td>
+                <td style="width: 28%;">No. Bukti</td>
                 <td style="width: 2%;">:</td>
                 <td style="width: 70%;">{{ $main->nomor_receive }}</td>
             </tr>
             <tr>
-                <td>Tanggal. Inv</td>
+                <td>Tanggal Tiba</td>
                 <td>:</td>
-                <td>{{ date_format(date_create($main->tanggal_receive), 'd-M-Y') }}</td>
+                <td>{{ date_format(date_create($main->tgl_tiba), 'd-m-Y') }}</td>
             </tr>
             <tr>
-                <td>Jatuh Tempo</td>
+                <td>Nomor Invoice</td>
                 <td>:</td>
-                <td>{{ ($main->cara_bayar==1) ? '' : date_format(date_create($main->tgl_jatuh_tempo), 'd-M-Y') }}</td>
-            </tr>
-            <tr>
-                <td>Pembayaran Via</td>
-                <td>:</td>
-                <td>{{ ($main->cara_bayar==1) ? 'Tunai' : 'Kredit' }}</td>
+                <td>{{ $main->no_invoice }}</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">Supplier</td>
@@ -134,13 +132,17 @@
             <td colspan="4"></td>
             <td colspan="4">
             <table style="width: 100%; font-size: 9pt; font-family: Arial, Helvetica, sans-serif;">
+                <tr>
+                    <td style="width: 50%; border: 1px; border-style: solid;" align="center">Diterima Oleh</td>
+                    <td style="width: 50%; border: 1px; border-style: solid;" align="center">Diserahkan Oleh</td>
+                </tr>
                 <tr>    
-                <td style="width: 50%; border: 1px; border-style: solid; height: 100px;"></td>
-                <td style="width: 50%; border: 1px; border-style: solid; height: 100px;"></td>
+                <td style="border: 1px; border-style: solid; height: 100px;"></td>
+                <td style="border: 1px; border-style: solid; height: 100px;"></td>
                 </tr>
                 <tr>
-                <td style="border: 1px; border-style: solid; height: 30px; text-align: center;">PT. USAHA TANI BERSAMA</td>
-                <td style="border: 1px; border-style: solid; height: 30px; text-align: center;">{{ strtoupper($main->get_supplier->nama_supplier) }}</td>
+                <td style="border: 1px; border-style: solid; height: 30px;" align="center">PT. USAHA TANI BERSAMA</td>
+                <td style="border: 1px; border-style: solid; height: 30px;" align="center">{{ (empty($main->kontainer_id)) ? "" : strtoupper($main->get_kontainer->nama_kontainer) }}</td>
                 </tr>
             </table>
             </td>
