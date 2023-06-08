@@ -149,7 +149,7 @@
         <td colspan="4">
           <table style="width: 100%; font-size: 9pt; font-family: Arial, Helvetica, sans-serif;">
             <tr>
-              <td style="width: 50%; border: 1px; border-style: solid; height: 100px; text-align: center"><img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate('http://google.com')) !!} "></td>
+              <td style="width: 50%; border: 1px; border-style: solid; height: 100px; text-align: center"><img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate(url('vqrcode'))) !!} "></td>
               <td style="width: 50%; border: 1px; border-style: solid; height: 100px;"></td>
             </tr>
             <tr>

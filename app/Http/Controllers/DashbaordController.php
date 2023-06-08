@@ -19,9 +19,4 @@ class DashbaordController extends Controller
         // ];
         return view('dashboard.index');
     }
-
-    public function show_qr()
-    {
-        return view('dashboard.qrcode');
-    }
 }

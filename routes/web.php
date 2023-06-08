@@ -17,6 +17,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KontainerController;
 use App\Http\Controllers\PersetujuanController;
+use App\Http\Controllers\QrController;
 use App\Http\Controllers\ReturnController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('client')->group(function(){
     Route::get('/', [App::class,'index'])->name('client:app');
 });
+
+
 
 Auth::routes();
 
@@ -244,4 +247,4 @@ Route::get('persetujuanPenjualanFilter/{param1}/{param2}', [PersetujuanControlle
 Route::get('persetujuanPenjualanApprove/{param}', [PersetujuanController::class, 'persetujuan_penjualan_approve'])->name('persetujuanPenjualanApprove');
 Route::post('persetujuanPenjualanStore', [PersetujuanController::class, 'persetujuan_penjualan_store'])->name('persetujuanPenjualanStore');
 
-Route::get('generate_qrcode', [DashbaordController::class, 'show_qr'])->name('generate_qrcode');
+Route::get('vqrcode', [QrController::class, 'index'])->name('vqrcode');
