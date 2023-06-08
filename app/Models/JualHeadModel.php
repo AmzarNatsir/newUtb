@@ -32,7 +32,8 @@ class JualHeadModel extends Model
         'approved', //NULL : belum di approve, 1. Approved
         'approved_by',
         'approved_date',
-        'approved_note'
+        'approved_note',
+        'tgl_transaksi'
     ];
 
     public function get_customer()

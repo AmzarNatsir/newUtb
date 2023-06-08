@@ -191,6 +191,7 @@
                             <select class="form-control select2bs4" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" placeholder="Pilihan Kontainer" required>   
                                 <option></optionn>
                                 @foreach($listKontainer as $kontainer)
+
                                 <option value="{{ $kontainer->id }}">{{ $kontainer->nama_kontainer }}</option>
                                 @endforeach
                             </select>

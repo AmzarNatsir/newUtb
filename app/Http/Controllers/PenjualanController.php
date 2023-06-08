@@ -35,12 +35,13 @@ class PenjualanController extends Controller
         try {
             $save_head = new JualHeadModel();
             //store header
+            $save_head->tgl_transaksi = date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_trans)));
             $save_head->customer_id = $request->sel_customer;
-            $save_head->no_invoice = $this->create_no_invoice();
+            $save_head->no_invoice = $this->create_no_invoice($request->inp_tgl_trans);
             $save_head->tgl_invoice = $this->datetimeStore;
             $save_head->keterangan = $request->inp_keterangan;
             $save_head->bayar_via = $request->inp_carabayar;
-            if($request->inpTglJatuhTempo <> "")
+            if($request->inp_carabayar==2) //Kredit
             {
                 $newDate_jtp = date("Y-m-d", strtotime(str_replace("/", "-", $request->inpTglJatuhTempo)));  
             } else {
@@ -72,7 +73,8 @@ class PenjualanController extends Controller
                     $newdetail = new JualDetailModel();
                     $newdetail->head_id = $id_head;
                     $newdetail->produk_id = $value['item_id'][$i];
-                    $newdetail->qty = $value['item_qty'][$i];
+                    $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
+                    $newdetail->kat_harga = $value['selKatHarga'][$i];
                     $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
                     $newdetail->diskitem_persen = $value['item_diskon'][$i];
                     $newdetail->diskitem_rupiah = str_replace(",","", $value['item_diskonrp'][$i]);
@@ -97,14 +99,15 @@ class PenjualanController extends Controller
         }
     }
 
-    public function create_no_invoice()
+    public function create_no_invoice($tglTrans)
     {
+        $arr_tgl_trans = explode("/", $tglTrans);
         $no_urut = 1;
         $kd="INV";
-        $bulan = sprintf('%02s', date('m'));
-        $tahun = date('Y');
+        $bulan = sprintf('%02s', $arr_tgl_trans[1]);
+        $tahun = $arr_tgl_trans[2];
         
-        $result = JualHeadModel::whereYear('tgl_invoice', $tahun)->orderby('id', 'desc')->first();
+        $result = JualHeadModel::orderby('id', 'desc')->first();
         if(empty($result->no_invoice)) {
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
         } else {

@@ -80,6 +80,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="inp_kemasan">Tanggal Transaksi</label>
+                                <input type="text" class="form-control" value="{{ (empty($head->tgl_transaksi)) ? '' : date_format(date_create($head->tgl_transaksi), 'd-m-Y') }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="inp_nomor">Nomor Invoice</label>
                                 <input type="text" class="form-control" value="{{ $head->no_invoice }}" readonly>
                             </div>
@@ -203,7 +211,7 @@
 <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
 </div>
-<!-- <script type="text/javascript" src="{{ asset('assets/js/initAll.js') }}"></script> -->
+<script type="text/javascript" src="{{ asset('assets/js/initAll.js') }}"></script>
 <script>
     $(function(){});
     function konfirm()
