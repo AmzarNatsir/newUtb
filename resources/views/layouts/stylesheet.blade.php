@@ -24,4 +24,4 @@
 <!-- iCheck for checkboxes and radio inputs -->
 <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 <!-- <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/pace-progress/themes/black/pace-theme-flat-top.css') }}"> -->
-<link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/simpleDatePicker/dcalendar.picker.css') }} ">
+<!-- <link rel="stylesheet" href="{{ asset('assets/AdminLTE/plugins/simpleDatePicker/dcalendar.picker.css') }} "> -->
