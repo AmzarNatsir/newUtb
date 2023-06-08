@@ -109,7 +109,7 @@
         @endforeach
         <tr>
           <td colspan='6' style='text-align: right'><b>TOTAL</b></td>
-          <td colspan='2' style='text-align: right'><b>{{ number_format($main->total_invoice, 0) }}</b></td>
+          <td colspan='2' style='text-align: right'><b>{{ number_format($main->total_receice, 0) }}</b></td>
       </tr>
         <tr>
             <td colspan='6' style='text-align: right'><b>DISKON</b></td>
