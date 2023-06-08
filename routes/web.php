@@ -113,7 +113,7 @@ Route::post('purchaseOrderStore', [POController::class, 'store'])->name("purchas
 Route::get('editOrder/{id}', [POController::class, 'edit'])->name('editOrder');
 Route::put('updateOrder/{id}', [POController::class, 'update'])->name('updateOrder');
 Route::post('deleteItemOrder', [POController::class, 'delete_items'])->name('deleteItemOrder');
-Route::post('deleteOrder', [POController::class, 'delete_po'])->name('deleteOrder');
+Route::get('deleteOrder/{id}', [POController::class, 'delete_po'])->name('deleteOrder');
 //approve PO
 Route::get('approveOrder/{id}', [POController::class, 'approve'])->name('approveOrder');
 Route::put('approvePOStore/{id}', [POController::class, 'approveStore'])->name('approvePOStore');
