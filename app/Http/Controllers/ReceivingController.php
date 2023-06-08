@@ -76,7 +76,7 @@ class ReceivingController extends Controller
                     $newdetail = new ReceiveDetailModel();
                     $newdetail->head_id = $id_head;
                     $newdetail->produk_id = $value['produk_id'][$i];
-                    $newdetail->qty = $value['item_qty'][$i];
+                    $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
                     $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
                     $newdetail->diskitem_persen = $value['item_diskon'][$i];
                     $newdetail->diskitem_rupiah = str_replace(",","", $value['item_diskonrp'][$i]);

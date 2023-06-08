@@ -144,13 +144,13 @@ class POController extends Controller
                         $newdetail = new PODetailModel();
                         $newdetail->head_id = $id;
                         $newdetail->produk_id = $value['item_id'][$i];
-                        $newdetail->qty = $value['item_qty'][$i];
+                        $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
                         $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
                         $newdetail->sub_total = str_replace(",","", $value['item_sub_total'][$i]);
                         $newdetail->save();
                     } else {
                         $update_detail = PODetailModel::find($value['id_item'][$i]);
-                        $update_detail->qty = $value['item_qty'][$i];
+                        $update_detail->qty = str_replace(",","", $value['item_qty'][$i]);
                         $update_detail->harga = str_replace(",","", $value['harga_satuan'][$i]);
                         $update_detail->sub_total = str_replace(",","", $value['item_sub_total'][$i]);
                         $update_detail->save();

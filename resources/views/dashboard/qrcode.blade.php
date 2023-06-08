@@ -2,18 +2,23 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Laravel Generate QR Code Examples</title>
+    <title>UTB PT</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
     <div class="container mt-4">
         <div class="card">
             <div class="card-header">
-                <h2>Simple QR Code</h2>
+                <h2>APLIKASI UTB</h2>
             </div>
             <div class="card-body">
-            {{ QrCode::size(300)->merge('/public/assets/AdminLTE/dist/img/utb_logo.png')->generate('https://techvblogs.com/blog/generate-qr-code-laravel-8') }}
+            Menyatakan bahwa :
+            <table style="width: 100%;">
+            <tr>
+                <td style="width: 50%;">Nomor</td>
+            </tr>
+            </table>
             </div>
         </div>
         <div class="card">
