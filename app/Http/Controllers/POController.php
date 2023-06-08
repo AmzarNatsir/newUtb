@@ -68,7 +68,7 @@ class POController extends Controller
                     $newdetail = new PODetailModel();
                     $newdetail->head_id = $id_head;
                     $newdetail->produk_id = $value['item_id'][$i];
-                    $newdetail->qty = $value['item_qty'][$i];
+                    $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
                     $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
                     $newdetail->sub_total = str_replace(",","", $value['item_sub_total'][$i]);
                     $newdetail->save();
