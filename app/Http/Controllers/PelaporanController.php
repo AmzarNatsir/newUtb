@@ -212,6 +212,7 @@ class PelaporanController extends Controller
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
                                 ->whereNULL('jual_head.jenis_jual')
+                                ->where('jual_head.approved', 1)
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
 
@@ -260,6 +261,7 @@ class PelaporanController extends Controller
                     ->where('jual_detail.produk_id', $list->id)
                     ->whereNull('jual_head.deleted_at')
                     ->whereNull('jual_head.jenis_jual')
+                    ->where('jual_head.approved', 1)
                     ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                     ->pluck('t_penjualan')->first();
             $qty_pemberian_sampel = \DB::table('jual_head')
@@ -345,6 +347,7 @@ class PelaporanController extends Controller
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
                                 ->whereNULL('jual_head.jenis_jual')
+                                ->where('jual_head.approved', 1)
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
 
@@ -393,6 +396,7 @@ class PelaporanController extends Controller
                     ->where('jual_detail.produk_id', $list->id)
                     ->whereNull('jual_head.deleted_at')
                     ->whereNull('jual_head.jenis_jual')
+                    ->where('jual_head.approved', 1)
                     ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                     ->pluck('t_penjualan')->first();
             $qty_pemberian_sampel = \DB::table('jual_head')

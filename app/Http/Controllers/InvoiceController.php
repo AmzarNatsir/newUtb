@@ -180,12 +180,14 @@ class InvoiceController extends Controller
             $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
                             ->whereDate('tgl_invoice', '<=', $tgl_akhir)
                             ->whereNull('jenis_jual')
+                            ->where('approved', 1)
                             ->orderby('tgl_invoice', 'asc')->get();
         } else {
             $ket_customer = CustomerModel::find($customer)->nama_supplier;
             $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
                             ->whereDate('tgl_invoice', '<=', $tgl_akhir)
                             ->whereNull('jenis_jual')
+                            ->where('approved', 1)
                             ->where('customer_id', $customer)
                             ->orderby('tgl_invoice', 'asc')->get();
         }
