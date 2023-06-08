@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UTB | Print Invoice Penjualan</title>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/> -->
   <link rel="stylesheet" href="{{ asset('assets/AdminLTE/dist/css/adminlte.min.css')}} ">
   <style>
     @page { margin: 30px 30px; }
@@ -148,7 +149,7 @@
         <td colspan="4">
           <table style="width: 100%; font-size: 9pt; font-family: Arial, Helvetica, sans-serif;">
             <tr>
-              <td style="width: 50%; border: 1px; border-style: solid; height: 100px; text-align: center"><img src="{{ asset('assets/AdminLTE/dist/img/qr_sample.png')}}" alt="UTB Logo" style="width: 100px;  height: auto;"></td>
+              <td style="width: 50%; border: 1px; border-style: solid; height: 100px; text-align: center"><img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate('http://google.com')) !!} "></td>
               <td style="width: 50%; border: 1px; border-style: solid; height: 100px;"></td>
             </tr>
             <tr>
@@ -160,7 +161,6 @@
       </tr>
     </tbody>
   </table>
-  
   <footer><div class="dropdown-divider"></div><div class="text-center"><span class='badge' style='font-size: 8pt;'>Alamat : Jl. Sorumba No. 79, Wowawanggu, Kec. Kedia, Kota Kendari, Sulawesi Tenggara 93117<br>Telp. +62 401 3092867 Email : usahatanibersama21@gmail.com</span></div></footer>
 </body>
 </html>

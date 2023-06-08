@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "simplesoftwareio/simple-qrcode": "~4",
         "tightenco/ziggy": "^1.5"
     },
     "require-dev": {

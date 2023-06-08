@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         // App\Providers\GlobalServiceProvider::class,
 
     ],
@@ -216,6 +216,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
         'Helper' => App\Helpers\Helper::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
 
     ])->toArray(),
 

@@ -243,3 +243,5 @@ Route::get('persetujuanPenjualan', [PersetujuanController::class, 'persetujuan_p
 Route::get('persetujuanPenjualanFilter/{param1}/{param2}', [PersetujuanController::class, 'persetujuan_penjualan_filter'])->name('persetujuanPenjualanFilter');
 Route::get('persetujuanPenjualanApprove/{param}', [PersetujuanController::class, 'persetujuan_penjualan_approve'])->name('persetujuanPenjualanApprove');
 Route::post('persetujuanPenjualanStore', [PersetujuanController::class, 'persetujuan_penjualan_store'])->name('persetujuanPenjualanStore');
+
+Route::get('generate_qrcode', [DashbaordController::class, 'show_qr'])->name('generate_qrcode');

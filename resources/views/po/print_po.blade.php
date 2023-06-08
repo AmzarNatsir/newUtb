@@ -89,7 +89,7 @@
     <td class="text-center" style="vertical-align: top;">Disetujui Oleh</td>
   </tr>
   <tr>
-    <td><img src="{{ asset('assets/AdminLTE/dist/img/qr_sample.png')}}" alt="UTB Logo" style="width: 100px;  height: auto;"></td>
+    <td><img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate('http://google.com')) !!} "></td>
   </tr>
   <tr>
     <td></td>

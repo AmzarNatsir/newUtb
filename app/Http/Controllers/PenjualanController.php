@@ -9,6 +9,8 @@ use App\Models\ProductModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PDF;
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class PenjualanController extends Controller
 {
