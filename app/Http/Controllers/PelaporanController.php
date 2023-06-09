@@ -116,7 +116,7 @@ class PelaporanController extends Controller
             'list_data' => $result,
             'periode' => $ket_periode,
             'check_view_detail' => $view_detail
-        ])->setPaper('A4', "landscape");
+        ])->setPaper('A4', "landscape",);
         return $pdf->stream();
 
     }

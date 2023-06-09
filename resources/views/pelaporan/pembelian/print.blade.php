@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UTB | Print Laporan Pembelian</title>
-  <link rel="stylesheet" href="{{ asset('assets/AdminLTE/dist/css/adminlte.min.css')}} ">
+  <!-- <link rel="stylesheet" href="{{ asset('assets/AdminLTE/dist/css/adminlte.min.css')}} "> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/> -->
   <style>
-    @page { margin: 0px 30px 30px 30px; }
+    @page { margin: 20px; padding: 0; }
     footer { position: fixed; bottom: -20px; left: 0px; right: 0px; height: 50px; }
     p { page-break-after: always; }
     p:last-child { page-break-after: never; }
@@ -15,20 +16,13 @@
 <body>
 <table style="width: 100%;">
 <tr>
-  <td style="width: 60%;"></td>
+  <td style="width: 60%;"><h3>LAPORAN PEMBELIAN</h3><br>
+        <b>Periode : {{ $periode }}</b></td>
   <td style="width: 10%; vertical-align: bottom;"><img src="{{ asset('assets/AdminLTE/dist/img/utb_logo.png')}}" alt="UTB Logo" style="width: 120px;  height: auto;"></td>
-  <td style="vertical-align: middle;"><h5><strong>PT. USAHA TANI BERSAMA</strong></h5></td>
+  <td style="vertical-align: middle;"><h3><strong>PT. USAHA TANI BERSAMA</strong></h3></td>
 </tr>
 </table>
-<main style="margin-top: -80px;">
-<table style="width: 100%;">
-<tr>
-    <td style="text-align: left;">
-        <h5>LAPORAN PEMBELIAN</h5>
-        <p <span class='badge bg-success' style='font-size: 9pt;'>Periode : {{ $periode }}</p>
-    </td>
-</tr>
-</table>
+
 <table style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
     <thead>
     <tr style="background-color: #808080; color:azure">
@@ -136,7 +130,7 @@
     </tr>
     </tbody>
 </table>
-</main>
+
 <footer><div class="dropdown-divider"></div><div class="text-center"><span class='badge' style='font-size: 8pt;'>Alamat : Jl. Sorumba No. 79, Wowawanggu, Kec. Kedia, Kota Kendari, Sulawesi Tenggara 93117<br>Telp. +62 401 3092867 Email : usahatanibersama21@gmail.com</span></div></footer>
 </body>
 </html>
