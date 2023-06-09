@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="sel_via" class="col-form-label">Pembayaran Via</label>
+                                        <label for="sel_via" class="col-form-label">Penerimaan Via</label>
                                         <select class="form-control select2bs4" name="sel_via" id="sel_via" style="width: 100%;" disabled>
                                             <option></optionn>
                                             @foreach($allVia as $via)
