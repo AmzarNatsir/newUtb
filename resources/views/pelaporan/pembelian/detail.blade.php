@@ -66,19 +66,27 @@
             </tr>
             @php
             $nom++;
-            $total_qty+=$det->qty;
-            $total_harga+=$det->harga;
-            $total_subtotal+=$det->sub_total;
-            $total_subtotal_net+=$det->sub_total_net;
             @endphp
             @endforeach
             <tr style="background-color: gray; color: white;">
-                <td colspan='5' style='text-align: right'><b>TOTAL</b></td>
-                <td style='text-align: center'><b>{{ $total_qty }}</b></td>
-                <td style='text-align: right'><b>{{ number_format($total_harga, 0) }}</b></td>
-                <td style='text-align: right'><b>{{ number_format($total_subtotal, 0) }}</b></td>
+                <td colspan='8' style='text-align: right'><b>TOTAL</b></td>
                 <td></td>
-                <td style='text-align: right'><b>{{ number_format($total_subtotal_net, 0) }}</b></td>
+                <td style='text-align: right'><b>{{ number_format($head->total_receice, 0) }}</b></td>
+            </tr>
+            <tr style="background-color: gray; color: white;">
+                <td colspan='8' style='text-align: right'><b>DISKON</b></td>
+                <td style='text-align: right'><b>{{ $head->diskon_persen }} %</b></td>
+                <td style='text-align: right'><b>{{ number_format($head->diskon_rupiah, 0) }}</b></td>
+            </tr>
+            <tr style="background-color: gray; color: white;">
+                <td colspan='8' style='text-align: right'><b>PPN</b></td>
+                <td style='text-align: right'><b>{{ $head->ppn_persen }} %</b></td>
+                <td style='text-align: right'><b>{{ number_format($head->ppn_rupiah, 0) }}</b></td>
+            </tr>
+            <tr style="background-color: gray; color: white;">
+                <td colspan='8' style='text-align: right'><b>TOTAL NET</b></td>
+                <td></td>
+                <td style='text-align: right'><b>{{ number_format($head->total_receive_net, 0) }}</b></td>
             </tr>
         </tbody>
     </table>

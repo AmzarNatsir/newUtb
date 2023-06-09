@@ -6,7 +6,7 @@
   <title>UTB | Print Laporan Pembelian</title>
   <link rel="stylesheet" href="{{ asset('assets/AdminLTE/dist/css/adminlte.min.css')}} ">
   <style>
-    @page { margin: 30px 30px; }
+    @page { margin: 0px 30px 30px 30px; }
     footer { position: fixed; bottom: -20px; left: 0px; right: 0px; height: 50px; }
     p { page-break-after: always; }
     p:last-child { page-break-after: never; }
@@ -20,7 +20,7 @@
   <td style="vertical-align: middle;"><h5><strong>PT. USAHA TANI BERSAMA</strong></h5></td>
 </tr>
 </table>
-<main style="margin-top: -70px;">
+<main style="margin-top: -80px;">
 <table style="width: 100%;">
 <tr>
     <td style="text-align: left;">
@@ -34,20 +34,36 @@
     <tr style="background-color: #808080; color:azure">
         <th style="width: 5%; text-align: center; height: 30px">No.</th>
         <th style="width: 10%; text-align: center;">No.Invoce</th>
-        <th style="width: 10%; text-align: center;">Tgl.Invoce</th>
-        <th style="width: 10%; text-align: center;">Tgl.Tiba</th>
+        <th style="width: 8%; text-align: center;">Tgl.Invoce</th>
+        <th style="width: 8%; text-align: center;">Tgl.Tiba</th>
         <th>Supplier</th>
-        <th style="width: 12%; text-align: center;">Total (Rp)</th>
-        <th style="width: 8%; text-align:right">Diskon&nbsp;(%)</th>
-        <th style="width: 8%; text-align:right">Ppn (%)</th>
-        <th style="width: 12%; text-align:right">Total Net (Rp)</th>
+        <th style="width: 7%; text-align: center;">Total</th>
+        <th style="width: 5%; text-align:right">Diskon&nbsp;(%)</th>
+        <th style="width: 5%; text-align:right">Ppn (%)</th>
+        <th style="width: 7%; text-align:right">Total Net</th>
+        <th style="width: 7%; text-align:right">Pembayaran</th>
+        <th style="width: 7%; text-align:right">Outstanding</th>
+        <th style="width: 5%; text-align: center;">Cara Bayar</th>
+        <th style="width: 7%; text-align: center;">Ket.</th>
     </tr>
     </thead>
     <tbody>
     @php 
     $no_urut=1;
-    $total=0;  @endphp
+    $total=0;  
+    $total_bayar = 0;
+    $total_outs = 0;
+    @endphp
     @foreach($list_data as $list)
+    @php if($list->cara_bayar==2)
+    {
+        $total_terbayar_invoice = $list->get_hut_terbayar($list->id);
+        $outs_invoice = $list->total_receive_net - $total_terbayar_invoice;
+    } else {
+        $total_terbayar_invoice = $list->total_receive_net;
+        $outs_invoice = 0;
+    }
+    @endphp
     <tr>
         <td style='text-align: center; height: 25px;'>{{ $no_urut }}</td>
         <td style='text-align: center;'>{{ $list->no_invoice }}</td>
@@ -57,27 +73,15 @@
         <td style='text-align: right;'>{{ number_format($list->total_receice, 0, ",", ".") }}</td>
         <td style='text-align: right;'>{{ $list->diskon_persen }}</td>
         <td style='text-align: right;'>{{ $list->ppn_persen }}</td>
-        <td style='text-align: right;'>{{ number_format($list->total_receive_net, 0, ",", ".") }}</td>
-    </tr>
-    <tr>
-        <td colspan="9">
-            <table style="width: 100%; border-collapse: collapse;" border="1">
-            <tr style="background-color: #D3D3D3;">
-                <th style="width: 30%;">Cara Bayar</th>
-                <th style="width: 40%;">Keterangan</th>
-                <th style="width: 30%;">Petugas</th>
-            </tr>
-            <tr>
-                <td>{{ ($list->cara_bayar==1) ? 'Cash' : 'Credit' }}</td>
-                <td>{{ $list->keterangan }}</td>
-                <td>{{ $list->user_id }}</td>
-            </tr>
-            </table>
-        </td>
+        <td style='text-align: right;'><b>{{ number_format($list->total_receive_net, 0, ",", ".") }}</b></td>
+        <td style='text-align: right;'><b>{{ number_format($total_terbayar_invoice, 0, ",", ".") }}</b></td>
+        <td style='text-align: right;'><b>{{ number_format($outs_invoice, 0, ",", ".") }}</b></td>
+        <td style='text-align: center;'>{{ ($list->cara_bayar==1) ? 'Cash' : 'Credit' }}</td>
+        <td>{{ $list->keterangan }}</td>
     </tr>
     @if($check_view_detail=='true')
     <tr>
-        <td colspan="9">
+        <td colspan="13">
         <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
             <tr>
                 <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
@@ -117,11 +121,18 @@
     @endif
     @php 
     $no_urut++;
-    $total+=$list->total_receive_net; @endphp
+    $total+=$list->total_receive_net; 
+    $total_bayar+=$total_terbayar_invoice;
+    $total_outs+=$list->outs_invoice;
+    @endphp
     @endforeach
     <tr style="background-color: #808080; color:azure">
         <td colspan="8" class="text-right"><b>TOTAL</b></td>
         <td style='text-align: right; height:30px'><b>{{ number_format($total, 0, ",", ".") }}</b></td>
+        <td style='text-align: right; height:30px'><b>{{ number_format($total_bayar, 0, ",", ".") }}</b></td>
+        <td style='text-align: right; height:30px'><b>{{ number_format($total_outs, 0, ",", ".") }}</b></td>
+        <td></td>
+        <td></td>
     </tr>
     </tbody>
 </table>

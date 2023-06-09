@@ -39,10 +39,26 @@ class PelaporanController extends Controller
 
         $nom=1;
         $total_net = 0;
+        $total_bayar = 0;
+        $total_outs = 0;
         $html="";
         // $html_summary="";
         foreach($result_receive as $list)
         {
+            $ket_bayar = ($list->cara_bayar==1) ? 'Tunai' : 'Kredit';
+            if($list->cara_bayar==2)
+            {
+                $total_terbayar_invoice = \DB::table('hutang_kontainer')
+                                ->where('hutang_kontainer.receive_id', $list->id)
+                                ->whereNull('hutang_kontainer.deleted_at')
+                                ->selectRaw('sum(hutang_kontainer.nominal) as t_nominal')
+                                ->pluck('t_nominal')->first();
+                $outs_invoice = $list->total_receive_net - $total_terbayar_invoice;
+            } else {
+                $total_terbayar_invoice = $list->total_receive_net;
+                $outs_invoice = 0;
+            }
+            
             $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
 
             $html .= "<tr>
@@ -52,17 +68,22 @@ class PelaporanController extends Controller
             <td style='text-align: center;'>".date_format(date_create($list->tgl_invoice), 'd-m-Y')."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_tiba), 'd-m-Y')."</td>
             <td>".$list->get_supplier->nama_supplier."</td>
-            <td style='text-align: right;'>".number_format($list->total_receice, 0)."</td>
-            <td style='text-align: right;'>".$list->diskon_persen."</td>
-            <td style='text-align: right;'>".$list->ppn_persen."</td>
             <td style='text-align: right;'><b>".number_format($list->total_receive_net, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_terbayar_invoice, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($outs_invoice, 0)."</b></td>
+            <td style='text-align: center;'>".$ket_bayar."</td>
             </tr>";
             $nom++;
             $total_net+=$list->total_receive_net;
+            $total_bayar+=$total_terbayar_invoice;
+            $total_outs+=$list->outs_invoice;
         }
         $html .= "<tr>
-            <td colspan='9' style='text-align: right;'><b>TOTAL</b></td>
+            <td colspan='6' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total_net, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_bayar, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_outs, 0)."</b></td>
+            <td></td>
         ";
         return response()
             ->json([
@@ -95,7 +116,7 @@ class PelaporanController extends Controller
             'list_data' => $result,
             'periode' => $ket_periode,
             'check_view_detail' => $view_detail
-        ])->setPaper('A4', "Potrait");
+        ])->setPaper('A4', "landscape");
         return $pdf->stream();
 
     }

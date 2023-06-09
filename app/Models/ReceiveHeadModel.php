@@ -49,4 +49,15 @@ class ReceiveHeadModel extends Model
     {
         return $this->belongsTo(KontainerModel::class, 'kontainer_id', 'id');
     }
+
+    public function get_hut_terbayar($id)
+    {
+        $total_terbayar_invoice = \DB::table('hutang_kontainer')
+                                ->where('hutang_kontainer.receive_id', $id)
+                                ->whereNull('hutang_kontainer.deleted_at')
+                                ->selectRaw('sum(hutang_kontainer.nominal) as t_nominal')
+                                ->pluck('t_nominal')->first();
+
+        return $total_terbayar_invoice;
+    }
 }
