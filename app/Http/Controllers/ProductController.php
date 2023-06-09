@@ -294,7 +294,7 @@ class ProductController extends Controller
         //-
         $qty_penjualan_awal = \DB::table('jual_head')
                             ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                            ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                            ->whereDate('jual_head.tgl_transaksi', '<', $tgl_1)
                             ->where('jual_detail.produk_id', $id_stok)
                             ->whereNull('jual_head.deleted_at')
                             ->whereNULL('jual_head.jenis_jual')
@@ -311,7 +311,7 @@ class ProductController extends Controller
 
         $qty_pemberian_sampel = \DB::table('jual_head')
                             ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                            ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                            ->whereDate('jual_head.tgl_transaksi', '<', $tgl_1)
                             ->where('jual_detail.produk_id', $id_stok)
                             ->whereNull('jual_head.deleted_at')
                             ->where('jual_head.jenis_jual', 1)
@@ -341,8 +341,8 @@ class ProductController extends Controller
         //stok keluar
         $qty_penjualan = \DB::table('jual_head')
                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
-                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_1)
+                ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_2)
                 ->where('jual_detail.produk_id', $id_stok)
                 ->whereNull('jual_head.deleted_at')
                 ->whereNull('jual_head.jenis_jual')
@@ -351,8 +351,8 @@ class ProductController extends Controller
                 ->pluck('t_penjualan')->first();
         $qty_pemberian_sampel = \DB::table('jual_head')
                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
-                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_1)
+                ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_2)
                 ->where('jual_detail.produk_id', $id_stok)
                 ->whereNull('jual_head.deleted_at')
                 ->where('jual_head.jenis_jual', 1)
@@ -385,8 +385,8 @@ class ProductController extends Controller
         //keluar
         $rincian_penjualan = \DB::table('jual_head')
                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
-                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_1)
+                ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_2)
                 ->where('jual_detail.produk_id', $id_stok)
                 ->whereNull('jual_head.deleted_at')
                 ->whereNull('jual_head.jenis_jual')
@@ -401,8 +401,8 @@ class ProductController extends Controller
                 ->get();
         $rincian_pemberian_sampel = \DB::table('jual_head')
                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
-                ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_1)
+                ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_2)
                 ->where('jual_detail.produk_id', $id_stok)
                 ->whereNull('jual_head.deleted_at')
                 ->where('jual_head.jenis_jual', 1)
@@ -444,6 +444,7 @@ class ProductController extends Controller
             $save_head->customer_id = $request->sel_customer;
             $save_head->no_invoice = $this->create_no_invoice();
             $save_head->tgl_invoice = ($request->inp_tgl_pemberian=="") ? $this->datetimeStore : date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_pemberian)));
+            $save_head->tgl_transaksi = ($request->inp_tgl_pemberian=="") ? $this->datetimeStore : date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_pemberian)));
             $save_head->keterangan = $request->inp_keterangan;
             $save_head->total_invoice = 0;
             $save_head->ppn_persen = 0;
@@ -465,7 +466,7 @@ class ProductController extends Controller
                     $newdetail = new JualDetailModel();
                     $newdetail->head_id = $id_head;
                     $newdetail->produk_id = $value['item_id'][$i];
-                    $newdetail->qty = $value['item_qty'][$i];
+                    $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
                     $newdetail->harga = 0;
                     $newdetail->diskitem_persen =0;
                     $newdetail->diskitem_rupiah = 0;
@@ -493,11 +494,11 @@ class ProductController extends Controller
     public function create_no_invoice()
     {
         $no_urut = 1;
-        $kd="INV";
+        $kd="SPL";
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
         
-        $result = JualHeadModel::whereYear('tgl_invoice', $tahun)->orderby('id', 'desc')->first();
+        $result = JualHeadModel::orderby('id', 'desc')->first();
         if(empty($result->no_invoice)) {
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
         } else {

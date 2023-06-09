@@ -66,7 +66,7 @@
                         <table class="table table-bordered table-hover  table-responsive" style="font-size: 10pt; width: 100%;" id="table_penjualan">
                             <thead>
                             <tr>
-                                <td style="text-align: left;" colspan="10"><h4>Laporan Penjualan</h4>
+                                <td style="text-align: left;" colspan="11"><h4>Laporan Penjualan</h4>
                                 <p class="lbl_periode"></p>
                                 </td>
                             </tr>
@@ -79,8 +79,9 @@
                                 <th style="width: 10%; text-align: center;">Total</th>
                                 <th style="width: 5%; text-align:right">Diskon</th>
                                 <th style="width: 5%; text-align:right">Ppn</th>
-                                <th style="width: 10%; text-align:right">Ongkos&nbsp;Kirim</th>
+                                <th style="width: 10%; text-align:right">Ongkir</th>
                                 <th style="width: 10%; text-align:right">Total Net</th>
+                                <th style="width: 10%; text-align: center;">Cara Bayar/Via</th>
                             </tr>
                             </thead>
                             <tbody class="viewList"></tbody>

@@ -108,34 +108,42 @@ class PelaporanController extends Controller
     {
         $tgl_awal = $request->tgl_1;
         $tgl_akhir = $request->tgl_2;
-        $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)
+        $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
                             ->whereNULL('jenis_jual')->get();
         $nom=1;
         $total_net = 0;
+        $ket_via = "";
         $html="";
         foreach($result as $list)
         {
+            $cara_bayar = ($list->bayar_via==1) ? "Tunai/" : "Kredit";
+            if($list->bayar_via==1)
+            {
+                $ket_via = (empty($list->get_via->penerimaan)) ? "" : $list->get_via->penerimaan;
+            } 
             $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
 
             $html .= "<tr>
             <td style='text-align: center;'>".$tbl_aksi."</td>
             <td style='text-align: center;'>".$nom."</td>
-            <td style='text-align: center;'>".date_format(date_create($list->tgl_invoice), 'd-m-Y')."</td>
             <td style='text-align: center;'>".$list->no_invoice."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_transaksi), 'd-m-Y')."</td>
             <td>".$list->get_customer->nama_customer."</td>
             <td style='text-align: right;'>".number_format($list->total_invoice, 0)."</td>
             <td style='text-align: right;'>".$list->diskon_persen."</td>
             <td style='text-align: right;'>".$list->ppn_persen."</td>
             <td style='text-align: right;'>".number_format($list->ongkir, 0)."</td>
-            <td style='text-align: right;'>".number_format($list->total_invoice_net, 0)."</td>
+            <td style='text-align: right;'><b>".number_format($list->total_invoice_net, 0)."</b></td>
+            <td>".$cara_bayar.$ket_via."</td>
             </tr>";
             $nom++;
             $total_net+=$list->total_invoice_net;
         }
         $html .= "<tr>
             <td colspan='9' style='text-align: right;'><b>TOTAL</b></td>
-            <td style='text-align: right;'>".number_format($total_net, 0)."</td>
+            <td style='text-align: right;'><b>".number_format($total_net, 0)."</b></td>
+            <td></td>
         ";
         return response()
             ->json([
@@ -208,7 +216,7 @@ class PelaporanController extends Controller
             //-
             $qty_penjualan_awal = \DB::table('jual_head')
                                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                                ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                                ->whereDate('jual_head.tgl_transaksi', '<', $tgl_1)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
                                 ->whereNULL('jual_head.jenis_jual')
@@ -226,7 +234,7 @@ class PelaporanController extends Controller
 
             $qty_pemberian_sampel = \DB::table('jual_head')
                                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                                ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                                ->whereDate('jual_head.tgl_transaksi', '<', $tgl_1)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
                                 ->where('jual_head.jenis_jual', 1)
@@ -256,8 +264,8 @@ class PelaporanController extends Controller
             //stok keluar
             $qty_penjualan = \DB::table('jual_head')
                     ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                    ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
-                    ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                    ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_1)
+                    ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_2)
                     ->where('jual_detail.produk_id', $list->id)
                     ->whereNull('jual_head.deleted_at')
                     ->whereNull('jual_head.jenis_jual')
@@ -266,8 +274,8 @@ class PelaporanController extends Controller
                     ->pluck('t_penjualan')->first();
             $qty_pemberian_sampel = \DB::table('jual_head')
                     ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                    ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
-                    ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                    ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_1)
+                    ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_2)
                     ->where('jual_detail.produk_id', $list->id)
                     ->whereNull('jual_head.deleted_at')
                     ->where('jual_head.jenis_jual', 1)
@@ -343,7 +351,7 @@ class PelaporanController extends Controller
             //-
             $qty_penjualan_awal = \DB::table('jual_head')
                                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                                ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                                ->whereDate('jual_head.tgl_transaksi', '<', $tgl_1)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
                                 ->whereNULL('jual_head.jenis_jual')
@@ -361,7 +369,7 @@ class PelaporanController extends Controller
 
             $qty_pemberian_sampel = \DB::table('jual_head')
                                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                                ->whereDate('jual_head.tgl_invoice', '<', $tgl_1)
+                                ->whereDate('jual_head.tgl_transaksi', '<', $tgl_1)
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
                                 ->where('jual_head.jenis_jual', 1)
@@ -391,8 +399,8 @@ class PelaporanController extends Controller
             //stok keluar
             $qty_penjualan = \DB::table('jual_head')
                     ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                    ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
-                    ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                    ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_1)
+                    ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_2)
                     ->where('jual_detail.produk_id', $list->id)
                     ->whereNull('jual_head.deleted_at')
                     ->whereNull('jual_head.jenis_jual')
@@ -401,8 +409,8 @@ class PelaporanController extends Controller
                     ->pluck('t_penjualan')->first();
             $qty_pemberian_sampel = \DB::table('jual_head')
                     ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
-                    ->whereDate('jual_head.tgl_invoice', '>=', $tgl_1)
-                    ->whereDate('jual_head.tgl_invoice', '<=', $tgl_2)
+                    ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_1)
+                    ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_2)
                     ->where('jual_detail.produk_id', $list->id)
                     ->whereNull('jual_head.deleted_at')
                     ->where('jual_head.jenis_jual', 1)
@@ -456,8 +464,8 @@ class PelaporanController extends Controller
     {
         $tgl_awal = $request->tgl_1;
         $tgl_akhir = $request->tgl_2;
-        $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)
+        $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
                             ->where('jenis_jual', 1)->get();
         $nom=1;
         $total = 0;
@@ -471,7 +479,7 @@ class PelaporanController extends Controller
             $html .= "<tr>
             <td style='text-align: center;'>".$tbl_aksi."</td>
             <td style='text-align: center;'>".$nom."</td>
-            <td style='text-align: center;'>".date_format(date_create($list->tgl_invoice), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_transaksi), 'd-m-Y')."</td>
             <td>".$list->get_customer->nama_customer."</td>
             <td style='text-align: center;'>".$tot_qty."</td>
             <td style='text-align: center;'>".$list->keterangan."</td>
@@ -506,8 +514,8 @@ class PelaporanController extends Controller
         $tgl_akhir = $tgl_2;
         $ket_periode = $tgl_1." s/d ".$tgl_2;
 
-        $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)->where('jenis_jual', 1)->get();
+        $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)->where('jenis_jual', 1)->get();
         
         $pdf = PDF::loadview('pelaporan.pemberian_sampel.print', [
             'list_data' => $result,

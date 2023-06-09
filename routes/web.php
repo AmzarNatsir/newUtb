@@ -19,6 +19,7 @@ use App\Http\Controllers\KontainerController;
 use App\Http\Controllers\PersetujuanController;
 use App\Http\Controllers\QrController;
 use App\Http\Controllers\ReturnController;
+use App\Http\Controllers\ViaController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Iterator\CustomFilterIterator;
@@ -100,6 +101,14 @@ Route::post('kontainerStore', [KontainerController::class, 'store'])->name("kont
 Route::get('kontainerEdit/{id}', [KontainerController::class, 'edit'])->name("kontainerEdit");
 Route::put('kontainerUpdate/{id}', [KontainerController::class, 'update'])->name('kontainerUpdate');
 Route::get('kontainerDelete/{id}', [KontainerController::class, 'delete'])->name('kontainerDelete');
+
+//Common Penerimaan
+Route::get('via', [ViaController::class, 'index'])->name("via");
+Route::get('viaAdd', [ViaController::class, 'add'])->name("viaAdd");
+Route::post('viaStore', [ViaController::class, 'store'])->name("viaStore");
+Route::get('viaEdit/{id}', [ViaController::class, 'edit'])->name("viaEdit");
+Route::put('viaUpdate/{id}', [ViaController::class, 'update'])->name('viaUpdate');
+Route::get('viaDelete/{id}', [ViaController::class, 'delete'])->name('viaDelete');
 
 //Manajemen Stok
 Route::get('daftarStok', [ProductController::class, 'list_stok'])->name('daftarStok');

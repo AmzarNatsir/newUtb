@@ -20,10 +20,11 @@ foreach($list_data as $list)
     </td>
     <td style='text-align: center;'>{{ $nom }}</td>
     <td style='text-align: center;'>{{ $list->no_invoice }}</td>
-    <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
+    <td style='text-align: center;'>{{ date_format(date_create($list->tgl_transaksi), 'd-m-Y') }}</td>
     <td>{{ $list->get_customer->nama_customer }}</td>
     <td style='text-align: right;'><b>{{ number_format($list->total_invoice_net, 0) }}</b></td>
     <td style='text-align: center;'><span class='badge {{ $alert_ket }}'>{{ $ket_bayar }}</span></td>
+    <td style='text-align: center;'>{{ (empty($list->via_id)) ? "" : $list->get_via->penerimaan }}</td>
     <td>
     @if($list->approved==2)    
     <button type="button" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i> Rejected</button>

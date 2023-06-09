@@ -64,7 +64,8 @@
                                 <th style="width: 10%; text-align: center;">Tgl.Invoice</th>
                                 <th>Customer</th>
                                 <th style="width: 15%; text-align: center;">Nominal</th>
-                                <th style="width: 15%; text-align: center;">Cara Bayar</th>
+                                <th style="width: 10%; text-align: center;">Cara Bayar</th>
+                                <th style="width: 10%; text-align: center;">Penerimaan Via</th>
                                 <th style="width: 10%; text-align: center;">Status</th>
                             </tr>
                             </thead>

@@ -6,6 +6,7 @@ use App\Models\CustomerModel;
 use App\Models\JualDetailModel;
 use App\Models\JualHeadModel;
 use App\Models\ProductModel;
+use App\Models\ViaModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PDF;
@@ -25,7 +26,8 @@ class PenjualanController extends Controller
     public function index()
     {
         $data = [
-            'allCustomer' => CustomerModel::all()
+            'allCustomer' => CustomerModel::all(),
+            'allVia' => ViaModel::all()
         ];
         return view('penjualan.index', $data);
     }
@@ -44,8 +46,11 @@ class PenjualanController extends Controller
             if($request->inp_carabayar==2) //Kredit
             {
                 $newDate_jtp = date("Y-m-d", strtotime(str_replace("/", "-", $request->inpTglJatuhTempo)));  
+                $save_head->status_invoice = 2; //Belum Lunas
             } else {
                 $newDate_jtp = NULL;
+                $save_head->via_id = $request->sel_via;
+                $save_head->status_invoice = 1; //Lunas
             }
             $save_head->tgl_jatuh_tempo = $newDate_jtp;
             $save_head->total_invoice = str_replace(",","", $request->inputTotal);
@@ -55,12 +60,6 @@ class PenjualanController extends Controller
             $save_head->diskon_rupiah = str_replace(",","", $request->inputTotal_PpnRupiah);
             $save_head->ongkir = str_replace(",","", $request->inputOngkosKirim);
             $save_head->total_invoice_net = str_replace(",","", $request->inputTotalNet);
-            if($request->inp_carabayar==2) //Credit
-            {
-                $save_head->status_invoice = 2; //Belum Lunas
-            } else {
-                $save_head->status_invoice = 1; //Lunas
-            }
             $save_head->user_id = auth()->user()->id;
             $save_head->save();
             $id_head = $save_head->id;

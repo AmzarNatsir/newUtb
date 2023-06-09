@@ -73,7 +73,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="inp_tgl_trans">Tgl. Transaksi</label>
                                         <div class="input-group date" id="inp_tgl_po">
@@ -84,32 +84,47 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="sel_customer">Customer</label>
-                                <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>
-                                <option></option> 
-                                @foreach($allCustomer as $customer)
-                                <option value="{{ $customer->id }}">{{ $customer->nama_customer }}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inp_carabayar" class="col-sm-3 col-form-label">Pembayaran Via</label>
-                                <div class="col-sm-3">
-                                    <select class="form-control select2bs4" name="inp_carabayar" id="inp_carabayar" style="width: 100%;" required onchange="aktifJTP(this)">
-                                        <option></optionn>
-                                        <option value="1">Tunai</option>
-                                        <option value="2">Kredit</option>
-                                    </select>
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="sel_customer">Customer</label>
+                                        <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>
+                                        <option></option> 
+                                        @foreach($allCustomer as $customer)
+                                        <option value="{{ $customer->id }}">{{ $customer->nama_customer }}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                                <label for="inpJatuhTempo" class="col-sm-3 col-form-label">Jatuh Tempo</label>
-                                <div class="col-sm-3">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="inp_carabayar" class="col-form-label">Metode Pembayaran</label>
+                                        <select class="form-control select2bs4" name="inp_carabayar" id="inp_carabayar" style="width: 100%;" required onchange="aktifJTP(this)">
+                                            <option></optionn>
+                                            <option value="1">Tunai</option>
+                                            <option value="2">Kredit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="inpJatuhTempo" class="col-form-label">Jatuh Tempo</label>
                                     <div class="input-group date" id="reservationdate">
                                         <input type="text" class="form-control datetimepicker-input dtpicker" id="inpTglJatuhTempo" name="inpTglJatuhTempo" disabled>
                                         <div class="input-group-append" >
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="sel_via" class="col-form-label">Pembayaran Via</label>
+                                        <select class="form-control select2bs4" name="sel_via" id="sel_via" style="width: 100%;" disabled>
+                                            <option></optionn>
+                                            @foreach($allVia as $via)
+                                            <option value="{{ $via->id }}">{{ $via->penerimaan }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +134,7 @@
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
-                            <button type="submit" class="btn btn-outline-success btn-block btn-sm" id="tbl_submit">Simpan</button>
+                            <button type="submit" class="btn btn-success btn-block" id="tbl_submit">Simpan</button>
                         </div>
                     </div>
                 </div>
@@ -263,8 +278,16 @@
         if($(el).val()==2)
         {
             $("#inpTglJatuhTempo").attr("disabled", false);
+            $("#sel_via").attr('disabled', true);
+            $("#sel_via").attr('required', false);
+        } else if($(el).val()==1) {
+            $("#inpTglJatuhTempo").attr("disabled", true);
+            $("#sel_via").attr('disabled', false);
+            $("#sel_via").attr('required', true);
         } else {
             $("#inpTglJatuhTempo").attr("disabled", true);
+            $("#sel_via").attr('disabled', true);
+            $("#sel_via").attr('required', false);
         }
     }
 
@@ -383,6 +406,7 @@
         $("#inp_tgl_trans").val("{{ date('d/m/Y') }}");
         $("#sel_customer").val(null).trigger('change');
         $("#inp_carabayar").val(null).trigger('change');
+        $("#sel_via").val(null).trigger('change');
         $("#inpTglJatuhTempo").val("");
         $("#inp_keterangan").val("");
         $("#inputTotal").val("0");
@@ -392,6 +416,7 @@
         $("#inputTotal_PpnRupiah").val("0");
         $("#inputOngkosKirim").val("0");
         $("#inputTotalNet").val("0");
+        $("#sel_via").attr('required', false);
     }
 
     function konfirm()

@@ -62,7 +62,7 @@
             <div class="col-md-12">
                 <div class="card card-warning">
                     <div class="card-body">
-                        <table class="table table-bordered table-hover table-responsive datatable" style="font-size: 10pt; width: 100%;">
+                        <table class="table table-bordered table-hover datatable" style="font-size: 10pt; width: 100%;">
                             <thead>
                             <tr>
                                 <th style="width: 5%; text-align: center;">Act</th>
