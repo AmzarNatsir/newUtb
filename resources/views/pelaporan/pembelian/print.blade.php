@@ -121,7 +121,7 @@
     @endphp
     @endforeach
     <tr style="background-color: #808080; color:azure">
-        <td colspan="8" class="text-right"><b>TOTAL</b></td>
+        <td colspan="8" style='text-align: right'><b>TOTAL</b></td>
         <td style='text-align: right; height:30px'><b>{{ number_format($total, 0, ",", ".") }}</b></td>
         <td style='text-align: right; height:30px'><b>{{ number_format($total_bayar, 0, ",", ".") }}</b></td>
         <td style='text-align: right; height:30px'><b>{{ number_format($total_outs, 0, ",", ".") }}</b></td>
