@@ -117,7 +117,7 @@
     $no_urut++;
     $total+=$list->total_receive_net; 
     $total_bayar+=$total_terbayar_invoice;
-    $total_outs+=$list->outs_invoice;
+    $total_outs+=$outs_invoice;
     @endphp
     @endforeach
     <tr style="background-color: #808080; color:azure">
