@@ -78,19 +78,19 @@
         <td colspan="13">
         <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="0">
             <tr>
-                <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
+                <th rowspan="2" style="width: 2%; text-align: center; vertical-align: middle;">#</th>
                 <th rowspan="2" style="vertical-align: middle;">Nama Produk</th>
-                <th colspan="3" class="text-center">Satuan</th>
-                <th rowspan="2" class="text-right" style="width: 12%; vertical-align: middle;" >Sub Total</th>
-                <th colspan="2" class="text-center">Potongan</th>
-                <th rowspan="2" class="text-right" style="width: 12%;vertical-align: middle;">Sub Total Net</th>
+                <th colspan="3" style="text-align: center;">Satuan</th>
+                <th rowspan="2" style="width: 12%; text-align: right; vertical-align: middle;" >Sub Total</th>
+                <th colspan="2" style="text-align: center;">Potongan</th>
+                <th rowspan="2" style="width: 12%; text-align: right; vertical-align: middle;">Sub Total Net</th>
             </tr>
             <tr>
-                <th class="text-center" style="width: 10%">Satuan</th>
-                <th class="text-center" style="width: 5%">Qty</th>
-                <th class="text-center" style="width: 12%">Harga Satuan</th>
-                <th class="text-center" style="width: 5%">%</th>
-                <th class="text-center" style="width: 12%">Nilai</th>
+                <th style="width: 10%; text-align: center;">Satuan</th>
+                <th style="width: 5%; text-align: center;">Qty</th>
+                <th style="width: 12%; text-align: right;">Harga Satuan</th>
+                <th style="width: 5%; text-align: right;">%</th>
+                <th style="width: 12%; text-align: right;">Nilai</th>
             </tr>
             <tbody>
             @php $nom=1 @endphp
