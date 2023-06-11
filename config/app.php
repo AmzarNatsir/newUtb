@@ -197,7 +197,6 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         // App\Providers\GlobalServiceProvider::class,
-
     ],
 
     /*
