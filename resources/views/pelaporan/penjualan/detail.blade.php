@@ -5,11 +5,12 @@
 </div>
 <div class="modal-body">
     @php
-    $arr_via = array('1' => 'Tunai', '2' => 'Kredit');
     if($head->bayar_via==1) {
         $ket_cara_bayar = "Tunai";
+        $lbl_bayar = "Metode Pembayaran";
     } else {
-        $ket_cara_bayar = "Kredit";
+        $ket_cara_bayar = "Kredit / ".$head->get_via->penerimaan;
+        $lbl_bayar = "Metode Pembayaran / Via";
     }
     @endphp
     
@@ -17,11 +18,11 @@
     <thead>
         <tr>
         <th style="width: 50%;">No. Invoice : {{ $head->no_invoice }}</th>
-        <th style="width: 50%;">Tgl. Invoice : {{ $head->tgl_invoice }}</th>
+        <th style="width: 50%;">Tgl. Invoice : {{ $head->tgl_transaksi }}</th>
         </tr>
         <tr>
             <th>Customer : {{ $head->get_customer->nama_customer }}</th>
-            <th>Pembayaran Via : {{ $ket_cara_bayar }}</th>
+            <th>{{ $lbl_bayar }} : {{ $ket_cara_bayar }}</th>
         </tr>
     </thead>
     </table>
