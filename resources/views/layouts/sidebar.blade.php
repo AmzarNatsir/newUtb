@@ -182,7 +182,7 @@
             <a href="{{ route('pembayaranHutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang</p></a>
             <a href="{{ route('penerimaanPiutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penerimaan Piutang</p></a>
             <a href="{{ route('pembayaranHutangKontainer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang Kontainer</p></a>
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Lainnya</p></a>
+            <!-- <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Lainnya</p></a> -->
         </li>
     </ul>
 </li>
@@ -201,18 +201,15 @@
 
 <li class="nav-item">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-th-large"></i>
+        <i class="nav-icon fas fa-user"></i>
         <p>Manajement User<i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Group</p></a>
+            <a href="{{ route('roles_permission') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Roles Permission</p></a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Permission Group</p></a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Users</p></a>
+            <a href="{{ route('users') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Users</p></a>
         </li>
     </ul>
 </li>

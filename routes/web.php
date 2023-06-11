@@ -19,6 +19,7 @@ use App\Http\Controllers\KontainerController;
 use App\Http\Controllers\PersetujuanController;
 use App\Http\Controllers\QrController;
 use App\Http\Controllers\ReturnController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ViaController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
@@ -257,3 +258,10 @@ Route::get('persetujuanPenjualanApprove/{param}', [PersetujuanController::class,
 Route::post('persetujuanPenjualanStore', [PersetujuanController::class, 'persetujuan_penjualan_store'])->name('persetujuanPenjualanStore');
 
 Route::get('vqrcode', [QrController::class, 'index'])->name('vqrcode');
+
+//users
+Route::get('users', [UsersController::class, 'index'])->name('users');
+
+//roles permission
+Route::get('roles_permission', [UsersController::class, 'roles_permission'])->name('roles_permission');
+Route::get('roles_permission_add', [UsersController::class, 'roles_permission_add'])->name('roles_permission_add');

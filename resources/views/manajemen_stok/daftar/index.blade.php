@@ -74,6 +74,3 @@
 </div>
 <script type="text/javascript" src="{{ asset('assets/js/produk/manajemen_stok.js') }}"></script>
 @endsection
-
-
-
