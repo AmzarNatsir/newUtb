@@ -70,7 +70,7 @@
         <td style='text-align: right;'><b>{{ number_format($list->total_receive_net, 0, ",", ".") }}</b></td>
         <td style='text-align: right;'><b>{{ number_format($total_terbayar_invoice, 0, ",", ".") }}</b></td>
         <td style='text-align: right;'><b>{{ number_format($outs_invoice, 0, ",", ".") }}</b></td>
-        <td style='text-align: center;'>{{ ($list->cara_bayar==1) ? 'Cash' : 'Credit' }}</td>
+        <td style='text-align: center;'>{{ ($list->cara_bayar==1) ? 'Tunai' : 'Kredit' }}</td>
         <td>{{ $list->keterangan }}</td>
     </tr>
     @if($check_view_detail=='true')
