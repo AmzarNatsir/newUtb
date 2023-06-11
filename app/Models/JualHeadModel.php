@@ -52,4 +52,15 @@ class JualHeadModel extends Model
     {
         return $this->BelongsTo(ViaModel::class, 'via_id', 'id');
     }
+
+    public function get_piut_terbayar($id)
+    {
+        $total_terbayar_invoice = \DB::table('piutang')
+                ->where('piutang.jual_id', $id)
+                ->whereNull('piutang.deleted_at')
+                ->selectRaw('sum(piutang.nominal) as t_nominal')
+                ->pluck('t_nominal')->first();
+
+        return $total_terbayar_invoice;
+    }
 }

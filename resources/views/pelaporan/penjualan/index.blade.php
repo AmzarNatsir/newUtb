@@ -62,11 +62,11 @@
             </div>
             <div class="col-md-12">
                 <div class="card card-warning">
-                    <div class="card-body">
-                        <table class="table table-bordered table-hover  table-responsive" style="font-size: 10pt; width: 100%;" id="table_penjualan">
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered table-hover" style="font-size: 10pt; width: 100%;" id="table_penjualan">
                             <thead>
                             <tr>
-                                <td style="text-align: left;" colspan="11"><h4>Laporan Penjualan</h4>
+                                <td style="text-align: left;" colspan="10"><h4>Laporan Penjualan</h4>
                                 <p class="lbl_periode"></p>
                                 </td>
                             </tr>
@@ -76,12 +76,11 @@
                                 <th style="width: 10%; text-align: center;">No.Invoice</th>
                                 <th style="width: 10%; text-align: center;">Tgl.Invoice</th>
                                 <th>Customer</th>
-                                <th style="width: 10%; text-align: center;">Total</th>
-                                <th style="width: 5%; text-align:right">Diskon</th>
-                                <th style="width: 5%; text-align:right">Ppn</th>
-                                <th style="width: 10%; text-align:right">Ongkir</th>
                                 <th style="width: 10%; text-align:right">Total Net</th>
-                                <th style="width: 10%; text-align: center;">Cara Bayar/Via</th>
+                                <th style="width: 10%; text-align:right">Penerimaan</th>
+                                <th style="width: 10%; text-align:right">Oustanding</th>
+                                <th style="width: 10%; text-align: center;">Cara Bayar</th>
+                                <th style="width: 10%; text-align: center;">Via</th>
                             </tr>
                             </thead>
                             <tbody class="viewList"></tbody>

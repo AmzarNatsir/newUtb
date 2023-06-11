@@ -6,11 +6,11 @@
 <div class="modal-body">
     @php
     if($head->bayar_via==1) {
-        $ket_cara_bayar = "Tunai";
-        $lbl_bayar = "Metode Pembayaran";
-    } else {
-        $ket_cara_bayar = "Kredit / ".$head->get_via->penerimaan;
+        $ket_cara_bayar = "Tunai / ".$head->get_via->penerimaan;
         $lbl_bayar = "Metode Pembayaran / Via";
+    } else {
+        $ket_cara_bayar = "Kredit";
+        $lbl_bayar = "Metode Pembayaran";
     }
     @endphp
     

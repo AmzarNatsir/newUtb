@@ -76,7 +76,7 @@ class PelaporanController extends Controller
             $nom++;
             $total_net+=$list->total_receive_net;
             $total_bayar+=$total_terbayar_invoice;
-            $total_outs+=$list->outs_invoice;
+            $total_outs+=$outs_invoice;
         }
         $html .= "<tr>
             <td colspan='6' style='text-align: right;'><b>TOTAL</b></td>
@@ -134,15 +134,37 @@ class PelaporanController extends Controller
                             ->whereNULL('jenis_jual')->get();
         $nom=1;
         $total_net = 0;
+        $total_bayar = 0;
+        $total_outs = 0;
         $ket_via = "";
         $html="";
         foreach($result as $list)
         {
-            $cara_bayar = ($list->bayar_via==1) ? "Tunai/" : "Kredit";
+            $cara_bayar = ($list->bayar_via==1) ? "Tunai" : "Kredit";
             if($list->bayar_via==1)
             {
-                $ket_via = (empty($list->get_via->penerimaan)) ? "" : $list->get_via->penerimaan;
+                $ket_via = $list->get_via->penerimaan;
             } 
+            $total_terbayar_invoice = \DB::table('piutang')
+                                ->where('piutang.jual_id', $list->id)
+                                ->whereNull('piutang.deleted_at')
+                                ->selectRaw('sum(piutang.nominal) as t_nominal')
+                                ->pluck('t_nominal')->first();
+
+            if($list->bayar_via==2)
+            {
+                $total_terbayar_invoice = \DB::table('piutang')
+                        ->where('piutang.jual_id', $list->id)
+                        ->whereNull('piutang.deleted_at')
+                        ->selectRaw('sum(piutang.nominal) as t_nominal')
+                        ->pluck('t_nominal')->first();
+                $outs_invoice = $list->total_invoice_net - $total_terbayar_invoice;
+            } else {
+                $total_terbayar_invoice = $list->total_invoice_net;
+                $outs_invoice = 0;
+            }
+
+
             $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
 
             $html .= "<tr>
@@ -151,19 +173,24 @@ class PelaporanController extends Controller
             <td style='text-align: center;'>".$list->no_invoice."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_transaksi), 'd-m-Y')."</td>
             <td>".$list->get_customer->nama_customer."</td>
-            <td style='text-align: right;'>".number_format($list->total_invoice, 0)."</td>
-            <td style='text-align: right;'>".$list->diskon_persen."</td>
-            <td style='text-align: right;'>".$list->ppn_persen."</td>
-            <td style='text-align: right;'>".number_format($list->ongkir, 0)."</td>
             <td style='text-align: right;'><b>".number_format($list->total_invoice_net, 0)."</b></td>
-            <td>".$cara_bayar.$ket_via."</td>
+            <td style='text-align: right;'><b>".number_format($total_terbayar_invoice, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($outs_invoice, 0)."</b></td>
+            <td style='text-align: center;'>".$cara_bayar."</td>
+            <td style='text-align: center;'>".$ket_via."</td>
             </tr>";
             $nom++;
             $total_net+=$list->total_invoice_net;
+            $total_net+=$list->total_receive_net;
+            $total_bayar+=$total_terbayar_invoice;
+            $total_outs+=$outs_invoice;
         }
         $html .= "<tr>
-            <td colspan='9' style='text-align: right;'><b>TOTAL</b></td>
+            <td colspan='5' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total_net, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_bayar, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_outs, 0)."</b></td>
+            <td></td>
             <td></td>
         ";
         return response()
@@ -184,18 +211,20 @@ class PelaporanController extends Controller
     
     public function laporan_penjualan_print($tgl_1=null, $tgl_2=null, $view_detail=null)
     {
-        $tgl_awal = $tgl_1;
-        $tgl_akhir = $tgl_2;
-        $ket_periode = $tgl_1." s/d ".$tgl_2;
+        $arr_tgl_1 = explode('-', $tgl_1);
+        $ket_tgl_1 = $arr_tgl_1[2]."-".$arr_tgl_1[1]."-".$arr_tgl_1[0];
+        $arr_tgl_2 = explode('-', $tgl_2);
+        $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
+        $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
 
-        $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)->whereNULL('jenis_jual')->get();
+        $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_1)
+                            ->whereDate('tgl_invoice', '<=', $tgl_2)->whereNULL('jenis_jual')->get();
         
         $pdf = PDF::loadview('pelaporan.penjualan.print', [
             'list_data' => $result,
             'periode' => $ket_periode,
             'check_view_detail' => $view_detail
-        ])->setPaper('A4', "Potrait");
+        ])->setPaper('A4', "landscape");
         return $pdf->stream();
     }
 

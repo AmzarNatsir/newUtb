@@ -14,10 +14,10 @@
   </style>
 </head>
 <body>
-<table style="width: 100%;">
+<table style="width: 100%; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">
   <tr>
       <td style="width: 50%; vertical-align: middle;">
-        <table style="width: 100%; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">
+        <table style="width: 100%;">
         <tr>
             <td colspan="3"><h5>LAPORAN PEMBELIAN</h5></td>
         </tr>
@@ -29,7 +29,7 @@
         </table>
       </td>
       <td style="width: 50%;">
-          <table style="width: 100%; font-size: 8pt; font-family: Arial, Helvetica, sans-serif;">
+          <table style="width: 100%;">
           <tr>
               <td style="width: 20%; vertical-align: top;"><img src="{{ asset('assets/AdminLTE/dist/img/utb_logo.png')}}" alt="UTB Logo" style="width: 100px;  height: auto;"></td>
               <td style="width: 80%"><h5><strong>PT. USAHA TANI BERSAMA</strong></h5><p>Jl. Sorumba No. 79, Wowawanggu, Kec. Kedia, Kota Kendari, Sulawesi Tenggara 93117 - Telepon : 0401-3092867</p></td>
@@ -38,7 +38,7 @@
       </td>
   </tr>
 </table>
-<table style="font-size: 8pt; width: 100%; font-family: Arial, Helvetica, sans-serif; border-collapse: collapse;" border="1">
+<table style="font-size: 9pt; font-family: Arial, Helvetica, sans-serif; width: 100%; border-collapse: collapse;" border="1">
     <thead>
     <tr style="background-color: #808080; color:azure">
         <th style="width: 5%; text-align: center; height: 30px">No.</th>

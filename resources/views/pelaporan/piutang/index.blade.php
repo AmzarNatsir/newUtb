@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('title', 'Pelaporan')
-@section('breadcrumb', 'Laporan Pembayaran Piutang')
+@section('breadcrumb', 'Laporan Penerimaan Piutang')
 @section('content')
 @routes
 <section class="content">
     <!-- Default box -->
     <div class="card card-danger">
     <div class="card-header">
-        <h3 class="card-title">Laporan Pembayaran Piutang</h3>
+        <h3 class="card-title">Laporan Penerimaan Piutang</h3>
     </div>
     <div class="card-body">
         <div class="row">
@@ -68,7 +68,7 @@
                         <table class="table table-bordered table-hover  table-responsive" style="font-size: 11pt; width: 100%;" id="table_penjualan">
                             <thead>
                             <tr>
-                                <td style="text-align: left;" colspan="10"><h4>Laporan Pembayaran Piutang</h4>
+                                <td style="text-align: left;" colspan="10"><h4>Laporan Penerimaan Piutang</h4>
                                 <p class="lbl_periode"></p>
                                 <p class="lbl_customer"></p>
                                 </td>
