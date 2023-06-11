@@ -48,10 +48,10 @@ class PelaporanController extends Controller
             $ket_bayar = ($list->cara_bayar==1) ? 'Tunai' : 'Kredit';
             if($list->cara_bayar==2)
             {
-                $total_terbayar_invoice = \DB::table('hutang_kontainer')
-                                ->where('hutang_kontainer.receive_id', $list->id)
-                                ->whereNull('hutang_kontainer.deleted_at')
-                                ->selectRaw('sum(hutang_kontainer.nominal) as t_nominal')
+                $total_terbayar_invoice = \DB::table('hutang')
+                                ->where('hutang.receive_id', $list->id)
+                                ->whereNull('hutang.deleted_at')
+                                ->selectRaw('sum(hutang.nominal) as t_nominal')
                                 ->pluck('t_nominal')->first();
                 $outs_invoice = $list->total_receive_net - $total_terbayar_invoice;
             } else {

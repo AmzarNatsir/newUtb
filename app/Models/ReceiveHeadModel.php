@@ -52,11 +52,11 @@ class ReceiveHeadModel extends Model
 
     public function get_hut_terbayar($id)
     {
-        $total_terbayar_invoice = \DB::table('hutang_kontainer')
-                                ->where('hutang_kontainer.receive_id', $id)
-                                ->whereNull('hutang_kontainer.deleted_at')
-                                ->selectRaw('sum(hutang_kontainer.nominal) as t_nominal')
-                                ->pluck('t_nominal')->first();
+        $total_terbayar_invoice = \DB::table('hutang')
+                    ->where('hutang.receive_id', $id)
+                    ->whereNull('hutang.deleted_at')
+                    ->selectRaw('sum(hutang.nominal) as t_nominal')
+                    ->pluck('t_nominal')->first();
 
         return $total_terbayar_invoice;
     }
