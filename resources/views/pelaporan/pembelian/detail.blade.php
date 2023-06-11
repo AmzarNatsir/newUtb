@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <th>Supplier : {{ $head->get_supplier->nama_supplier }}</th>
-            <th>Pembayaran Via : {{ $ket_cara_bayar }}</th>
+            <th>Metode Pembayaran : {{ $ket_cara_bayar }}</th>
         </tr>
         <tr>
             <th>Kontainer Nomor : {{ $head->invoice_kontainer }} - Rp. {{ number_format($head->nilai_kontainer, 0) }}</th>
