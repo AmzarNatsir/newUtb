@@ -15,15 +15,30 @@
 </head>
 <body>
 <table style="width: 100%;">
-<tr>
-  <td style="width: 60%;"><h3>LAPORAN PEMBELIAN</h3><br>
-        <b>Periode : {{ $periode }}</b></td>
-  <td style="width: 10%; vertical-align: bottom;"><img src="{{ asset('assets/AdminLTE/dist/img/utb_logo.png')}}" alt="UTB Logo" style="width: 120px;  height: auto;"></td>
-  <td style="vertical-align: middle;"><h3><strong>PT. USAHA TANI BERSAMA</strong></h3></td>
-</tr>
+  <tr>
+      <td style="width: 50%; vertical-align: middle;">
+        <table style="width: 100%; font-size: 10pt; font-family: Arial, Helvetica, sans-serif;">
+        <tr>
+            <td colspan="3"><h5>LAPORAN PEMBELIAN</h5></td>
+        </tr>
+        <tr>
+            <td style="width: 18%;">Periode</td>
+            <td style="width: 2%;">:</td>
+            <td style="width: 80%;">{{ $periode }}</td>
+        </tr>
+        </table>
+      </td>
+      <td style="width: 50%;">
+          <table style="width: 100%; font-size: 8pt; font-family: Arial, Helvetica, sans-serif;">
+          <tr>
+              <td style="width: 20%; vertical-align: top;"><img src="{{ asset('assets/AdminLTE/dist/img/utb_logo.png')}}" alt="UTB Logo" style="width: 100px;  height: auto;"></td>
+              <td style="width: 80%"><h5><strong>PT. USAHA TANI BERSAMA</strong></h5><p>Jl. Sorumba No. 79, Wowawanggu, Kec. Kedia, Kota Kendari, Sulawesi Tenggara 93117 - Telepon : 0401-3092867</p></td>
+          </tr>
+          </table>
+      </td>
+  </tr>
 </table>
-
-<table style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
+<table style="font-size: 8pt; width: 100%; font-family: Arial, Helvetica, sans-serif; border-collapse: collapse;" border="1">
     <thead>
     <tr style="background-color: #808080; color:azure">
         <th style="width: 5%; text-align: center; height: 30px">No.</th>
@@ -58,7 +73,7 @@
         $outs_invoice = 0;
     }
     @endphp
-    <tr>
+    <tr style="background-color: #e0dfde; color:black">
         <td style='text-align: center; height: 25px;'>{{ $no_urut }}</td>
         <td style='text-align: center;'>{{ $list->no_invoice }}</td>
         <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
@@ -76,7 +91,7 @@
     @if($check_view_detail=='true')
     <tr>
         <td colspan="13">
-        <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="0">
+        <table class="table table-bordered table-vcenter" style="font-size: 8pt; font-family: Arial, Helvetica, sans-serif; width: 100%; border-collapse: collapse;" border="1">
             <tr>
                 <th rowspan="2" style="width: 2%; text-align: center; vertical-align: middle;">#</th>
                 <th rowspan="2" style="vertical-align: middle;">Nama Produk</th>
