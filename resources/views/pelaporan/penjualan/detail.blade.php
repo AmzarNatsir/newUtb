@@ -18,7 +18,7 @@
     <thead>
         <tr>
         <th style="width: 50%;">No. Invoice : {{ $head->no_invoice }}</th>
-        <th style="width: 50%;">Tgl. Invoice : {{ $head->tgl_transaksi }}</th>
+        <th style="width: 50%;">Tgl. Invoice : {{ date_format(date_create($head->tgl_transaksi), 'd-m-Y') }}</th>
         </tr>
         <tr>
             <th>Customer : {{ $head->get_customer->nama_customer }}</th>

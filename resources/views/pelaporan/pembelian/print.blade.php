@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UTB | Print Laporan Pembelian</title>
   <!-- <link rel="stylesheet" href="{{ asset('assets/AdminLTE/dist/css/adminlte.min.css')}} "> -->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <style>
     @page { margin: 20px; padding: 0; }
     footer { position: fixed; bottom: -20px; left: 0px; right: 0px; height: 50px; }
@@ -32,8 +32,8 @@
         <th style="width: 8%; text-align: center;">Tgl.Tiba</th>
         <th>Supplier</th>
         <th style="width: 7%; text-align: center;">Total</th>
-        <th style="width: 5%; text-align:right">Diskon&nbsp;(%)</th>
-        <th style="width: 5%; text-align:right">Ppn (%)</th>
+        <th style="width: 5%; text-align:right">Diskon</th>
+        <th style="width: 5%; text-align:right">Ppn</th>
         <th style="width: 7%; text-align:right">Total Net</th>
         <th style="width: 7%; text-align:right">Pembayaran</th>
         <th style="width: 7%; text-align:right">Outstanding</th>
@@ -64,12 +64,12 @@
         <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
         <td style='text-align: center;'>{{ date_format(date_create($list->tgl_tiba), 'd-m-Y') }}</td>
         <td>{{ $list->get_supplier->nama_supplier }}</td>
-        <td style='text-align: right;'>{{ number_format($list->total_receice, 0, ",", ".") }}</td>
-        <td style='text-align: right;'>{{ $list->diskon_persen }}</td>
-        <td style='text-align: right;'>{{ $list->ppn_persen }}</td>
-        <td style='text-align: right;'><b>{{ number_format($list->total_receive_net, 0, ",", ".") }}</b></td>
-        <td style='text-align: right;'><b>{{ number_format($total_terbayar_invoice, 0, ",", ".") }}</b></td>
-        <td style='text-align: right;'><b>{{ number_format($outs_invoice, 0, ",", ".") }}</b></td>
+        <td style='text-align: right;'>{{ number_format($list->total_receice, 0) }}</td>
+        <td style='text-align: right;'>{{ number_format($list->diskon_rupiah, 0) }}</td>
+        <td style='text-align: right;'>{{ number_format($list->ppn_rupiah, 0) }}</td>
+        <td style='text-align: right;'><b>{{ number_format($list->total_receive_net, 0) }}</b></td>
+        <td style='text-align: right;'><b>{{ number_format($total_terbayar_invoice, 0) }}</b></td>
+        <td style='text-align: right;'><b>{{ number_format($outs_invoice, 0) }}</b></td>
         <td style='text-align: center;'>{{ ($list->cara_bayar==1) ? 'Tunai' : 'Kredit' }}</td>
         <td>{{ $list->keterangan }}</td>
     </tr>

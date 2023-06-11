@@ -37,8 +37,8 @@
         <th style="width: 10%; text-align: center;">No.Invoice</th>
         <th>Customer</th>
         <th style="width: 12%; text-align: center;">Total (Rp)</th>
-        <th style="width: 8%; text-align:right">Diskon&nbsp;(%)</th>
-        <th style="width: 8%; text-align:right">Ppn (%)</th>
+        <th style="width: 8%; text-align:right">Diskon</th>
+        <th style="width: 8%; text-align:right">Ppn</th>
         <th style="width: 12%; text-align:right">Ongkos Kirim (Rp)</th>
         <th style="width: 12%; text-align:right">Total Net (Rp)</th>
     </tr>
@@ -53,11 +53,11 @@
         <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
         <td style='text-align: center;'>{{ $list->no_invoice }}</td>
         <td>{{ $list->get_customer->nama_customer }}</td>
-        <td style='text-align: right;'>{{ number_format($list->total_invoice, 0, ",", ".") }}</td>
-        <td style='text-align: right;'>{{ $list->diskon_persen }}</td>
-        <td style='text-align: right;'>{{ $list->ppn_persen }}</td>
-        <td style='text-align: right;'>{{ number_format($list->ongkir, 0, ",", ".") }}</td>
-        <td style='text-align: right;'>{{ number_format($list->total_invoice_net, 0, ",", ".") }}</td>
+        <td style='text-align: right;'>{{ number_format($list->total_invoice, 0) }}</td>
+        <td style='text-align: right;'>{{ number_format($list->diskon_rupiah, 0) }}</td>
+        <td style='text-align: right;'>{{ $list->ppn_rupiah }}</td>
+        <td style='text-align: right;'>{{ number_format($list->ongkir, 0) }}</td>
+        <td style='text-align: right;'>{{ number_format($list->total_invoice_net, 0) }}</td>
     </tr>
     <tr>
         <td colspan="9">
