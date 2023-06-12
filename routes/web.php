@@ -265,3 +265,7 @@ Route::get('users', [UsersController::class, 'index'])->name('users');
 //roles permission
 Route::get('roles_permission', [UsersController::class, 'roles_permission'])->name('roles_permission');
 Route::get('roles_permission_add', [UsersController::class, 'roles_permission_add'])->name('roles_permission_add');
+Route::post('roles_permission_store', [UsersController::class, 'roles_permission_store'])->name('roles_permission_store');
+Route::get('roles_permission_edit/{id}', [UsersController::class, 'roles_permission_edit'])->name('roles_permission_edit');
+Route::put('roles_permission_update/{id}', [UsersController::class, 'roles_permission_update'])->name('roles_permission_update');
+Route::get('roles_permission_delete/{id}', [UsersController::class, 'roles_permission_delete'])->name('roles_permission_delete');

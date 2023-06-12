@@ -30,11 +30,28 @@
             <tr>
                 <th class="text-center" style="width: 5%;">No.</th>
                 <th>Roles</th>
-                <th style="width: 20%;">Permission</th>
                 <th style="width: 10%;" class="text-center">Act</th>
             </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                @php $nom=1; @endphp
+                @foreach($all_roles as $role)
+                <tr>
+                    <td>{{ $nom }}</td>
+                    <td>{{ $role->name }}</td>
+                    <td><div class="input-group-prepend">
+                    <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                      Action
+                    </button>
+                    <div class="dropdown-menu">
+                        <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $role->id }}" onclick="goEdit(this)"><i class="fa fa-edit"></i> Edit</button>
+                        <a href="{{ url('roles_permission_delete') }}/{{ $role->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                    </div>
+                  </div></td>
+                </tr>
+                @php $nom++; @endphp
+                @endforeach
+            </tbody>
         </table>
     </div>
     <!-- /.card-body -->
@@ -51,12 +68,28 @@
 </div>
 <script>
     $(function(){
+        window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
         $("#tbl_new").on("click", function()
         {
             $("#frm_modal").load("{{ url('roles_permission_add') }}");
             
         });
     });
+    var goEdit = function(el) {
+        $("#frm_modal").load(route('roles_permission_edit', $(el).val()));
+    }
+
+    function konfirmHapus()
+    {
+        var psn = confirm("Delete Data ?");
+        if(psn==true)
+        {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 </script>
 @endsection
 
