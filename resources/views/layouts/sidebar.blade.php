@@ -43,12 +43,15 @@
 <li class="nav-item">
     <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
         <i class="nav-icon fas fa-home"></i>
-        <p>Home</p>
+        <p>Home </p>
     </a>
 </li>
+@can('dashboard')
 <li class="nav-item menu-open">
     <a href="{{ route('dashboard') }}" class="nav-link"><i class="nav-icon fas fa-chart-pie"></i><p>Dashboard</p></a>
 </li>
+@endcan
+@can('summary')
 <li class="nav-item">
     <a href="#" class="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i><p>Summary<i class="right fas fa-angle-left"></i></p></a>
     <ul class="nav nav-treeview">
@@ -57,36 +60,55 @@
         </li>
     </ul>
 </li>
+@endcan
 <li class="nav-item">
     <a href="#" class="nav-link"><i class="nav-icon fas fa-copy"></i><p>Pelaporan<i class="right fas fa-angle-left"></i></p></a>
     <ul class="nav nav-treeview">
+        @can('laporan_stok')
         <li class="nav-item">
             <a href="{{ route('laporanStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stok</p></a>
         </li>
+        @endcan
+        @can('laporan_pemberian_sampel')
         <li class="nav-item">
             <a href="{{ route('laporanPemerianSampel') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pemberian Sampel</p></a>
         </li>
+        @endcan
+        @can('laporan_pembelian')
         <li class="nav-item">
             <a href="{{ route('laporanPembelian') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembelian</p></a>
         </li>
+        @endcan
+        @can('laporan_penjualan')
         <li class="nav-item">
             <a href="{{ route('laporanPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
         </li>
+        @endcan
+        @can('laporan_return_pembelian')
         <li class="nav-item">
             <a href="{{ route('laporanReturnPembelian') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Pembelian</p></a>
         </li>
+        @endcan
+        @can('laporan_return_penjualan')
         <li class="nav-item">
             <a href="{{ route('laporanReturnPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Penjualan</p></a>
         </li>
+        @endcan
+        @can('laporan_bayar_hutang')
         <li class="nav-item">
             <a href="{{ route('laporanHutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang</p></a>
         </li>
+        @endcan
+        @can('laporan_terima_piutang')
         <li class="nav-item">
             <a href="{{ route('laporanPiutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penerimaan Piutang</p></a>
         </li>
+        @endcan
+        @can('laporan_hutang_kontainer')
         <li class="nav-item">
             <a href="{{ route('laporanHutangKontainer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang Kontainer</p></a>
         </li>
+        @endcan
     </ul>
 </li>
 <li class="nav-item">
@@ -95,21 +117,31 @@
         <p>Data Master<i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
+        @can('master_satuan')
         <li class="nav-item">
             <a href="{{ route('satuan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Satuan</p></a>
         </li>
+        @endcan
+        @can('master_merek')
         <li class="nav-item">
             <a href="{{ route('listMerk') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Merek</p></a>
         </li>
+        @endcan
+        @can('master_supplier')
         <li class="nav-item">
             <a href="{{ route('supplier') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Supplier</p></a>
         </li>
+        @endcan
+        @can('master_kontainer')
         <li class="nav-item">
             <a href="{{ route('kontainer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Kontainer</p></a>
         </li>
+        @endcan
+        @can('master_via')
         <li class="nav-item">
             <a href="{{ route('via') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penerimaan Via</p></a>
         </li>
+        @endcan
     </ul>
 </li>
 <li class="nav-item">
@@ -118,15 +150,21 @@
         <p>Customer<i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
+        @can('daftar_customer')
         <li class="nav-item">
             <a href="{{ route('customer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Customer</p></a>
         </li>
+        @endcan
+        @can('customer_submission')
         <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Submission Approval</p></a>
         </li>
+        @endcan
+        @can('customer_switch_level')
         <li class="nav-item">
             <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Switch Level Customer</p></a>
         </li>
+        @endcan
     </ul>
 </li>
 <li class="nav-item">
@@ -136,9 +174,15 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
+            @can('manajemen_stok_baru')
             <a href="{{ route('stok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Stok Baru</p></a>
+            @endcan
+            @can('manajemen_stok_daftar')
             <a href="{{ route('daftarStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Daftar Stok</p></a>
+            @endcan
+            @can('manajemen_stok_kartu')
             <a href="{{ route('kartuStok') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Kartu Stok</p></a>
+            @endcan
         </li>
     </ul>
 </li>
@@ -149,9 +193,15 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
+            @can('daftar_transaksi_po')
             <a href="{{ route('invoicePO') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Purchase Order</p></a>
+            @endcan
+            @can('daftar_transaksi_receive')
             <a href="{{ route('invoiceReceiving') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Receiving</p></a>
+            @endcan
+            @can('daftar_transaksi_penjualan')
             <a href="{{ route('invoicePenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
+            @endcan
         </li>
     </ul>
 </li>
@@ -163,12 +213,24 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
+            @can('transaksi_sampel')
             <a href="{{ route('pemberianSampel') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pemberian Sample</p></a>
+            @endcan
+            @can('transaksi_po')
             <a href="{{ route('purchaseOrder') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Purchase Order</p></a>
+            @endcan
+            @can('transaksi_receive')
             <a href="{{ route('receiving') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Receiving</p></a>
+            @endcan
+            @can('transaksi_penjualan')
             <a href="{{ route('penjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
+            @endcan
+            @can('transaksi_return_beli')
             <a href="{{ route('returnPembelian') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Pembelian</p></a>
+            @endcan
+            @can('transaksi_return_jual')
             <a href="{{ route('returnPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Penjualan</p></a>
+            @endcan
         </li>
     </ul>
 </li>
@@ -179,9 +241,15 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
+            @can('keuangan_bayar_hutang')
             <a href="{{ route('pembayaranHutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang</p></a>
+            @endcan
+            @can('keuangan_terima_piutang')
             <a href="{{ route('penerimaanPiutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penerimaan Piutang</p></a>
+            @endcan
+            @can('keuangan_hutang_kontainer')
             <a href="{{ route('pembayaranHutangKontainer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang Kontainer</p></a>
+            @endcan
             <!-- <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Lainnya</p></a> -->
         </li>
     </ul>
@@ -194,7 +262,9 @@
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
+            @can('persetujaun_penjualan')
             <a href="{{ route('persetujuanPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
+            @endcan
         </li>
     </ul>
 </li>
@@ -205,12 +275,16 @@
         <p>Manajement User<i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
+        @can('manaj_users_roles_permission')
         <li class="nav-item">
             <a href="{{ route('roles_permission') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Roles Permission</p></a>
         </li>
+        @endcan
+        @can('manaj_users_user')
         <li class="nav-item">
             <a href="{{ route('users') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Users</p></a>
         </li>
+        @endcan
     </ul>
 </li>
     </ul>
