@@ -259,9 +259,7 @@ Route::post('persetujuanPenjualanStore', [PersetujuanController::class, 'persetu
 
 Route::get('vqrcode', [QrController::class, 'index'])->name('vqrcode');
 
-//users
-Route::get('users', [UsersController::class, 'index'])->name('users');
-
+//manajemen user
 //roles permission
 Route::get('roles_permission', [UsersController::class, 'roles_permission'])->name('roles_permission');
 Route::get('roles_permission_add', [UsersController::class, 'roles_permission_add'])->name('roles_permission_add');
@@ -269,3 +267,12 @@ Route::post('roles_permission_store', [UsersController::class, 'roles_permission
 Route::get('roles_permission_edit/{id}', [UsersController::class, 'roles_permission_edit'])->name('roles_permission_edit');
 Route::put('roles_permission_update/{id}', [UsersController::class, 'roles_permission_update'])->name('roles_permission_update');
 Route::get('roles_permission_delete/{id}', [UsersController::class, 'roles_permission_delete'])->name('roles_permission_delete');
+
+//users
+Route::get('users', [UsersController::class, 'index'])->name('users');
+Route::get('users_add', [UsersController::class, 'users_add'])->name('users_add');
+Route::get('get_role_permission/{param}', [UsersController::class, 'get_role_permission'])->name('get_role_permission');
+Route::post('users_store', [UsersController::class, 'users_store'])->name('users_store');
+Route::get('users_edit/{id}', [UsersController::class, 'users_edit'])->name('users_edit');
+Route::put('users_update/{id}', [UsersController::class, 'users_update'])->name('users_update');
+Route::get('users_delete/{id}', [UsersController::class, 'users_delete'])->name('users_delete');

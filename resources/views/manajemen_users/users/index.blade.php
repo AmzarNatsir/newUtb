@@ -31,8 +31,10 @@
                 <th class="text-center" style="width: 5%;">No.</th>
                 <th>Nama User</th>
                 <th>Email</th>
-                <th class="text-center">Aktif</th>
-                <th class="text-center">Act</th>
+                <th style="width: 20%;">Role</th>
+                <th class="text-center" style="width: 20%;">Approver</th>
+                <th class="text-center" style="width: 10%;">Aktif</th>
+                <th style="width: 15%;">Act</th>
             </tr>
             </thead>
             <tbody>
@@ -42,8 +44,18 @@
                 <td class="text-center">{{ $nom }}</td>
                 <td>{{ $list->name }}</td>
                 <td>{{ $list->email }}</td>
-                <td class="text-center"></td>
-                <td class="text-center"></td>
+                <td>{{ $list->roles->pluck('name')->first() }}</td>
+                <td class="text-center">{{ (empty($list->approver)) ? "" : "Approver" }}</td>
+                <td class="text-center">{{ ($list->active=='y') ? "Aktif" : "Tidak Aktif" }}</td>
+                <td class="text-center"><div class="input-group-prepend">
+                    <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                      Action
+                    </button>
+                    <div class="dropdown-menu">
+                        <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goEdit(this)"><i class="fa fa-edit"></i> Edit</button>
+                        <a href="{{ url('users_delete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                    </div>
+                  </div></td>
             </tr>
             @php $nom++ @endphp
             @endforeach
@@ -62,6 +74,31 @@
         </div>
     </div>
 </div>
+<script>
+    $(function() {
+        window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
+        $("#tbl_new").on("click", function()
+        {
+            $("#frm_modal").load("{{ url('users_add') }}");
+            
+        });
+    });
+    var goEdit = function(el) {
+        $("#frm_modal").load(route('users_edit', $(el).val()));
+    }
+
+    function konfirmHapus()
+    {
+        var psn = confirm("Delete Data ?");
+        if(psn==true)
+        {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+</script>
 @endsection
 
 
