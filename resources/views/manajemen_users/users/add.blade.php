@@ -44,6 +44,29 @@
                                 </div>
                             </div>
                         </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="form-group clearfix">
+                                        <div class="icheck-danger d-inline">
+                                            <input type="checkbox" id="selApprover" name="selApprover" value="y" onchange="checkApprover(this)">
+                                            <label for="selApprover">Approver</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label for="selLevelApprover" class="col-md-4 col-form-label">Level Approver</label>
+                            <div class="col-md-4">
+                                <select class="form-control select2bs4" name="selLevelApprover" id="selLevelApprover" style="width: 100%;" disabled>
+                                    <option></optionn>
+                                    <option value="1">Lever Pertama</option>
+                                    <option value="2">Level Kedua</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>
@@ -94,6 +117,16 @@
         $("#v_permission").show(1000);
         $("#v_permission").load(route('get_role_permission', $(el).val()));
     }
+
+    var checkApprover = function(el)
+    {
+        if ($(el).is(':checked')) {
+            $("#selLevelApprover").attr("disabled", false);
+        } else {
+            $("#selLevelApprover").attr("disabled", true);
+        }
+    }
+    
     function konfirm()
     {
         var psn = confirm("Yakin akan menyimpan data ?");

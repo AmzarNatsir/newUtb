@@ -34,10 +34,23 @@ class UsersController extends Controller
 
     public function users_store(Request $request)
     {
+        if($request->selApprover=='y')
+        {
+            $approver = $request->selApprover;
+            $lvl_approver = $request->selLevelApprover;
+        } else {
+            $approver = NULL;
+            $lvl_approver = NULL;
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)]);
+            'password' => Hash::make($request->password),
+            'active' => 'y',
+            'approver' => $approver,
+            'lvl_approver' => $lvl_approver
+        ]);
             
         $excec_role_user = $user->assignRole($request->checkRole);
         if($excec_role_user)

@@ -38,14 +38,20 @@
             </tr>
             </thead>
             <tbody>
-            @php $nom=1 @endphp
+            @php $nom=1; $ket_lvl_approver = ""; @endphp
             @foreach($all_users as $list)
+            @php
+            if(!empty($list->lvl_approver))
+            {
+                $ket_lvl_approver = "Level ".$list->lvl_approver;
+            }
+            @endphp
             <tr>
                 <td class="text-center">{{ $nom }}</td>
                 <td>{{ $list->name }}</td>
                 <td>{{ $list->email }}</td>
                 <td>{{ $list->roles->pluck('name')->first() }}</td>
-                <td class="text-center">{{ (empty($list->approver)) ? "" : "Approver" }}</td>
+                <td class="text-center">{{ (empty($list->approver)) ? "" : "Approver" }} {{ $ket_lvl_approver }}</td>
                 <td class="text-center">{{ ($list->active=='y') ? "Aktif" : "Tidak Aktif" }}</td>
                 <td class="text-center"><div class="input-group-prepend">
                     <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
