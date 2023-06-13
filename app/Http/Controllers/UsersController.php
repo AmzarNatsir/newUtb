@@ -79,7 +79,6 @@ class UsersController extends Controller
         {
             $update->password =  Hash::make($request->editPassword);
         }
-
         if($request->selApprover=='y')
         {
             $update->approver = $request->selApprover;
@@ -88,7 +87,10 @@ class UsersController extends Controller
             $update->approver = NULL;
             $update->lvl_approver = NULL;
         }
-
+        if($request->selActive=='y')
+        {
+            $update->active = "y";
+        }
         $update->save();
         \DB::table('model_has_roles')->where('model_id',$id)->delete();
 
@@ -104,7 +106,9 @@ class UsersController extends Controller
 
     public function users_delete($id)
     {
-        $exec_del = User::find($id)->delete();
+        $delete_user = User::find($id);
+        $delete_user->active = "t";
+        $exec_del = $delete_user->save();
         if($exec_del)
         {
             return redirect('users')->with('message', 'Data user berhasil dihapus');

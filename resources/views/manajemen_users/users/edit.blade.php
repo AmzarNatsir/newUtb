@@ -68,6 +68,18 @@
                             </div>
                         </div>
                         <hr>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="form-group clearfix">
+                                        <div class="icheck-danger d-inline">
+                                            <input type="checkbox" id="selActive" name="selActive" value="y" {{ ($user->active=='y') ? 'checked' : '' }} >
+                                            <label for="selActive">Aktif</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
