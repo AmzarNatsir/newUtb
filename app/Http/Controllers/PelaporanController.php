@@ -131,7 +131,8 @@ class PelaporanController extends Controller
         $tgl_akhir = $request->tgl_2;
         $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
                             ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
-                            ->whereNULL('jenis_jual')->get();
+                            ->whereNULL('jenis_jual')
+                            ->where('status_approval', 1)->get();
         $nom=1;
         $total_net = 0;
         $total_bayar = 0;
@@ -218,7 +219,9 @@ class PelaporanController extends Controller
         $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
 
         $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_1)
-                            ->whereDate('tgl_invoice', '<=', $tgl_2)->whereNULL('jenis_jual')->get();
+                            ->whereDate('tgl_invoice', '<=', $tgl_2)
+                            ->whereNULL('jenis_jual')
+                            ->where('status_approval', 1)->get();
         
         $pdf = PDF::loadview('pelaporan.penjualan.print', [
             'list_data' => $result,
@@ -270,7 +273,7 @@ class PelaporanController extends Controller
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
                                 ->whereNULL('jual_head.jenis_jual')
-                                ->where('jual_head.approved', 1)
+                                ->where('jual_head.status_approval', 1)
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
 
@@ -319,7 +322,7 @@ class PelaporanController extends Controller
                     ->where('jual_detail.produk_id', $list->id)
                     ->whereNull('jual_head.deleted_at')
                     ->whereNull('jual_head.jenis_jual')
-                    ->where('jual_head.approved', 1)
+                    ->where('jual_head.status_approval', 1)
                     ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                     ->pluck('t_penjualan')->first();
             $qty_pemberian_sampel = \DB::table('jual_head')
@@ -405,7 +408,7 @@ class PelaporanController extends Controller
                                 ->where('jual_detail.produk_id', $list->id)
                                 ->whereNull('jual_head.deleted_at')
                                 ->whereNULL('jual_head.jenis_jual')
-                                ->where('jual_head.approved', 1)
+                                ->where('jual_head.status_approval', 1)
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
 
@@ -454,7 +457,7 @@ class PelaporanController extends Controller
                     ->where('jual_detail.produk_id', $list->id)
                     ->whereNull('jual_head.deleted_at')
                     ->whereNull('jual_head.jenis_jual')
-                    ->where('jual_head.approved', 1)
+                    ->where('jual_head.status_approval', 1)
                     ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                     ->pluck('t_penjualan')->first();
             $qty_pemberian_sampel = \DB::table('jual_head')

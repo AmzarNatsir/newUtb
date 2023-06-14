@@ -298,7 +298,7 @@ class ProductController extends Controller
                             ->where('jual_detail.produk_id', $id_stok)
                             ->whereNull('jual_head.deleted_at')
                             ->whereNULL('jual_head.jenis_jual')
-                            ->where('jual_head.approved', 1)
+                            ->where('jual_head.status_approval', 1)
                             ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                             ->pluck('t_penjualan_awal')->first();
         $qty_return_beli_awal = \DB::table('return_beli_head')
@@ -346,7 +346,7 @@ class ProductController extends Controller
                 ->where('jual_detail.produk_id', $id_stok)
                 ->whereNull('jual_head.deleted_at')
                 ->whereNull('jual_head.jenis_jual')
-                ->where('jual_head.approved', 1)
+                ->where('jual_head.status_approval', 1)
                 ->selectRaw('sum(jual_detail.qty) as t_penjualan')
                 ->pluck('t_penjualan')->first();
         $qty_pemberian_sampel = \DB::table('jual_head')
@@ -390,7 +390,7 @@ class ProductController extends Controller
                 ->where('jual_detail.produk_id', $id_stok)
                 ->whereNull('jual_head.deleted_at')
                 ->whereNull('jual_head.jenis_jual')
-                ->where('jual_head.approved', 1)
+                ->where('jual_head.status_approval', 1)
                 ->get();
         $rincian_return_beli = \DB::table('return_beli_head')
                 ->join('return_beli_detail', 'return_beli_head.id', '=', 'return_beli_detail.head_id')
