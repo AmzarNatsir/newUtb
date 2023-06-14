@@ -177,19 +177,19 @@ class InvoiceController extends Controller
         if($customer==null)
         {
             $ket_customer = 'Semua Customer';
-            $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)
+            $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
                             ->whereNull('jenis_jual')
-                            ->where('approved', 1)
-                            ->orderby('tgl_invoice', 'asc')->get();
+                            ->where('status_approval', 1)
+                            ->orderby('tgl_transaksi', 'asc')->get();
         } else {
             $ket_customer = CustomerModel::find($customer)->nama_supplier;
-            $result = JualHeadModel::whereDate('tgl_invoice', '>=', $tgl_awal)
-                            ->whereDate('tgl_invoice', '<=', $tgl_akhir)
+            $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
                             ->whereNull('jenis_jual')
-                            ->where('approved', 1)
+                            ->where('status_approval', 1)
                             ->where('customer_id', $customer)
-                            ->orderby('tgl_invoice', 'asc')->get();
+                            ->orderby('tgl_transaksi', 'asc')->get();
         }
         
         $nom=1;

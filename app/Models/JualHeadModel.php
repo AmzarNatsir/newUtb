@@ -34,6 +34,11 @@ class JualHeadModel extends Model
         'approved_by',
         'approved_date',
         'approved_note',
+        'approved_2', //NULL : belum di approve, 1. Approved
+        'approved_by_2',
+        'approved_date_2',
+        'approved_note_2',
+        'status_approval',
         'tgl_transaksi',
         'via_id'
     ];
@@ -62,5 +67,15 @@ class JualHeadModel extends Model
                 ->pluck('t_nominal')->first();
 
         return $total_terbayar_invoice;
+    }
+
+    public function get_approver_1()
+    {
+        return $this->belongsTo(User::class, 'approved_by', 'id');
+    }
+
+    public function get_approver_2()
+    {
+        return $this->belongsTo(User::class, 'approved_by_2', 'id');
     }
 }

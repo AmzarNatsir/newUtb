@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title">Approve Transaksi Tingkatan Pertama</h4>
+    <h4 class="modal-title">Approve Transaksi Tingkatan Kedua</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span></button>
 </div>
@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class="dropdown-divider"></div>
-    <form action="{{ route('persetujuanPenjualanStore') }}" method="post" onsubmit="return konfirm()">
+    <form action="{{ route('persetujuanPenjualanStore_2') }}" method="post" onsubmit="return konfirm()">
     {{csrf_field()}}
     <input type="hidden" name="id_trans" id="id_trans" value="{{ $head->id }}">
     <div class="row">
@@ -121,6 +121,39 @@
                         <label for="inp_keterangan">Keterangan</label>
                         <textarea class="form-control" readonly>{{ $head->keterangan }}</textarea>
                     </div>
+                </div>
+            </div>
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title"> Keterangan Aprroval Tingkatan Pertama</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <td style="width: 30%;">Tanggal</td>
+                            <td>: {{ date_format(date_create($head->approved_date), 'd-m-Y') }}</td>
+                        </tr>
+                        <tr>
+                            <td>Status Approval</td>
+                            <td>: @if($head->approved==1)
+                                <button type="button" class="btn btn-outline-success btn-sm"><i class="fa fa-check"></i> Approved</button>
+                                @endif
+                                @if($head->approved==2)
+                                <button type="button" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i> Reject</button>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Keterangan</td>
+                            <td>: {{ $head->approved_note }}</td>
+                        </tr>
+                        <tr>
+                            <td>Oleh</td>
+                            <td>: {{ $head->get_approver_1->name }}</td>
+                        </tr>
+                    </thead>
+                    </table>
                 </div>
             </div>
         </div>

@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('jual_head', function (Blueprint $table) {
+            $table->integer('approved_2')->nullable(); //NULL : belum diapprove, 1. Approved
+            $table->integer('approved_by_2')->nullable();
+            $table->dateTime('approved_date_2')->nullable();
+            $table->text('approved_note_2')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('jual_head', function (Blueprint $table) {
+            //
+        });
+    }
+};

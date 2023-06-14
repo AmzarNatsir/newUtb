@@ -253,9 +253,14 @@ Route::post('invoicePenjualanFilter', [InvoiceController::class, 'invoice_penjua
 //Persetujuan
 //penjualan
 Route::get('persetujuanPenjualan', [PersetujuanController::class, 'persetujuan_penjualan'])->name('persetujuanPenjualan');
+Route::get('persetujuanPenjualanData', [PersetujuanController::class, 'persetujuan_penjualan_data'])->name('persetujuanPenjualanData');
 Route::get('persetujuanPenjualanFilter/{param1}/{param2}', [PersetujuanController::class, 'persetujuan_penjualan_filter'])->name('persetujuanPenjualanFilter');
 Route::get('persetujuanPenjualanApprove/{param}', [PersetujuanController::class, 'persetujuan_penjualan_approve'])->name('persetujuanPenjualanApprove');
 Route::post('persetujuanPenjualanStore', [PersetujuanController::class, 'persetujuan_penjualan_store'])->name('persetujuanPenjualanStore');
+
+//level 2
+Route::get('persetujuanPenjualanApprove_2/{param}', [PersetujuanController::class, 'persetujuan_penjualan_approve_2'])->name('persetujuanPenjualanApprove_2');
+Route::post('persetujuanPenjualanStore_2', [PersetujuanController::class, 'persetujuan_penjualan_store_2'])->name('persetujuanPenjualanStore_2');
 
 Route::get('vqrcode', [QrController::class, 'index'])->name('vqrcode');
 
