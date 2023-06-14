@@ -25,10 +25,8 @@ class PersetujuanController extends Controller
 
     public function persetujuan_penjualan_data()
     {
-        $result = JualHeadModel::whereDate('tgl_transaksi', '>=', date("Y-m-d"))
-                            ->whereNull('jenis_jual')
+        $result = JualHeadModel::whereNull('jenis_jual')
                             ->whereNull('status_approval')
-                            ->orwhereDate('tgl_transaksi', '>=', date("Y-m-d"))
                             ->whereNull('jenis_jual')
                             ->where('status_approval', 2)
                             ->orderby('tgl_transaksi', 'desc')
