@@ -58,37 +58,37 @@ $head_persetujuan = "";
 $head_manaj_user = "";
 @endphp
 @if(auth()->user()->can('laporan_stok') || auth()->user()->can('laporan_pemberian_sampel') || auth()->user()->can('laporan_pembelian') || auth()->user()->can('laporan_penjualan') || auth()->user()->can('laporan_return_pembelian') || auth()->user()->can('laporan_return_penjualan') || auth()->user()->can('laporan_bayar_hutang') || auth()->user()->can('laporan_terima_piutang') || auth()->user()->can('laporan_hutang_kontainer'))
-{{ $head_pelaporan = "y" }}
+@php $head_pelaporan = "y" @endphp
 @endif
 @if(auth()->user()->can('master_satuan') || auth()->user()->can('master_merek') || auth()->user()->can('master_supplier') || auth()->user()->can('master_kontainer') || auth()->user()->can('master_via'))
-{{ $head_master = "y" }}
+@php $head_master = "y" @endphp
 @endif
 @if(auth()->user()->can('daftar_customer') || auth()->user()->can('customer_submission') || auth()->user()->can('customer_switch_level'))
-{{ $head_customer = "y" }}
+@php $head_customer = "y" @endphp
 @endif
 
 @if(auth()->user()->can('manajemen_stok_baru') || auth()->user()->can('manajemen_stok_daftar') || auth()->user()->can('manajemen_stok_kartu'))
-{{ $head_manaj_stok = "y" }}
+@php $head_manaj_stok = "y" @endphp
 @endif
 
 @if(auth()->user()->can('daftar_transaksi_po') || auth()->user()->can('daftar_transaksi_receive') || auth()->user()->can('daftar_transaksi_penjualan'))
-{{ $head_data_transaksi = "y" }}
+@php $head_data_transaksi = "y" @endphp
 @endif
 
 @if(auth()->user()->can('transaksi_sampel') || auth()->user()->can('transaksi_po') || auth()->user()->can('transaksi_receive') || auth()->user()->can('transaksi_penjualan') || auth()->user()->can('transaksi_return_beli') || auth()->user()->can('transaksi_return_jual'))
-{{ $head_transaksi = "y" }}
+@php $head_transaksi = "y" @endphp
 @endif
 
 @if(auth()->user()->can('keuangan_bayar_hutang') || auth()->user()->can('keuangan_terima_piutang') || auth()->user()->can('keuangan_hutang_kontainer'))
-{{ $head_keuangan = "y" }}
+@php $head_keuangan = "y" @endphp
 @endif
 
 @if(auth()->user()->can('persetujaun_penjualan'))
-{{ $head_persetujuan = "y" }}
+@php $head_persetujuan = "y" @endphp
 @endif
 
 @if(auth()->user()->can('manaj_users_roles_permission') || auth()->user()->can('manaj_users_user'))
-{{ $head_manaj_user = "y" }}
+@php $head_manaj_user = "y" @endphp
 @endif
 
 @can('dashboard')
