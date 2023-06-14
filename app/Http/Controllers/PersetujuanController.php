@@ -31,7 +31,7 @@ class PersetujuanController extends Controller
                             ->orwhereDate('tgl_transaksi', '>=', date("Y-m-d"))
                             ->whereNull('jenis_jual')
                             ->where('status_approval', 2)
-                            ->orderby('tgl_transaksi', 'asc')
+                            ->orderby('tgl_transaksi', 'desc')
                             ->orderby('status_approval', 'desc')->get();
         $data = [
             'list_data' => $result
@@ -49,7 +49,7 @@ class PersetujuanController extends Controller
                             ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
                             ->whereNull('jenis_jual')
                             ->where('status_approval', 2)
-                            ->orderby('tgl_transaksi', 'asc')
+                            ->orderby('tgl_transaksi', 'desc')
                             ->orderby('status_approval', 'desc')->get();
         $data = [
             'list_data' => $result

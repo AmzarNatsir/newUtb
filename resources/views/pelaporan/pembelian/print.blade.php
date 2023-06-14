@@ -73,7 +73,11 @@
         $outs_invoice = 0;
     }
     @endphp
+    @if($check_view_detail=='true')
     <tr style="background-color: #e0dfde; color:black">
+    @else
+    <tr>
+    @endif
         <td style='text-align: center; height: 25px;'>{{ $no_urut }}</td>
         <td style='text-align: center;'>{{ $list->no_invoice }}</td>
         <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
