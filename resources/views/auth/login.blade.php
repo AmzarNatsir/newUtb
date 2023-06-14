@@ -277,7 +277,7 @@ body{
                                 </div>
                             </div>
                             <div class="button input-box">
-                                <input type="submit" value="Sumbit">
+                                <input type="submit" value="Login">
                             </div>
                         </div>
                     </form>
