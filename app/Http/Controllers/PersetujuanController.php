@@ -27,7 +27,7 @@ class PersetujuanController extends Controller
     {
         $result = JualHeadModel::whereNull('jenis_jual')
                             ->whereNull('status_approval')
-                            ->whereNull('jenis_jual')
+                            ->orwhereNull('jenis_jual')
                             ->where('status_approval', 2)
                             ->orderby('tgl_transaksi', 'desc')
                             ->orderby('status_approval', 'desc')->get();
