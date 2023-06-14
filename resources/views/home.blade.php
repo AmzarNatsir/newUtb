@@ -40,8 +40,8 @@
                         </a>
                     </div>
                     <div style="text-align: center; margin: 20px;">
-                    {{ __('Anda berhasil login sebagai Admin') }}
-                    : <strong>{{ auth()->user()->name }}</strong>
+                    {{ __('Anda berhasil login sebagai ') }} <strong>{{ auth()->user()->roles()->pluck('name')->first() }}
+                    : {{ auth()->user()->name }}</strong>
                     </div>
                 </div>
             </div>

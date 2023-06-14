@@ -46,6 +46,51 @@
         <p>Home </p>
     </a>
 </li>
+@php
+$head_pelaporan = "";
+$head_master = "";
+$head_customer = "";
+$head_manaj_stok = "";
+$head_data_transaksi = "";
+$head_transaksi = "";
+$head_keuangan = "";
+$head_persetujuan = "";
+$head_manaj_user = "";
+@endphp
+@if(auth()->user()->can('laporan_stok') || auth()->user()->can('laporan_pemberian_sampel') || auth()->user()->can('laporan_pembelian') || auth()->user()->can('laporan_penjualan') || auth()->user()->can('laporan_return_pembelian') || auth()->user()->can('laporan_return_penjualan') || auth()->user()->can('laporan_bayar_hutang') || auth()->user()->can('laporan_terima_piutang') || auth()->user()->can('laporan_hutang_kontainer'))
+{{ $head_pelaporan = "y" }}
+@endif
+@if(auth()->user()->can('master_satuan') || auth()->user()->can('master_merek') || auth()->user()->can('master_supplier') || auth()->user()->can('master_kontainer') || auth()->user()->can('master_via'))
+{{ $head_master = "y" }}
+@endif
+@if(auth()->user()->can('daftar_customer') || auth()->user()->can('customer_submission') || auth()->user()->can('customer_switch_level'))
+{{ $head_customer = "y" }}
+@endif
+
+@if(auth()->user()->can('manajemen_stok_baru') || auth()->user()->can('manajemen_stok_daftar') || auth()->user()->can('manajemen_stok_kartu'))
+{{ $head_manaj_stok = "y" }}
+@endif
+
+@if(auth()->user()->can('daftar_transaksi_po') || auth()->user()->can('daftar_transaksi_receive') || auth()->user()->can('daftar_transaksi_penjualan'))
+{{ $head_data_transaksi = "y" }}
+@endif
+
+@if(auth()->user()->can('transaksi_sampel') || auth()->user()->can('transaksi_po') || auth()->user()->can('transaksi_receive') || auth()->user()->can('transaksi_penjualan') || auth()->user()->can('transaksi_return_beli') || auth()->user()->can('transaksi_return_jual'))
+{{ $head_transaksi = "y" }}
+@endif
+
+@if(auth()->user()->can('keuangan_bayar_hutang') || auth()->user()->can('keuangan_terima_piutang') || auth()->user()->can('keuangan_hutang_kontainer'))
+{{ $head_keuangan = "y" }}
+@endif
+
+@if(auth()->user()->can('persetujaun_penjualan'))
+{{ $head_persetujuan = "y" }}
+@endif
+
+@if(auth()->user()->can('manaj_users_roles_permission') || auth()->user()->can('manaj_users_user'))
+{{ $head_manaj_user = "y" }}
+@endif
+
 @can('dashboard')
 <li class="nav-item menu-open">
     <a href="{{ route('dashboard') }}" class="nav-link"><i class="nav-icon fas fa-chart-pie"></i><p>Dashboard</p></a>
@@ -61,6 +106,7 @@
     </ul>
 </li>
 @endcan
+@if($head_pelaporan=='y')
 <li class="nav-item">
     <a href="#" class="nav-link"><i class="nav-icon fas fa-copy"></i><p>Pelaporan<i class="right fas fa-angle-left"></i></p></a>
     <ul class="nav nav-treeview">
@@ -111,6 +157,8 @@
         @endcan
     </ul>
 </li>
+@endif
+@if($head_master=="y")
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon far fa-plus-square"></i>
@@ -144,6 +192,8 @@
         @endcan
     </ul>
 </li>
+@endif
+@if($head_customer=="y")
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-users"></i>
@@ -167,6 +217,8 @@
         @endcan
     </ul>
 </li>
+@endif
+@if($head_manaj_stok=="y")
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon far fa-plus-square"></i>
@@ -186,6 +238,8 @@
         </li>
     </ul>
 </li>
+@endif
+@if($head_data_transaksi=="y")
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon far fa-plus-square"></i>
@@ -205,7 +259,11 @@
         </li>
     </ul>
 </li>
+@endif
+@if($head_transaksi=="y" || $head_keuangan=="y")
 <li class="nav-header">TRANSAKSI</li>
+@endif
+@if($head_transaksi=="y")
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-table"></i>
@@ -234,6 +292,8 @@
         </li>
     </ul>
 </li>
+@endif
+@if($head_keuangan=="y")
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-table"></i>
@@ -254,7 +314,11 @@
         </li>
     </ul>
 </li>
+@endif
+@if($head_persetujuan=="y" || $head_manaj_user=="y")
 <li class="nav-header">TOOLS</li>
+@endif
+@if($head_persetujuan=="y")
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-thumbs-up"></i>
@@ -268,7 +332,8 @@
         </li>
     </ul>
 </li>
-
+@endif
+@if($head_manaj_user=="y")
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-user"></i>
@@ -287,6 +352,7 @@
         @endcan
     </ul>
 </li>
+@endif
     </ul>
     </nav>
     <!-- /.sidebar-menu -->
