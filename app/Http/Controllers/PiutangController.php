@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CustomerModel;
 use App\Models\JualHeadModel;
 use App\Models\PiutangModel;
+use App\Models\ViaModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PDF;
@@ -22,7 +23,8 @@ class PiutangController extends Controller
     public function index()
     {
         $data = [
-            'allCustomer' => CustomerModel::all()
+            'allCustomer' => CustomerModel::all(),
+            'allVia' => ViaModel::all()
         ];
         return view('piutang.penerimaan.index', $data);
     }
@@ -134,6 +136,7 @@ class PiutangController extends Controller
             $save->jual_id = $request->id_invoice;
             $save->customer_id = $request->sel_customer;
             $save->metode_bayar = $request->selCaraBayar;
+            $save->via_id = $request->sel_via;
             $save->nominal = str_replace(",","", $request->inpBayar);
             $save->keterangan = $request->inpKeterangan;
             $save->user_id = auth()->user()->id;

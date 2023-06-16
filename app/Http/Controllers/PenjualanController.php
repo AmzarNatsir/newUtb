@@ -79,6 +79,7 @@ class PenjualanController extends Controller
                     $newdetail->diskitem_rupiah = str_replace(",","", $value['item_diskonrp'][$i]);
                     $newdetail->sub_total = str_replace(",","", $value['item_sub_total'][$i]);
                     $newdetail->sub_total_net = str_replace(",","", $value['item_sub_total_net'][$i]);
+                    $newdetail->harga_beli = $value['temp_harga_beli'][$i];
                     $newdetail->save();
                     //Update Stok
                     // $update = ProductModel::find($value['item_id'][$i]);

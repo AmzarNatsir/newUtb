@@ -18,6 +18,7 @@ class PiutangModel extends Model
         'customer_id',
         'jual_id',
         'metode_bayar',
+        'via_id',
         'nominal',
         'keterangan',
         'file_evidence',
@@ -34,4 +35,10 @@ class PiutangModel extends Model
     {
         return $this->belongsTo(CustomerModel::class, 'customer_id', 'id');
     }
+
+    public function get_via()
+    {
+        return $this->BelongsTo(ViaModel::class, 'via_id', 'id');
+    }
+    
 }

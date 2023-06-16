@@ -46,7 +46,7 @@
                     <td>{{ date_format(date_create($list->tgl_bayar), 'd-m-Y') }}</td>
                     <td style="text-align: right;">{{ number_format($list->nominal, 0) }}</td>
                     <td style="text-align: right;">{{ number_format($n_outs, 0) }}</td>
-                    <td>{{ $list->keterangan }} ({{ ($list->metode_bayar==1) ? "Tunai" : "Transfer" }})</td>
+                    <td>{{ $list->keterangan }} ({{ ($list->metode_bayar==1) ? "Tunai" : "Transfer" }} / Via : {{ (empty($list->via_id)) ? "" : $list->get_via->penerimaan }})</td>
                 </tr>
                 @php
                     $nom++;

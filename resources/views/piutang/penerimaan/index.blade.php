@@ -130,12 +130,24 @@
                             <div class="form-group row">
                                 <label for="selCaraBayar" class="col-sm-4 col-form-label">Metode Pembayaran</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control select2bs4" name="selCaraBayar" id="selCaraBayar" style="width: 100%;" disabled>
+                                    <select class="form-control select2bs4" name="selCaraBayar" id="selCaraBayar" style="width: 100%;" disabled required>
                                         <option value="1">Tunai</option>
                                         <option value="2">Transfer</option>
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="sel_via" class="col-sm-4 col-form-label">Penerimaan Via</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control select2bs4" name="sel_via" id="sel_via" style="width: 100%;" disabled required>
+                                        <option></optionn>
+                                        @foreach($allVia as $via)
+                                        <option value="{{ $via->id }}">{{ $via->penerimaan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="dropdown-divider"></div>
                             <div class="form-group row">
                                 <label for="inpOutstanding" class="col-sm-4 col-form-label">Oustanding</label>
@@ -286,6 +298,7 @@
     var goMutasi = function(el)
     {
         var id_invoice = el;
+        // alert(id_invoice);
         $("#frm_modal").load(route('penerimaanPiutangMutasi', id_invoice));
     }
 
@@ -300,12 +313,15 @@
         $("#inpSisaHutang").val("0");
         $("#inpKeterangan").val("");
         $("#inpTglBayar").val(moment().format('DD/MM/YYYY'));
+        $("#selCaraBayar").val('').trigger("change");
+        $("#sel_via").val('').trigger("change");
     }
 
     function aktif_teks(tf)
     {
         $("#inpTglBayar").attr('disabled', tf);
         $("#selCaraBayar").attr('disabled', tf);
+        $("#sel_via").attr("disabled", tf);
         $("#inpBayar").attr('disabled', tf);
         $("#inpKeterangan").attr('disabled', tf);
         $("#tbl_submit").attr('disabled', tf);
