@@ -17,6 +17,7 @@ class ProductModel extends Model
         'kode',
         'nama_produk',
         'kemasan',
+        'harga_beli',
         'harga_toko',
         'harga_eceran',
         'gambar',

@@ -169,6 +169,7 @@ class ProductController extends Controller
                 "satuan"=>$item->get_unit->unit,
                 "harga_toko"=>$item->harga_toko,
                 "harga_eceran" => $item->harga_eceran,
+                "harga_beli" => $item->harga_beli,
                 "kemasan" => $item->kemasan,
                 "stok" => $item->stok_akhir
             );
@@ -192,6 +193,7 @@ class ProductController extends Controller
                 "satuan"=>$item->get_unit->unit,
                 "harga_toko"=>$item->harga_toko,
                 "harga_eceran" => $item->harga_eceran,
+                "harga_beli" => $item->harga_beli,
                 "kemasan" => $item->kemasan,
                 "stok" => $item->stok_akhir
             );
@@ -226,6 +228,7 @@ class ProductController extends Controller
                 for($i=0; $i<$jml_item; $i++)
                 {
                     $update = ProductModel::find($value['id_stok'][$i]);
+                    $update->harga_beli = str_replace(",","", $value['inp_harga_beli'][$i]);
                     $update->harga_toko = str_replace(",","", $value['inp_harga_toko'][$i]);
                     $update->harga_eceran = str_replace(",","", $value['inp_harga_eceran'][$i]);
                     $update->stok_awal = str_replace(",","", $value['inp_stok_awal'][$i]);

@@ -34,6 +34,7 @@
                 <th>Merk</th>
                 <th class="text-center">Kemasan</th>
                 <th class="text-center">Unit</th>
+                <th class="text-right">Harga Beli</th>
                 <th class="text-right">Harga Toko</th>
                 <th class="text-right">Harga Eceran</th>
                 <th class="text-center">Stok Awal</th>
@@ -50,6 +51,7 @@
                 <td>{{ $list->get_merk->merk }}</td>
                 <td class="text-center">{{ $list->kemasan }}</td>
                 <td class="text-center">{{ $list->get_unit->unit }}</td>
+                <td class="text-right">{{ number_format($list->harga_beli, 0) }}</td>
                 <td class="text-right">{{ number_format($list->harga_toko, 0) }}</td>
                 <td class="text-right">{{ number_format($list->harga_eceran, 0) }}</td>
                 <td class="text-right">{{ number_format($list->stok_awal, 0) }}</td>

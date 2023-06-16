@@ -86,7 +86,7 @@ class ReceivingController extends Controller
                     //Update Stok
                     $update = ProductModel::find($value['produk_id'][$i]);
                     $update->stok_akhir = ((int)$update->stok_akhir +  (int)str_replace(",","", $value['item_qty'][$i]));
-                    $update->harga_toko = str_replace(",","", $value['harga_satuan'][$i]);
+                    $update->harga_beli = str_replace(",","", $value['harga_satuan'][$i]);
                     $update->save();
                 }
             }

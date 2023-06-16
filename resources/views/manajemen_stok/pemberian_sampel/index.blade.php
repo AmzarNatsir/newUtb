@@ -28,7 +28,7 @@
                                 <label for="inp_carabayar" class="col-sm-6 col-form-label">Tgl Pemberian</label>
                                 <div class="col-sm-6">
                                     <div class="input-group date" id="inp_tgl_pemberian">
-                                        <input type="text" class="form-control datetimepicker-input datepicker" id="inp_tgl_pemberian" name="inp_tgl_pemberian" value="{{ date('d-m-Y') }}">
+                                        <input type="text" class="form-control datetimepicker-input dtpicker" id="inp_tgl_pemberian" name="inp_tgl_pemberian" value="{{ date('d-m-Y') }}">
                                         <div class="input-group-append" >
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>

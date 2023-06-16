@@ -17,6 +17,7 @@
                         <th>Merk</th>
                         <th class="text-center">Kemasan</th>
                         <th class="text-center">Unit</th>
+                        <th class="text-right;" style="width: 15%">Harga Beli</th>
                         <th class="text-right;" style="width: 15%">Harga Eceran</th>
                         <th class="text-right;" style=" width: 15%">Harga Eceran</th>
                         <th class="text-center;" style=" width: 10%">Stok Awal</th>
@@ -33,6 +34,7 @@
                         <td>{{ $list->get_merk->merk }}</td>
                         <td class="text-center">{{ $list->kemasan }}</td>
                         <td class="text-center">{{ $list->get_unit->unit }}</td>
+                        <td class="text-right"><input type="text" class="form-control text-right angka" name="inp_harga_beli[]" value="{{ number_format($list->harga_beli, 0) }}" onblur="changeToNull(this)"></td>
                         <td class="text-right"><input type="text" class="form-control text-right angka" name="inp_harga_toko[]" value="{{ number_format($list->harga_toko, 0) }}" onblur="changeToNull(this)"></td>
                         <td class="text-right"><input type="text" class="form-control text-right angka" name="inp_harga_eceran[]" value="{{ number_format($list->harga_eceran, 0) }}" onblur="changeToNull(this)"></td>
                         <td class="text-center"><input type="text" class="form-control text-right angka" name="inp_stok_awal[]" value="{{ (empty($list->stok_awal)) ? 0 : $list->stok_awal }}" onblur="changeToNull(this)" onkeyup="getStokAkhir(this)" <?= ((empty($list->stok_akhir))) ? "" : "readonly" ?>></td>
