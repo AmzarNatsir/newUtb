@@ -257,12 +257,21 @@ Route::get('persetujuanPenjualanData', [PersetujuanController::class, 'persetuju
 Route::get('persetujuanPenjualanFilter/{param1}/{param2}', [PersetujuanController::class, 'persetujuan_penjualan_filter'])->name('persetujuanPenjualanFilter');
 Route::get('persetujuanPenjualanApprove/{param}', [PersetujuanController::class, 'persetujuan_penjualan_approve'])->name('persetujuanPenjualanApprove');
 Route::post('persetujuanPenjualanStore', [PersetujuanController::class, 'persetujuan_penjualan_store'])->name('persetujuanPenjualanStore');
-
 //level 2
 Route::get('persetujuanPenjualanApprove_2/{param}', [PersetujuanController::class, 'persetujuan_penjualan_approve_2'])->name('persetujuanPenjualanApprove_2');
 Route::post('persetujuanPenjualanStore_2', [PersetujuanController::class, 'persetujuan_penjualan_store_2'])->name('persetujuanPenjualanStore_2');
-
 Route::get('vqrcode', [QrController::class, 'index'])->name('vqrcode');
+
+//persetujuan pembelian
+Route::get('persetujuanPO', [PersetujuanController::class, 'persetujuan_po'])->name('persetujuanPO');
+Route::get('persetujuanPOData', [PersetujuanController::class, 'persetujuan_po_data'])->name('persetujuanPOData');
+Route::get('persetujuanPOFilter/{param1}/{param2}', [PersetujuanController::class, 'persetujuan_po_filter'])->name('persetujuanPOFilter');
+Route::get('persetujuanPOApprove/{param}', [PersetujuanController::class, 'persetujuan_po_approve'])->name('persetujuanPOApprove');
+Route::post('persetujuanPOStore', [PersetujuanController::class, 'persetujuan_po_store'])->name('persetujuanPOStore');
+
+//level 2
+Route::get('persetujuanPOApprove_2/{param}', [PersetujuanController::class, 'persetujuan_po_approve_2'])->name('persetujuanPOApprove_2');
+Route::post('persetujuanPOStore_2', [PersetujuanController::class, 'persetujuan_po_store_2'])->name('persetujuanPOStore_2');
 
 //manajemen user
 //roles permission

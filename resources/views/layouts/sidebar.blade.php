@@ -326,6 +326,7 @@ $head_manaj_user = "";
     </a>
     <ul class="nav nav-treeview">
         <li class="nav-item">
+            <a href="{{ route('persetujuanPO') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Purchase Order</p></a>
             @can('persetujaun_penjualan')
             <a href="{{ route('persetujuanPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
             @endcan

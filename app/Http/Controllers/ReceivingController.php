@@ -22,7 +22,7 @@ class ReceivingController extends Controller
 
     public function index()
     {
-        $q_po = POHeadModel::where('status_po', 1)->orderby('tanggal_po', 'desc')->get();
+        $q_po = POHeadModel::where('status_approval', 1)->where('status_po', 1)->orderby('tanggal_po', 'desc')->get();
         $data = [
             'all_po' => $q_po
         ];

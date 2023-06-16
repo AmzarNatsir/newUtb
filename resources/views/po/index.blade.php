@@ -48,36 +48,45 @@
                         <td class="text-center">{{ $list->nomor_po }}</td>
                         <td class="text-center">{{ date_format(date_create($list->tanggal_po), 'd-m-Y') }}</td>
                         <td>{{ $list->get_supplier->nama_supplier }}</td>
-                        <th class="text-right">{{ number_format($list->total_po, 0) }}</th>
+                        <th class="text-right">{{ number_format($list->total_po_net, 0) }}</th>
                         <td class="text-center">
-                            @if(empty($list->status_po)) 
+                            @if(empty($list->status_approval)) 
+                                @if(empty($list->approved) || (empty($list->approved_2)))
+                                <span class='badge bg-info'>Proses Approval</span>
+                                @else 
                                 <span class='badge bg-primary'>Draft</span>
-                            @elseif($list->status_po==1)
-                            <span class='badge bg-info'>Approved</span>
-                            @elseif($list->status_po==2)
-                            <span class='badge bg-success'>Received/Close</span>
+                                @endif
+                            @elseif($list->status_approval==1)
+                            <span class='badge bg-success'>Approved</span>
                             @else
                             <span class='badge bg-danger'>Cancel PO</span>
                             @endif
                         </td>
                         <td>{{ $list->keterangan }}</td>
                         <td>
+                            @if(empty($list->status_approval))
+                                @if(empty($list->approved) && (empty($list->approved_2)))
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Action
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-edit"></i> Edit</button>
+                                        <a href="{{ url('deleteOrder') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                                    </div>
+                                </div>
+                                @endif
+                            @endif
+                            @if($list->status_approval==1)
                             <div class="input-group-prepend">
                                 <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
                                 Action
                                 </button>
                                 <div class="dropdown-menu">
-                                    @if(empty($list->status_po))
-                                    <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-edit"></i> Edit</button>
-                                    <a href="{{ url('deleteOrder') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
-                                    <div class="dropdown-divider"></div>
-                                    <button type="button" class="dropdown-item" id="tbl_approve" name="tbl_approve" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}"><i class="fa fa-thumbs-up"></i> Approve</button>
-                                    @endif
-                                    @if($list->status_po > 0)
                                     <button type="button" class="dropdown-item" id="tbl_print" name="tbl_print" value="{{ $list->id }}" onClick='goPrint(this)'><i class="fa fa-print"></i> Print</button>
-                                    @endif
                                 </div>
                             </div>
+                            @endif
                         </td>
                     </tr>
                     @php $nom++ @endphp
@@ -110,12 +119,6 @@
         {
             var id_data = this.value;
             $("#frm_modal").load(route('editOrder', id_data));
-        });
-
-        $(".ListData").on("click", '#tbl_approve', function()
-        {
-            var id_data = this.value;
-            $("#frm_modal").load(route('approveOrder', id_data));
         });
     });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JualDetailModel;
 use App\Models\JualHeadModel;
+use App\Models\POHeadModel;
 use App\Models\ProductModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -124,4 +125,99 @@ class PersetujuanController extends Controller
             return redirect('persetujuanPenjualan')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
         }
     }
+
+    //persetujuan po
+    public function persetujuan_po()
+    {
+        return view('persetujuan.po.index');
+    }
+    public function persetujuan_po_data()
+    {
+        $result = POHeadModel::whereNull('status_approval')
+                            ->orwhere('status_approval', 2)
+                            ->orderby('tanggal_po', 'desc')
+                            ->orderby('status_approval', 'desc')->get();
+        $data = [
+            'list_data' => $result
+        ];
+        return view('persetujuan.po.list', $data);
+    }
+    public function persetujuan_po_filter($tgl_awal=null, $tgl_akhir=null)
+    {
+        $result = POHeadModel::whereDate('tanggal_po', '>=', $tgl_awal)
+                            ->whereDate('tanggal_po', '<=', $tgl_akhir)
+                            ->whereNull('status_approval')
+                            ->orwhereDate('tanggal_po', '>=', $tgl_awal)
+                            ->whereDate('tanggal_po', '<=', $tgl_akhir)
+                            ->where('status_approval', 2)
+                            ->orderby('tanggal_po', 'desc')
+                            ->orderby('status_approval', 'desc')->get();
+        $data = [
+            'list_data' => $result
+        ];
+        return view('persetujuan.po.list', $data);
+    }
+
+    public function persetujuan_po_approve($id)
+    {
+        $head_trans = POHeadModel::find($id);
+        $data = [
+            'resHead' => $head_trans
+        ];
+
+        return view('persetujuan.po.approve', $data);
+    }
+
+    public function persetujuan_po_store(Request $request)
+    {
+        try {
+            $update_head = POHeadModel::find($request->id_po);
+            $update_head->approved = $request->selApproval;
+            $update_head->approved_date = $this->datetimeStore;
+            $update_head->approved_note = $request->inp_catatan_persetujuan;
+            $update_head->approved_by = auth()->user()->id;
+            if($request->selApproval==2)
+            {
+                $update_head->status_approval = $request->selApproval;
+            }
+            $update_head->save();
+            return redirect('persetujuanPO')->with('message', 'Persetujuan PO berhasil disimpan');
+        } catch (QueryException $e)
+        {
+            return redirect('persetujuanPO')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
+    }
+
+    //level 2
+    public function persetujuan_po_approve_2($id)
+    {
+        $head_trans = POHeadModel::find($id);
+        $data = [
+            'resHead' => $head_trans
+        ];
+
+        return view('persetujuan.po.approve_2', $data);
+    }
+
+    public function persetujuan_po_store_2(Request $request)
+    {
+        try {
+            $update_head = POHeadModel::find($request->id_po);
+            $update_head->approved_2 = $request->selApproval;
+            $update_head->approved_date_2 = $this->datetimeStore;
+            $update_head->approved_note_2 = $request->inp_catatan_persetujuan;
+            $update_head->approved_by_2 = auth()->user()->id;
+            $update_head->status_approval = $request->selApproval;
+            if($request->selApproval==1)
+            {
+                $update_head->status_po = 1;
+            }
+            $update_head->save();
+            return redirect('persetujuanPO')->with('message', 'Persetujuan PO berhasil disimpan');
+        } catch (QueryException $e)
+        {
+            return redirect('persetujuanPO')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
+    }
+
 }

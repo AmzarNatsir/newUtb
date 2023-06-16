@@ -36,12 +36,12 @@ foreach($list_data as $list)
     @endif
     </td>
     <td style='text-align: center;'>{{ $nom }}</td>
-    <td style='text-align: center;'>{{ $list->no_invoice }}</td>
-    <td style='text-align: center;'>{{ date_format(date_create($list->tgl_transaksi), 'd-m-Y') }}</td>
-    <td>{{ $list->get_customer->nama_customer }}</td>
-    <td style='text-align: right;'><b>{{ number_format($list->total_invoice_net, 0) }}</b></td>
+    <td style='text-align: center;'>{{ $list->nomor_po }}</td>
+    <td style='text-align: center;'>{{ date_format(date_create($list->tanggal_po), 'd-m-Y') }}</td>
+    <td>{{ $list->get_supplier->nama_supplier }}</td>
+    <td style='text-align: right;'><b>{{ number_format($list->total_po_net, 0) }}</b></td>
     <td style='text-align: center;'><span class='badge {{ $alert_ket }}'>{{ $ket_bayar }}</span></td>
-    <td style='text-align: center;'>{{ (empty($list->via_id)) ? "" : $list->get_via->penerimaan }}</td>
+    <td style='text-align: left;'>{{ $list->keterangan }}</td>
     </tr>
 <?php
 $nom++;
