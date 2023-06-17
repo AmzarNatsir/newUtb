@@ -43,7 +43,8 @@
                                         </tr>
                                         <tbody class="row_baru">
                                         @php
-                                            $nom=1
+                                            $nom=1;
+                                            $t_qty=0;
                                             @endphp
                                             @foreach($resHead->get_detail as $list)
                                             <tr class="rows_item" name="rows_item[]">
@@ -58,7 +59,8 @@
                                                 <td class="text-right"><input type="text" name="item_sub_total_net[]" value="{{ $list->sub_total }}" class="form-control form-control-sm text-right angka" readonly></td>
                                             </tr>
                                             @php
-                                            $nom++
+                                            $nom++;
+                                            $t_qty+=$list->qty;
                                             @endphp
                                             @endforeach
                                         </tbody>
@@ -153,6 +155,7 @@
                         <div class="form-group row">
                             <label for="inputTotal" class="col-sm-6 col-form-label text-right">Total</label>
                             <div class="col-sm-6">
+                                <input type="hidden" name="total_qty" id="total_qty" value="{{ $t_qty }}">
                                 <input type="text" class="form-control angka" id="inputTotal" name="inputTotal" value="{{ $resHead->total_po }}" style="text-align: right; background-color: black; color: white;" readonly>
                             </div>
                         </div>
@@ -336,11 +339,18 @@ var total = function(){
     
     var total = 0;
     var sub_total = 0;
+    var total_qty=0;
+    var sub_total_qty = 0;
     $.each($('input[name="item_sub_total_net[]"]'),function(key, value){
         sub_total = $(value).val() ?  $(value).val() : 0;
         total += parseFloat($(value).val());
     })
+    $.each($('input[name="item_qty[]"]'),function(key, value){
+        sub_total_qty = $(value).val() ?  $(value).val() : 0;
+        total_qty += parseFloat($(value).val());
+    })
     $("#inputTotal").val(total);
+    $("#total_qty").val(total_qty);
     hitung_total_net();
 } 
 

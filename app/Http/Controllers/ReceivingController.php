@@ -44,6 +44,7 @@ class ReceivingController extends Controller
     {
         try {
             $save_head = new ReceiveHeadModel();
+            $total_qty = $request->total_qty;
             //store header
             $save_head->po_id = $request->inp_id_po;
             $save_head->supplier_id = $request->sel_supplier;
@@ -85,8 +86,22 @@ class ReceivingController extends Controller
                     $newdetail->save();
                     //Update Stok
                     $update = ProductModel::find($value['produk_id'][$i]);
+                    //kontainer
+                    $tot_kontainer = str_replace(",","", $request->inp_ongkir_kontainer);
+                    $nil_kontainer = ((int)$tot_kontainer==0) ? 0 : ((int)$tot_kontainer / (int)$total_qty);
+                    //average hpp
+                    $stok_akhir = $update->stok_akhir;
+                    $harga_beli = $update->harga_beli;
+                    $sub_total_stok = $harga_beli * $stok_akhir;
+                    //stok order
+                    $stok_order = str_replace(",","", $value['item_qty'][$i]);
+                    $harga_order = str_replace(",","", $value['harga_satuan'][$i]) + (int)$nil_kontainer;
+                    $sub_total_order = (int)$harga_order * (int)$stok_order;
+                    //hpp
+                    $hpp_item = ((int)$sub_total_order + (int)$sub_total_stok) / ((int)$stok_akhir + (int)$stok_order);
+
                     $update->stok_akhir = ((int)$update->stok_akhir +  (int)str_replace(",","", $value['item_qty'][$i]));
-                    $update->harga_beli = str_replace(",","", $value['harga_satuan'][$i]);
+                    $update->harga_beli = round($hpp_item); // str_replace(",","", $value['harga_satuan'][$i]);
                     $update->save();
                 }
             }
