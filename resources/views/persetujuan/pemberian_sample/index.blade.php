@@ -91,13 +91,13 @@
         $(".ListData").on("click", '#tbl_approve', function()
         {
             var id_data = this.value;
-            $("#frm_modal").load(route('persetujuanPOApprove', id_data));
+            $("#frm_modal").load(route('persetujuanPemberianSampleApprove', id_data));
         });
 
         $(".ListData").on("click", '#tbl_approve_2', function()
         {
             var id_data = this.value;
-            $("#frm_modal").load(route('persetujuanPOApprove_2', id_data));
+            $("#frm_modal").load(route('persetujuanPemberianSampleApprove_2', id_data));
         });
     });
     var goFilter = function()
@@ -108,7 +108,7 @@
         var arr_tgl_2 = $("#searchTglTrans_2").val().split('/');
         var tgl_2 = arr_tgl_2[2]+"-"+arr_tgl_2[1]+"-"+arr_tgl_2[0];
         var ket_periode = $("#searchTglTrans_1").val()+" s/d "+$("#searchTglTrans_2").val();
-        $(".viewList").load(route('persetujuanPOFilter', [tgl_1, tgl_2]));
+        $(".viewList").load(route('persetujuanPemberianSampleFilter', [tgl_1, tgl_2]));
         $("#loaderDiv").hide();
         
     };

@@ -477,9 +477,9 @@ class ProductController extends Controller
                     $newdetail->sub_total_net = 0;
                     $newdetail->save();
                     //Update Stok
-                    $update = ProductModel::find($value['item_id'][$i]);
-                    $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['item_qty'][$i]));
-                    $update->save();
+                    // $update = ProductModel::find($value['item_id'][$i]);
+                    // $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['item_qty'][$i]));
+                    // $update->save();
                 }
             }
             if($id_head)

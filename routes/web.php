@@ -276,6 +276,15 @@ Route::post('persetujuanPOStore_2', [PersetujuanController::class, 'persetujuan_
 //persetujuan pemberian sample
 Route::get('persetujuanPemberianSample', [PersetujuanController::class, 'persetujuan_pemberian_sample'])->name('persetujuanPemberianSample');
 Route::get('persetujuanPemberianSampleData', [PersetujuanController::class, 'persetujuan_pemberian_sample_data'])->name('persetujuanPemberianSampleData');
+Route::get('persetujuanPemberianSampleFilter/{param1}/{param2}', [PersetujuanController::class, 'persetujuan_pemberian_sample_filter'])->name('persetujuanPemberianSampleFilter');
+
+//approval 1
+Route::get('persetujuanPemberianSampleApprove/{param}', [PersetujuanController::class, 'persetujuan_pemberian_sample_approve'])->name('persetujuanPemberianSampleApprove');
+Route::post('persetujuanPemberianSampleStore', [PersetujuanController::class, 'persetujuan_pemberian_sample_store'])->name('persetujuanPemberianSampleStore');
+
+//approval 2
+Route::get('persetujuanPemberianSampleApprove_2/{param}', [PersetujuanController::class, 'persetujuan_pemberian_sample_approve_2'])->name('persetujuanPemberianSampleApprove_2');
+Route::post('persetujuanPemberianSampleStore_2', [PersetujuanController::class, 'persetujuan_pemberian_sample_store_2'])->name('persetujuanPemberianSampleStore_2');
 
 //manajemen user
 //roles permission

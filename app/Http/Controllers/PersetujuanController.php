@@ -80,7 +80,7 @@ class PersetujuanController extends Controller
                 $update_head->status_approval = $request->selApproval;
             }
             $update_head->save();
-            return redirect('persetujuanPenjualan')->with('message', 'Transaksi berhasil disimpan');
+            return redirect('persetujuanPenjualan')->with('message', 'Persetujuan Penjualan berhasil disimpan');
         } catch (QueryException $e)
         {
             return redirect('persetujuanPenjualan')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
@@ -119,7 +119,7 @@ class PersetujuanController extends Controller
                     $update->save();
                 }
             }
-            return redirect('persetujuanPenjualan')->with('message', 'Transaksi berhasil disimpan');
+            return redirect('persetujuanPenjualan')->with('message', 'Persetujuan Penjualan berhasil disimpan');
         } catch (QueryException $e)
         {
             return redirect('persetujuanPenjualan')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
@@ -223,6 +223,108 @@ class PersetujuanController extends Controller
     public function persetujuan_pemberian_sample ()
     {
         return view('persetujuan.pemberian_sample.index');
+    }
+
+    public function persetujuan_pemberian_sample_data()
+    {
+        $result = JualHeadModel::where('jenis_jual', 1)
+                            ->whereNull('status_approval')
+                            ->orwhere('jenis_jual', 1)
+                            ->where('status_approval', 2)
+                            ->orderby('tgl_transaksi', 'desc')
+                            ->orderby('status_approval', 'desc')->get();
+        $data = [
+            'list_data' => $result
+        ];
+        return view('persetujuan.pemberian_sample.list', $data);
+    }
+
+    public function persetujuan_pemberian_sample_filter($tgl_awal=null, $tgl_akhir=null)
+    {
+        $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
+                            ->where('jenis_jual', 1)
+                            ->whereNull('status_approval')
+                            ->orwhereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
+                            ->where('jenis_jual', 1)
+                            ->where('status_approval', 2)
+                            ->orderby('tgl_transaksi', 'desc')
+                            ->orderby('status_approval', 'desc')->get();
+        $data = [
+            'list_data' => $result
+        ];
+        return view('persetujuan.pemberian_sample.list', $data);
+    }
+
+    public function persetujuan_pemberian_sample_approve($id)
+    {
+        $head_trans = JualHeadModel::find($id);
+        $data = [
+            'head' => $head_trans
+        ];
+
+        return view('persetujuan.pemberian_sample.approve', $data);
+    }
+
+    public function persetujuan_pemberian_sample_store(Request $request)
+    {
+        try {
+            $update_head = JualHeadModel::find($request->id_trans);
+            $update_head->tgl_transaksi = date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_trans)));
+            $update_head->approved = $request->selApproval;
+            $update_head->approved_date = $this->datetimeStore;
+            $update_head->approved_note = $request->inp_catatan_persetujuan;
+            $update_head->approved_by = auth()->user()->id;
+            if($request->selApproval==2)
+            {
+                $update_head->status_approval = $request->selApproval;
+            }
+            $update_head->save();
+            return redirect('persetujuanPemberianSample')->with('message', 'Persetujuan Pemberian Sample berhasil disimpan');
+        } catch (QueryException $e)
+        {
+            return redirect('persetujuanPemberianSample')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
+    }
+    //level 2
+    public function persetujuan_pemberian_sample_approve_2($id)
+    {
+        $head_trans = JualHeadModel::find($id);
+        $data = [
+            'head' => $head_trans
+        ];
+
+        return view('persetujuan.pemberian_sample.approve_2', $data);
+    }
+
+    public function persetujuan_pemberian_sample_store_2(Request $request)
+    {
+        try {
+            $update_head = JualHeadModel::find($request->id_trans);
+            $update_head->tgl_transaksi = date("Y-m-d", strtotime(str_replace("/", "-", $request->inp_tgl_trans)));
+            $update_head->approved_2 = $request->selApproval;
+            $update_head->approved_date_2 = $this->datetimeStore;
+            $update_head->approved_note_2 = $request->inp_catatan_persetujuan;
+            $update_head->approved_by_2 = auth()->user()->id;
+            $update_head->status_approval = $request->selApproval;
+            $update_head->save();
+            if($request->selApproval==1)
+            {
+                $detail_trans = JualDetailModel::where('head_id', $request->id_trans)->get();
+                foreach($detail_trans as $list)
+                {
+                    //Update Stok
+                    $update = ProductModel::find($list->produk_id);
+                    $update->stok_akhir = ((int)$update->stok_akhir -  (int)$list->qty);
+                    $update->save();
+                }
+            }
+            return redirect('persetujuanPemberianSample')->with('message', 'Persetujuan Penjualan berhasil disimpan');
+        } catch (QueryException $e)
+        {
+            return redirect('persetujuanPemberianSample')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
     }
 
 }
