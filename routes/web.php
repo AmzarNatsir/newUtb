@@ -275,6 +275,7 @@ Route::post('persetujuanPOStore_2', [PersetujuanController::class, 'persetujuan_
 
 //persetujuan pemberian sample
 Route::get('persetujuanPemberianSample', [PersetujuanController::class, 'persetujuan_pemberian_sample'])->name('persetujuanPemberianSample');
+Route::get('persetujuanPemberianSampleData', [PersetujuanController::class, 'persetujuan_pemberian_sample_data'])->name('persetujuanPemberianSampleData');
 
 //manajemen user
 //roles permission

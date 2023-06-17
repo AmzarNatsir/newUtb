@@ -18,7 +18,7 @@
                         <th class="text-center">Kemasan</th>
                         <th class="text-center">Unit</th>
                         <th class="text-right;" style="width: 15%">Harga Beli</th>
-                        <th class="text-right;" style="width: 15%">Harga Eceran</th>
+                        <th class="text-right;" style="width: 15%">Harga Toko</th>
                         <th class="text-right;" style=" width: 15%">Harga Eceran</th>
                         <th class="text-center;" style=" width: 10%">Stok Awal</th>
                         <th class="text-center;" style=" width: 10%">Stok Akhit</th>

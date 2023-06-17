@@ -220,4 +220,9 @@ class PersetujuanController extends Controller
         }
     }
 
+    public function persetujuan_pemberian_sample ()
+    {
+        return view('persetujuan.pemberian_sample.index');
+    }
+
 }

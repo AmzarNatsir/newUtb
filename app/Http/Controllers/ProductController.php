@@ -48,7 +48,7 @@ class ProductController extends Controller
         $no_item = 1;
         $kd="UTB/Pupuk-";
         
-        $result = ProductModel::orderby('id', 'desc')->first();
+        $result = ProductModel::orderby('kode', 'desc')->first();
         if(empty($result->kode)) {
             $no_baru = $kd.sprintf('%02s', $no_item).".".sprintf('%04s', $sub); 
         } else {
