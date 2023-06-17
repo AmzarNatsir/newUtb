@@ -410,13 +410,32 @@
                                         <td style="width: 5%;"></td>
                                         <td style="width: 5%;"><div class="form-group clearfix">
                                                 <div class="icheck-danger d-inline">
+                                                    <input type="checkbox" id="checkPersetujuanSample" name="checkMenu[39]" value="persetujuan_pemberian_sampel">
+                                                    <label for="checkPersetujuanSample"></label>
+                                                </div>
+                                            </div></td>
+                                        <td><label for="checkPersetujuanJual">Pemberian Sample</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 5%;"></td>
+                                        <td style="width: 5%;"><div class="form-group clearfix">
+                                                <div class="icheck-danger d-inline">
+                                                    <input type="checkbox" id="checkPersetujuanPO" name="checkMenu[38]" value="persetujuan_po">
+                                                    <label for="checkPersetujuanPO"></label>
+                                                </div>
+                                            </div></td>
+                                        <td><label for="checkPersetujuanJual">Purchase Order</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 5%;"></td>
+                                        <td style="width: 5%;"><div class="form-group clearfix">
+                                                <div class="icheck-danger d-inline">
                                                     <input type="checkbox" id="checkPersetujuanJual" name="checkMenu[34]" value="persetujaun_penjualan">
                                                     <label for="checkPersetujuanJual"></label>
                                                 </div>
                                             </div></td>
                                         <td><label for="checkPersetujuanJual">Penjualan</label></td>
                                     </tr>
-
                                     <tr>
                                         <td style="width: 5%;"></td>
                                         <td colspan="2"><label for="checkManajUser">MANAJEMEN USER</label></td>

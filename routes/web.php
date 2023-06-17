@@ -273,6 +273,9 @@ Route::post('persetujuanPOStore', [PersetujuanController::class, 'persetujuan_po
 Route::get('persetujuanPOApprove_2/{param}', [PersetujuanController::class, 'persetujuan_po_approve_2'])->name('persetujuanPOApprove_2');
 Route::post('persetujuanPOStore_2', [PersetujuanController::class, 'persetujuan_po_store_2'])->name('persetujuanPOStore_2');
 
+//persetujuan pemberian sample
+Route::get('persetujuanPemberianSample', [PersetujuanController::class, 'persetujuan_pemberian_sample'])->name('persetujuanPemberianSample');
+
 //manajemen user
 //roles permission
 Route::get('roles_permission', [UsersController::class, 'roles_permission'])->name('roles_permission');
