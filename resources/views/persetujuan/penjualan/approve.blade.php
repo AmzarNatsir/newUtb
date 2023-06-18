@@ -40,12 +40,12 @@
                                         @foreach($head->get_detail as $list )
                                         <tr>
                                             <td class="text-center">{{ $nom }}</td>
-                                            <td>{{ $list->get_produk->nama_produk }}</td>
+                                            <td>{{ $list->get_produk->nama_produk }} ({{ $list->get_sub_produk->nama_produk }})</td>
                                             <td class="text-center">{{ $list->get_produk->kemasan }} {{ $list->get_produk->get_unit->unit }}</td>
                                             <td class="text-center"><b>{{ $list->qty }}</b></td>
                                             <td class="text-right">{{ number_format($list->harga, 0) }}</td>
                                             <td class="text-right">{{ number_format($list->sub_total, 0) }}</td>
-                                            <td class="text-right">{{ number_format($list->diskitem_persen, 0) }}</td>
+                                            <td class="text-right">{{ $list->diskitem_persen }}</td>
                                             <td class="text-right">{{ number_format($list->diskitem_rupiah, 0) }}</td>
                                             <td class="text-right">{{ number_format($list->sub_total, 0) }}</td>
                                             <td class="text-center"><b>{{ $list->get_produk->stok_akhir }}</b></td>

@@ -62,7 +62,6 @@
                                 <th style="width: 10%; text-align: center;" rowspan="2">Merk</th>
                                 <th style="width: 10%; text-align: center;" rowspan="2">Kemasan</th>
                                 <th style="width: 5%; text-align: center;" rowspan="2">Stok Awal</th>
-                                <th style="width: 10%; text-align: center;" rowspan="2">Harga</th>
                                 <th style="text-align: center;" colspan="2">Mutasi</th>
                                 <th style="width: 5%; text-align: center;" rowspan="2">Stok Akhir</th>
                             </tr>

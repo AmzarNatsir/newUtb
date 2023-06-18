@@ -25,7 +25,7 @@
             {!! session('message') !!}
         </div>
         @endif
-        <table class="table table-bordered table-hover datatable ListData" style="width: 100%;">
+        <table class="table table-bordered table-hover datatable ListData" style="width: 100%; font-size: small;">
             <thead>
             <tr>
                 <th style="width: 5%;">No.</th>
@@ -42,26 +42,50 @@
             @php $nom=1 @endphp
             @foreach($allProduct as $list)
             <tr>
-                <td class="text-center">{{ $nom }}</td>
-                <td class="text-center">{{ $list->kode }}</td>
-                <td>{{ $list->nama_produk }}</td>
-                <td>{{ $list->get_merk->merk }}</td>
-                <td class="text-center">{{ $list->kemasan }}</td>
-                <td class="text-center">{{ $list->get_unit->unit }}</td>
-                <td>{{ $list->keterangan }}</td>
+                <td class="text-left"><b>{{ $nom }}</b></td>
+                <td class="text-left"><b>{{ $list->kode }}</b></td>
+                <td><b>{{ $list->nama_produk }}</b></td>
+                <td><b>{{ $list->get_merk->merk }}</b></td>
+                <td class="text-center"><b>{{ $list->kemasan }}</b></td>
+                <td class="text-center"><b>{{ $list->get_unit->unit }}</b></td>
+                <td></td>
                 <td>
                     <div class="input-group-prepend">
-                    <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                      Action
-                    </button>
-                    <div class="dropdown-menu">
-                        <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_sub_produk" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goSubProduk(this)"><i class="fa fa-plus"></i> Sub Produk</button>
-                        <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goEdit(this)"><i class="fa fa-edit"></i> Edit</button>
-                        <a href="{{ url('productDelete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                        <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                        Action
+                        </button>
+                        <div class="dropdown-menu">
+                            <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_sub_produk" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goSubProduk(this)"><i class="fa fa-plus"></i> Sub Produk</button>
+                            <button type="button" class="dropdown-item" id="tbl_edit" name="tbl_edit" data-toggle="modal" data-target="#modal-form" value="{{ $list->id }}" onclick="goEdit(this)"><i class="fa fa-edit"></i> Edit</button>
+                            @if($list->get_sub_produk()->count() == 0)
+                            <a href="{{ url('productDelete') }}/{{ $list->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                            @endif
+                        </div>
                     </div>
-                  </div>
                 </td>
             </tr>
+            @if($list->get_sub_produk()->count() > 0)
+                @php $sub_no = 1 @endphp
+                @foreach($list->get_sub_produk as $sub)
+                <tr>
+                    <td>{{ $nom.".".$sub_no }}</td>
+                    <td class="text-left">{{ $sub->kode }}</td>
+                    <td colspan="4">{{ $sub->nama_produk }}</td>
+                    <td>{{ $sub->keterangan }}</td>
+                    <td><div class="input-group-prepend">
+                        <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                        Action
+                        </button>
+                        <div class="dropdown-menu">
+                            <button type="button" class="dropdown-item" id="tbl_edit_sub" name="tbl_edit_sub" data-toggle="modal" data-target="#modal-form" value="{{ $sub->id }}" onclick="goEditSub(this)"><i class="fa fa-edit"></i> Edit</button>
+                            <a href="{{ url('productSubDelete') }}/{{ $sub->id }}" class="dropdown-item" onclick="return konfirmHapus()" ><i class="fa fa-trash-alt"></i> Delete</a>
+                        </div>
+                    </div></td>
+                </tr>
+                @php $sub_no++ @endphp
+                @endforeach
+            
+            @endif
             @php $nom++ @endphp
             @endforeach
             </tbody>
@@ -95,6 +119,10 @@
 
     var goSubProduk = function (el) {
         $("#frm_modal").load(route('productSub', $(el).val()));
+    }
+
+    var goEditSub = function(el) {
+        $("#frm_modal").load(route('productSubEdit', $(el).val()));
     }
 
     function konfirmHapus()

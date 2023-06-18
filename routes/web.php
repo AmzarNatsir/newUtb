@@ -78,7 +78,10 @@ Route::put('productUpdate/{id}', [ProductController::class, 'update'])->name('pr
 Route::get('productDelete/{id}', [ProductController::class, 'delete'])->name('productDelete');
 //create sub product
 Route::get('productSub/{id}', [ProductController::class, 'add_sub_produk'])->name("productSub");
-Route::post('productSubStore', [ProductController::class, 'store'])->name("productSubStore");
+Route::post('productSubStore', [ProductController::class, 'store_sub_produk'])->name("productSubStore");
+Route::get('productSubEdit/{id}', [ProductController::class, 'edit_sub'])->name("productSubEdit");
+Route::put('productSubUpdate/{id}', [ProductController::class, 'update_sub'])->name('productSubUpdate');
+Route::get('productSubDelete/{id}', [ProductController::class, 'delete_sub'])->name('productSubDelete');
 //Common Supplier
 Route::get('supplier', [SupplierController::class, 'index'])->name('supplier');
 Route::get('supplierAdd', [SupplierController::class, 'add'])->name("supplierAdd");

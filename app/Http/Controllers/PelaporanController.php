@@ -355,7 +355,6 @@ class PelaporanController extends Controller
             <td style='text-align: center;'>".$list->get_merk->merk."</td>
             <td style='text-align: center;'>".$list->kemasan." ".$list->get_unit->unit."</td>
             <td style='text-align: center;'><span class='badge bg-info' style='font-size: 12pt;'>".$stok_awal."</span></td>
-            <td style='text-align: right;'>".number_format($list->harga_eceran, 0)."</td>
             <td style='text-align: center;'><span class='badge bg-warning' style='font-size: 12pt;'>".((!empty($stok_masuk)) ? $stok_masuk : 0)."</span></td>
             <td style='text-align: center;'><span class='badge bg-success' style='font-size: 12pt;'>".((!empty($stok_keluar)) ? $stok_keluar : 0)."</span></td>
             <td style='text-align: center;'><span class='badge bg-primary' style='font-size: 12pt;'>".$current_qty."</span></td>

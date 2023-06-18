@@ -36,4 +36,9 @@ class ProductModel extends Model
     {
         return $this->belongsTo(MerkModel::class, 'merk_id', 'id');
     }
+
+    public function get_sub_produk()
+    {
+        return $this->hasMany(ProductSubModel::class, 'head_id', 'id');
+    }
 }

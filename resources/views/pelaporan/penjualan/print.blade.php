@@ -118,7 +118,7 @@
                 <tr>
                 <td>{{ $nom }}</td>
                 <td>{{ $det->get_produk->kode }}</td>
-                <td>{{ $det->get_produk->nama_produk }}</td>
+                <td>{{ $det->get_produk->nama_produk }} ({{ $det->get_sub_produk->nama_produk }})</td>
                 <td style='text-align: center'>{{ $det->get_produk->kemasan }}</td>
                 <td style='text-align: center'>{{ $det->get_produk->get_unit->unit }}</td>
                 <td style='text-align: center'>{{ number_format($det->qty, 0) }}</td>

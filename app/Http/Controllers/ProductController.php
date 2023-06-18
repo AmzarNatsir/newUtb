@@ -7,6 +7,7 @@ use App\Models\JualDetailModel;
 use App\Models\JualHeadModel;
 use App\Models\MerkModel;
 use App\Models\ProductModel;
+use App\Models\ProductSubModel;
 use App\Models\UnitModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -50,10 +51,10 @@ class ProductController extends Controller
         
         $result = ProductModel::orderby('kode', 'desc')->first();
         if(empty($result->kode)) {
-            $no_baru = $kd.sprintf('%02s', $no_item).".".sprintf('%04s', $sub); 
+            $no_baru = $kd.sprintf('%02s', $no_item); 
         } else {
             $no_trans_baru = (int)substr($result->kode, 11, 2) + 1;
-            $no_baru = $kd.sprintf('%02s', $no_trans_baru).".".sprintf('%04s', $sub);
+            $no_baru = $kd.sprintf('%02s', $no_trans_baru);
         }
         return $no_baru;
     }
@@ -67,10 +68,6 @@ class ProductController extends Controller
             $new_data->merk_id = $request->sel_merk;
             $new_data->unit_id = $request->sel_satuan;
             $new_data->kemasan = $request->inp_kemasan;
-            if(isset($request->inp_ket))
-            {
-                $new_data->keterangan = $request->inp_ket;
-            }
             $new_data->harga_toko = 0;
             $new_data->harga_eceran = 0;
             $exec = $new_data->save();
@@ -108,7 +105,6 @@ class ProductController extends Controller
             $update->merk_id = $request->sel_merk;
             $update->unit_id = $request->sel_satuan;
             $update->kemasan = $request->inp_kemasan;
-            $update->keterangan = $request->inp_ket;
             $exec = $update->save();
             if($exec)
             {
@@ -137,14 +133,7 @@ class ProductController extends Controller
     public function add_sub_produk($id)
     {
         $main = ProductModel::find($id);
-        $kode_produk_head = substr($main->kode, 0, 13);
-        $sub_main = \DB::table('common_product')
-                                ->where(\DB::raw('SUBSTR(kode,1, 13)'), '=', $kode_produk_head)
-                                ->whereNull('deleted_at')
-                                ->orderby('id', 'desc')
-                                ->selectRaw('kode')
-                                ->first();
-        $kode_produk_sub = $kode_produk_head . sprintf('%04s', (int)substr($sub_main->kode, 13, 4) + 1);
+        $kode_produk_sub = $this->create_kode_sub_produk($id);
         $query_unit = UnitModel::all();
         $query_merk = MerkModel::all();
         $data = [
@@ -154,6 +143,92 @@ class ProductController extends Controller
             'kode_sub' => $kode_produk_sub
         ];
         return view('common.produk.add_sub', $data);
+    }
+
+    public function store_sub_produk(Request $request)
+    {
+        try {
+            $new_data = new ProductSubModel();
+            $new_data->head_id = $request->id_head_product;
+            $new_data->kode = $request->inp_kode;
+            $new_data->nama_produk = $request->inp_nama;
+            $new_data->keterangan = $request->inp_ket;
+            $new_data->harga_toko = 0;
+            $new_data->harga_eceran = 0;
+            $exec = $new_data->save();
+            if($exec)
+            {
+                return redirect('stok')->with('message', 'Sub Item Produk berhasil disimpan');
+            } else {
+                return redirect('stok')->with('message', 'Sub Item Produk gagal disimpan');
+            }
+           
+        } catch (QueryException $e)
+        {
+            return redirect('stok')->with('message', 'Proses gagal. Error : '.$e->getMessage());
+        }
+    }
+
+    public function edit_sub($id)
+    {
+        $query_sub = ProductSubModel::find($id);
+        $query_main = ProductModel::find($query_sub->head_id);
+        $query_unit = UnitModel::all();
+        $query_merk = MerkModel::all();
+        $data = [
+            'res_sub' => $query_sub,
+            'res' => $query_main,
+            'allUnit' => $query_unit,
+            'allMerk' => $query_merk
+        ];
+        return view('common.produk.edit_sub', $data);
+    }
+
+    public function update_sub(Request $request, $id)
+    {
+        try {
+            $update = ProductSubModel::find($id);
+            $update->nama_produk = $request->inp_nama_sub;
+            $update->keterangan = $request->inp_ket;
+            $exec = $update->save();
+            if($exec)
+            {
+                return redirect('stok')->with('message', 'Perubahan data berhasil disimpan');
+            } else {
+                return redirect('stok')->with('message', 'Perubahan data gagal disimpan');
+            }
+        } catch (QueryException $e)
+        {
+            return redirect('stok')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
+    }
+
+    public function delete_sub($id)
+    {
+        $delete = ProductSubModel::find($id);
+        $exec = $delete->delete();
+        if($exec)
+        {
+            return redirect('stok')->with('message', 'Sub Produk berhasil dihapus');
+        } else {
+            return redirect('stok')->with('message', 'Sub Produk gagal dihapus');
+        }
+    }
+
+    public function create_kode_sub_produk($id_head)
+    {
+        $no_item = 1;
+        $head = ProductModel::find($id_head);
+        $kd = $head->kode;
+        
+        $result = ProductSubModel::where('head_id', $id_head)->orderby('kode', 'desc')->first();
+        if(empty($result->kode)) {
+            $no_baru = $kd.".".sprintf('%04s', $no_item); 
+        } else {
+            $no_trans_baru = (int)substr($result->kode, 14, 4) + 1;
+            $no_baru = $kd.".".sprintf('%04s', $no_trans_baru);
+        }
+        return $no_baru;
     }
 
     public function searchItem(Request $request)
@@ -183,19 +258,20 @@ class ProductController extends Controller
     public function searchItemJual(Request $request)
     {
         $keyword = $request->search;
-        $result = ProductModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->get();
+        $result = ProductSubModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->orderBy('kode', 'asc')->get();
         $response = array();
         foreach($result as $item){
             $response[] = array(
                 "value"=>$item->id, 
-                "label"=> "[".$item->kode." | ".$item->nama_produk." | Stok : ".$item->stok_akhir." ".$item->get_unit->unit."]",
+                "label"=> "[".$item->kode." | ".$item->nama_produk." | Stok : ".$item->get_product->stok_akhir." ".$item->get_product->get_unit->unit."]",
+                "id_head_produk"=>$item->get_product->id,
                 "kode"=>$item->kode,
-                "satuan"=>$item->get_unit->unit,
+                "satuan"=>$item->get_product->get_unit->unit,
                 "harga_toko"=>$item->harga_toko,
                 "harga_eceran" => $item->harga_eceran,
-                "harga_beli" => $item->harga_beli,
-                "kemasan" => $item->kemasan,
-                "stok" => $item->stok_akhir
+                "harga_beli" => $item->get_product->harga_beli,
+                "kemasan" => $item->get_product->kemasan,
+                "stok" => $item->get_product->stok_akhir
             );
         }
         return response()
@@ -227,12 +303,9 @@ class ProductController extends Controller
             {
                 for($i=0; $i<$jml_item; $i++)
                 {
-                    $update = ProductModel::find($value['id_stok'][$i]);
-                    $update->harga_beli = str_replace(",","", $value['inp_harga_beli'][$i]);
+                    $update = ProductSubModel::find($value['id_stok'][$i]);
                     $update->harga_toko = str_replace(",","", $value['inp_harga_toko'][$i]);
                     $update->harga_eceran = str_replace(",","", $value['inp_harga_eceran'][$i]);
-                    $update->stok_awal = str_replace(",","", $value['inp_stok_awal'][$i]);
-                    $update->stok_akhir = str_replace(",","", $value['inp_stok_akhir'][$i]);
                     $update->save();
                 }
             }
@@ -468,7 +541,7 @@ class ProductController extends Controller
                 {
                     $newdetail = new JualDetailModel();
                     $newdetail->head_id = $id_head;
-                    $newdetail->produk_id = $value['item_id'][$i];
+                    $newdetail->produk_id = $value['item_sub_id'][$i];
                     $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
                     $newdetail->harga = 0;
                     $newdetail->diskitem_persen =0;
@@ -476,10 +549,6 @@ class ProductController extends Controller
                     $newdetail->sub_total = 0;
                     $newdetail->sub_total_net = 0;
                     $newdetail->save();
-                    //Update Stok
-                    // $update = ProductModel::find($value['item_id'][$i]);
-                    // $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['item_qty'][$i]));
-                    // $update->save();
                 }
             }
             if($id_head)

@@ -184,7 +184,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fa fa-table"></i> Rincian Stok Masuk</h3>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body table-responsive">
                                         <table style="font-size: 10pt; width: 100%;">
                                         <thead>
                                             <tr>
@@ -228,7 +228,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fa fa-table"></i> Rincian Stok Keluar</h3>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body table-responsive">
                                     <table style="font-size: 10pt; width: 100%;">
                                         <thead>
                                             <tr>

@@ -1,9 +1,9 @@
 <div class="modal-header">
-    <h4 class="modal-title">Tambah Data Baru</h4>
+    <h4 class="modal-title">Tambah Data Produk Baru</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span></button>
 </div>
-<form action="{{ route('productStore') }}" method="post">
+<form action="{{ route('productStore') }}" method="post" onsubmit="return konfirm()">
 {{csrf_field()}}
     <div class="modal-body">
         <div class="form-group">
@@ -48,3 +48,15 @@
     </div>
 </form>
 <script type="text/javascript" src="{{ asset('assets/js/initAll.js') }}"></script>
+<script>
+    function konfirm()
+    {
+        var psn = confirm("Yakin akan menyimpan data ?");
+        if(psn==true)
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>

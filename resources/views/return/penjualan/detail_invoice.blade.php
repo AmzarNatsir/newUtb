@@ -2,11 +2,11 @@
 {{csrf_field()}}
 <input type="hidden" name="inpInvoiceId" id="inpInvoiceId" value="{{ $dtHead->id }}">
 <div class="table-responsive mailbox-messages">
-    <table class="table table-hover table-striped">
+    <table class="table table-hover table-striped" style="font-size: small;">
         <thead>
             <tr>
                 <th rowspan="2" class="text-center" style="width: 2%; vertical-align: middle;">#</th>
-                <th rowspan="2" style="width: 16%; vertical-align: middle;">Nama Produk</th>
+                <th rowspan="2" style="vertical-align: middle;">Nama Produk</th>
                 <th colspan="3" class="text-center">Satuan</th>
                 <th rowspan="2" class="text-right" style="width: 12%; vertical-align: middle;" >Sub Total (Rp.)</th>
                 <th colspan="2" class="text-center">Potongan</th>
@@ -14,18 +14,18 @@
             </tr>
             <tr>
                 <th class="text-center" style="width: 10%">Satuan</th>
-                <th class="text-center" style="width: 12%">Qty</th>
-                <th class="text-center" style="width: 10%">Harga Satuan</th>
-                <th class="text-center" style="width: 6%">%</th>
-                <th class="text-center" style="width: 9%">Nilai</th>
+                <th class="text-center" style="width: 10%">Qty</th>
+                <th class="text-center" style="width: 12%">Harga Satuan</th>
+                <th class="text-center" style="width: 10%">%</th>
+                <th class="text-center" style="width: 12%">Nilai</th>
             </tr>
         </thead>
         <tbody>
         @foreach($dtHead->get_detail as $list)
         <tr>
             <td><div class="icheck-primary"><input type="hidden" name="item_id[]" id="item_id[]" value="{{ $list->produk_id }}"><input type="checkbox" value="" name="checkItem[]" id="{{ $list->id }}" onclick="checkItem(this)"><label for="{{ $list->id }}"></label></div><input type="hidden" name="selectItem[]" id="selectItem[]" value="0"></td>
-            <td>{{ $list->get_produk->nama_produk }}</td>
-            <td>{{ $list->get_produk->kemasan }} {{ $list->get_produk->get_unit->unit }}</td>
+            <td>{{ $list->get_produk->nama_produk }} ({{ $list->get_sub_produk->nama_produk }})</td>
+            <td class="text-center">{{ $list->get_produk->kemasan }} {{ $list->get_produk->get_unit->unit }}</td>
             <td align="center"><input type="hidden" name="temp_qty[]" id="temp_qty[]" value="{{ $list->qty }}"><input type="text" min="1" max="1000" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="{{ $list->qty }}" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)" disabled></td>
             <td class="text-right"><input type="hidden" name="temp_harga_satuan[]" id="temp_harga_satuan[]" value="{{ $list->harga }}"><input type="text" class="form-control form-control-sm angka" id="harga_satuan[]" name="harga_satuan[]" value="{{ $list->harga }}" style="text-align: right" readonly></td>
             <td class="text-right"><input type="hidden" name="temp_item_sub_total[]" id="temp_item_sub_total[]" value="{{ $list->sub_total }}"><input type="text" name="item_sub_total[]" value="{{ $list->sub_total }}" class="form-control form-control-sm text-right angka" readonly></td>

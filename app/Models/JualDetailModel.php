@@ -15,6 +15,7 @@ class JualDetailModel extends Model
     protected $fillable = [
         'head_id',
         'produk_id',
+        'produk_sub_id',
         'qty',
         'harga',
         'sub_total',
@@ -29,5 +30,10 @@ class JualDetailModel extends Model
     public function get_produk()
     {
         return $this->belongsTo(ProductModel::class, 'produk_id', 'id');
+    }
+
+    public function get_sub_produk()
+    {
+        return $this->belongsTo(ProductSubModel::class, 'produk_sub_id', 'id');
     }
 }

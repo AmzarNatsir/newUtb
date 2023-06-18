@@ -58,14 +58,14 @@
                         <table class="table table-bordered table-hover datatable ListData" style="font-size: 11pt; width: 100%;">
                             <thead>
                             <tr>
-                                <th style="width: 20%; text-align: center;">Act</th>
+                                <th style="width: 15%; text-align: center;">Act</th>
                                 <th style="width: 5%; text-align: center;">No.</th>
                                 <th style="width: 10%; text-align: center;">No.PO</th>
                                 <th style="width: 10%; text-align: center;">Tanggal PO</th>
                                 <th>Supplier</th>
                                 <th style="width: 10%; text-align: center;">Total PO</th>
                                 <th style="width: 10%; text-align: center;">Metode Bayar</th>
-                                <th style="width: 10%; text-align: left;">Keterangan</th>
+                                <th style="width: 15%; text-align: left;">Keterangan</th>
                             </tr>
                             </thead>
                             <tbody class="viewList"></tbody>

@@ -4,7 +4,7 @@ $total=0;
 $ket_bayar="";
 foreach($list_data as $list)
 { 
-    if($list->bayar_via==1){
+    if($list->cara_bayar==1){
         $ket_bayar = "Tunai";
         $alert_ket = "bg-success";
     } else {

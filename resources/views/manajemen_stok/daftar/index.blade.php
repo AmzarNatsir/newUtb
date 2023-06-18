@@ -25,7 +25,7 @@
             {!! session('message') !!}
         </div>
         @endif
-        <table class="table table-bordered table-hover datatable ListData" style="width: 100%;">
+        <table class="table table-bordered table-hover datatable ListData" style="width: 100%; font-size: small;">
             <thead>
             <tr>
                 <th style="width: 5%;">No.</th>
@@ -45,18 +45,37 @@
             @php $nom=1 @endphp
             @foreach($allProduct as $list)
             <tr>
-                <td class="text-center">{{ $nom }}</td>
-                <td class="text-center">{{ $list->kode }}</td>
-                <td>{{ $list->nama_produk }}</td>
-                <td>{{ $list->get_merk->merk }}</td>
-                <td class="text-center">{{ $list->kemasan }}</td>
-                <td class="text-center">{{ $list->get_unit->unit }}</td>
-                <td class="text-right">{{ number_format($list->harga_beli, 0) }}</td>
-                <td class="text-right">{{ number_format($list->harga_toko, 0) }}</td>
-                <td class="text-right">{{ number_format($list->harga_eceran, 0) }}</td>
-                <td class="text-right">{{ number_format($list->stok_awal, 0) }}</td>
-                <td class="text-right">{{ number_format($list->stok_akhir, 0) }}</td>
+                <td class="text-left"><b>{{ $nom }}</b></td>
+                <td class="text-left"><b>{{ $list->kode }}</b></td>
+                <td><b>{{ $list->nama_produk }}</b></td>
+                <td><b>{{ $list->get_merk->merk }}</b></td>
+                <td class="text-center"><b>{{ $list->kemasan }}</b></td>
+                <td class="text-center"><b>{{ $list->get_unit->unit }}</b></td>
+                <td class="text-right"><b>{{ number_format($list->harga_beli, 0) }}</b></td>
+                <td></td>
+                <td></td>
+                <td class="text-right"><b>{{ number_format($list->stok_awal, 0) }}</b></td>
+                <td class="text-right"><b>{{ number_format($list->stok_akhir, 0) }}</b></td>
             </tr>
+            @if($list->get_sub_produk()->count() > 0)
+                @php $sub_no = 1 @endphp
+                @foreach($list->get_sub_produk as $sub)
+                <tr>
+                    <td>{{ $nom.".".$sub_no }}</td>
+                    <td>{{ $sub->kode }}</td>
+                    <td>{{ $sub->nama_produk }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right">{{ number_format($sub->harga_toko, 0) }}</td>
+                    <td class="text-right">{{ number_format($sub->harga_eceran, 0) }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @php $sub_no++ @endphp
+                @endforeach
+            @endif
             @php $nom++ @endphp
             @endforeach
             </tbody>

@@ -71,7 +71,8 @@ class PenjualanController extends Controller
                 {
                     $newdetail = new JualDetailModel();
                     $newdetail->head_id = $id_head;
-                    $newdetail->produk_id = $value['item_id'][$i];
+                    $newdetail->produk_id = $value['item_head_id'][$i];
+                    $newdetail->produk_sub_id = $value['item_id'][$i];
                     $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
                     $newdetail->kat_harga = $value['selKatHarga'][$i];
                     $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
@@ -81,10 +82,6 @@ class PenjualanController extends Controller
                     $newdetail->sub_total_net = str_replace(",","", $value['item_sub_total_net'][$i]);
                     $newdetail->harga_beli = $value['temp_harga_beli'][$i];
                     $newdetail->save();
-                    //Update Stok
-                    // $update = ProductModel::find($value['item_id'][$i]);
-                    // $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['item_qty'][$i]));
-                    // $update->save();
                 }
             }
             if($id_head)

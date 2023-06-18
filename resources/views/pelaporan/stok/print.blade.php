@@ -46,7 +46,6 @@
         <th rowspan="2">Nama Produk</th>
         <th style="width: 10%; text-align: center;" rowspan="2">Merk</th>
         <th style="width: 10%; text-align: center;" rowspan="2">Kemasan</th>
-        <th style="width: 12%; text-align: center;" rowspan="2">Harga</th>
         <th style="width: 8%; text-align: center;" rowspan="2">Stok Awal</th>
         <th style="text-align: center;" colspan="2">Mutasi</th>
         <th style="width: 8%; text-align: center;" rowspan="2">Stok Akhir</th>
@@ -71,7 +70,6 @@
         <td>{{ $list['nama_produk'] }}</td>
         <td style='text-align: center;'>{{ $list['merk'] }}</td>
         <td style='text-align: center;'>{{ $list['kemasan'] }} {{ $list['satuan'] }}</td>
-        <td style='text-align: right;'>{{ number_format($list['harga_jual'], 0) }}&nbsp;</td>
         <td style='text-align: center;'>{{ number_format($list['stok_awal'], 0) }}</td>
         <td style='text-align: center;'>{{ number_format($list['stok_masuk'], 0) }}</td>
         <td style='text-align: center;'>{{ number_format($list['stok_keluar'], 0) }}</td>
@@ -79,7 +77,6 @@
     </tr>";
     @php 
     $t_stok_awal+=$list['stok_awal'];
-    $t_harga+=$list['harga_jual'];
     $t_stok_masuk+=$list['stok_masuk'];
     $t_stok_keluar+=$list['stok_keluar'];
     $t_stok_akhir+=$list['stok_akhir'];
@@ -87,7 +84,6 @@
     @endforeach
     <tr style="background-color: #808080; color:azure">
         <td colspan="5" style="height: 30px; text-align: right;"><b>TOTAL</b></td>
-        <td style='text-align: right;'><b>{{ number_format($t_harga, 0) }}&nbsp;</b></td>
         <td style='text-align: center;'><b>{{ number_format($t_stok_awal, 0) }}</b></td>
         <td style='text-align: center;'><b>{{ number_format($t_stok_masuk, 0) }}</b></td>
         <td style='text-align: center;'><b>{{ number_format($t_stok_keluar, 0) }}</b></td>
