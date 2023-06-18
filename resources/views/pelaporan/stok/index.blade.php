@@ -138,10 +138,6 @@
         window.open(route('laporanStokPrint', [tgl_1, tgl_2]), "_blank");
     }
 
-    var goExportExcell = function()
-    {
-        window.open(route('exportProduct'), "_blank");
-    }
 </script>
 @endsection
 

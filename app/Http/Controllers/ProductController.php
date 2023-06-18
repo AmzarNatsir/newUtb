@@ -12,9 +12,6 @@ use App\Models\ProductSubModel;
 use App\Models\UnitModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\FuncCall;
-use Svg\Tag\Rect;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -584,8 +581,4 @@ class ProductController extends Controller
 
 
     //export 
-    public function export_produk()
-    {
-        return Excel::download(new ProdukExport, 'allProduk.xlsx');
-    }
 }

@@ -308,4 +308,3 @@ Route::put('users_update/{id}', [UsersController::class, 'users_update'])->name(
 Route::get('users_delete/{id}', [UsersController::class, 'users_delete'])->name('users_delete');
 
 //export excell
-Route::get('exportProduct', [ProductController::class, 'export_produk'])->name('exportProduct');
