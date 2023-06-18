@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProdukExport;
 use App\Models\CustomerModel;
 use App\Models\JualDetailModel;
 use App\Models\JualHeadModel;
@@ -13,6 +14,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 use Svg\Tag\Rect;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -580,4 +582,10 @@ class ProductController extends Controller
         return $no_baru;
     }
 
+
+    //export 
+    public function export_produk()
+    {
+        return Excel::download(new ProdukExport, 'allProduk.xlsx');
+    }
 }

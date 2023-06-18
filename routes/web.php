@@ -306,3 +306,6 @@ Route::post('users_store', [UsersController::class, 'users_store'])->name('users
 Route::get('users_edit/{id}', [UsersController::class, 'users_edit'])->name('users_edit');
 Route::put('users_update/{id}', [UsersController::class, 'users_update'])->name('users_update');
 Route::get('users_delete/{id}', [UsersController::class, 'users_delete'])->name('users_delete');
+
+//export excell
+Route::get('exportProduct', [ProductController::class, 'export_produk'])->name('exportProduct');

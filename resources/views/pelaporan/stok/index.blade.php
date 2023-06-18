@@ -41,7 +41,7 @@
                             <div class="form-group col-md-8">
                                 <button class="btn btn-success" name="tbl-filter" id="tbl-filter" onclick="goFilter()"><i class="fa fa-search"></i> Filter</button>
                                 <button class="btn btn-danger" name="tbl-print" id="tbl-print" onclick="goPrint()"><i class="fa fa-print"></i> Print</button>
-                                <button class="btn btn-primary" name="tbl-export" id="tbl-export" onclick="goExport('table_penjualan', 'laporan_penjualan')"><i class="fa fa-table"></i> Export</button>
+                                <button class="btn btn-primary" name="tbl-export" id="tbl-export" onclick="goExport()"><i class="fa fa-table"></i> Export</button>
                                 <button class="btn btn-danger" type="button" id="loaderDiv" style="display: none">
                                     <i class="fa fa-asterisk fa-spin text-info"></i>
                                 </button>
@@ -136,6 +136,11 @@
         var arr_tgl_2 = $("#searchTglTrans_2").val().split('/');
         var tgl_2 = arr_tgl_2[2]+"-"+arr_tgl_2[1]+"-"+arr_tgl_2[0];
         window.open(route('laporanStokPrint', [tgl_1, tgl_2]), "_blank");
+    }
+
+    var goExport = function()
+    {
+        window.open(route('exportProduct'), "_blank");
     }
 </script>
 @endsection
