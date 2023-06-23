@@ -144,6 +144,16 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 5%;"></td>
+                                    <td style="width: 5%;"><div class="form-group clearfix">
+                                            <div class="icheck-danger d-inline">
+                                                <input type="checkbox" id="checkPelaporanHPP" name="checkMenu[40]" value="laporan_hpp">
+                                                <label for="checkPelaporanHPP"></label>
+                                            </div>
+                                        </div></td>
+                                    <td><label for="checkPelaporanHPP">Harga Pokok Penjualan (HPP)</label></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 5%;"></td>
                                     <td colspan="2"><label for="checkDataMaster">DATA MASTER</label></td>
                                 </tr>
                                 <tr>

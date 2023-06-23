@@ -116,6 +116,16 @@
             </tr>
             <tr>
                 <td style="width: 5%;"></td>
+                <td style="width: 5%;"><div class="form-group clearfix">
+                        <div class="icheck-danger d-inline">
+                            <input type="checkbox" id="checkPelaporanHPP" name="checkMenu[40]" value="laporan_hutang_kontainer" {{ in_array('laporan_hpp', $rolePermissions) ? 'checked' : '' }} disabled>
+                            <label for="checkPelaporanHPP"></label>
+                        </div>
+                    </div></td>
+                <td><label for="checkPelaporanHPP">Harga Pokok Penjualan (HPP)</label></td>
+            </tr>
+            <tr>
+                <td style="width: 5%;"></td>
                 <td colspan="2"><label for="checkDataMaster">DATA MASTER</label></td>
             </tr>
             <tr>

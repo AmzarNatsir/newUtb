@@ -155,6 +155,11 @@ $head_manaj_user = "";
             <a href="{{ route('laporanHutangKontainer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang Kontainer</p></a>
         </li>
         @endcan
+        @can('laporan_hpp')
+        <li class="nav-item">
+            <a href="{{ route('laporanHPP') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Harga Pokok Penjualan</p></a>
+        </li>
+        @endcan
     </ul>
 </li>
 @endif

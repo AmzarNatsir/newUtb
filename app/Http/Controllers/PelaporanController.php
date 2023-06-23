@@ -989,4 +989,64 @@ class PelaporanController extends Controller
         ])->setPaper('A4', "Potrait");
         return $pdf->stream();
     }
+
+    //laporan hpp
+    public function laporan_hpp()
+    {
+        $data = [
+            'allCustomer' => CustomerModel::all(),
+            'allProduk' => ProductModel::all()
+        ];
+        return view('pelaporan.hpp.index', $data);
+    }
+
+    public function laporan_hpp_filter(Request $request)
+    {
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+        $result = \DB::table('jual_head')
+                        ->leftjoin('jual_detail', 'jual_detail.head_id', '=', 'jual_head.id')
+                        ->leftjoin('common_product', 'common_product.id', '=', 'jual_detail.produk_id')
+                        ->leftjoin('common_customer', 'common_customer.id', '=', 'jual_head.customer_id')
+                        ->whereDate('jual_head.tgl_transaksi', '>=', $tgl_awal)
+                        ->whereDate('jual_head.tgl_transaksi', '<=', $tgl_akhir)
+                        ->whereNull('jual_head.deleted_at')
+                        ->whereNull('jual_head.jenis_jual')
+                        ->orderBy('jual_head.tgl_transaksi', 'Asc')
+                        ->selectRaw('jual_head.tgl_transaksi, common_product.nama_produk, jual_detail.qty, jual_detail.harga, jual_detail.harga, jual_detail.sub_total, jual_detail.sub_total_net, jual_detail.diskitem_persen, jual_detail.diskitem_rupiah, jual_detail.harga_beli')
+                        ->get();
+        $nom=1;
+        $total_laba = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            $laba = ($list->sub_total_net - ($list->harga_beli * $list->qty));
+            $html .= "<tr>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_transaksi), 'd-m-Y')."</td>
+            <td>".$list->nama_produk."</td>
+            <td style='text-align: center;'><b>".$list->qty."</b></td>
+            <td style='text-align: right;'><b>".number_format($list->harga, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($list->sub_total, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($list->diskitem_rupiah, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($list->sub_total_net, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($list->harga_beli, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($list->harga_beli * $list->qty, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($laba, 0)."</b></td>
+            </tr>";
+            $nom++;
+            $total_laba += $laba;
+        }
+        $html .= "<tr>
+            <td colspan='10' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total_laba, 0)."</b></td>
+        ";
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode
+            ])
+            ->withCallback($request->input('callback'));
+
+    }
 }
