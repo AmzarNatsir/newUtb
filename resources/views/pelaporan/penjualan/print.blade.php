@@ -66,17 +66,15 @@
     @endphp
     @foreach($list_data as $list)
     @php 
-    if($list->bayar_via==1)
-    {
-        $ket_via = $list->get_via->penerimaan;
-    } 
     if($list->bayar_via==2)
     {
         $total_terbayar_invoice = $list->get_piut_terbayar($list->id);
         $outs_invoice = $list->total_invoice_net - $total_terbayar_invoice;
+        $ket_via = "";
     } else {
         $total_terbayar_invoice = $list->total_invoice_net;
         $outs_invoice = 0;
+        $ket_via = $list->get_via->penerimaan;
     }
     @endphp
     @if($check_view_detail=='true')
