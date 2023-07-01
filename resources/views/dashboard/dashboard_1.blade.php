@@ -48,8 +48,7 @@
 </style>
 <figure class="highcharts-figure">
     <div id="container_best_selling"></div>
-</figure>   
-{{ dd($top_ten_name) }} 
+</figure>
 <script>
     var lastColor;
     function getRandColor(same, darkness) {
