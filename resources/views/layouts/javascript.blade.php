@@ -50,7 +50,9 @@
             "info": true,
             "autoWidth": false,
             "responsive": true,
+            "processing": true,
             "language" : { processing:  '<i class="fa fa-sync fa-spin fa-2x fa-fw"></i><span>  Loading Data...</span>' } ,
+            // "serverSide": true,
         });
         $(".select2").select2();
         $('.select2bs4').select2({
