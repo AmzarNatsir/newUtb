@@ -142,10 +142,6 @@ class PelaporanController extends Controller
         foreach($result as $list)
         {
             $cara_bayar = ($list->bayar_via==1) ? "Tunai" : "Kredit";
-            if($list->bayar_via==1)
-            {
-                $ket_via = $list->get_via->penerimaan;
-            } 
             $total_terbayar_invoice = \DB::table('piutang')
                                 ->where('piutang.jual_id', $list->id)
                                 ->whereNull('piutang.deleted_at')
@@ -160,9 +156,11 @@ class PelaporanController extends Controller
                         ->selectRaw('sum(piutang.nominal) as t_nominal')
                         ->pluck('t_nominal')->first();
                 $outs_invoice = $list->total_invoice_net - $total_terbayar_invoice;
+                $ket_via = "";
             } else {
                 $total_terbayar_invoice = $list->total_invoice_net;
                 $outs_invoice = 0;
+                $ket_via = $list->get_via->penerimaan;
             }
 
 
