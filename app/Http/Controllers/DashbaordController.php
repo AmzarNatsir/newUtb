@@ -32,7 +32,7 @@ class DashbaordController extends Controller
                     ->join('common_unit', 'common_unit.id', '=', 'common_product.unit_id')
                     ->join('common_merk', 'common_merk.id', '=', 'common_product.merk_id')
                     ->whereMonth('jual_head.tgl_transaksi', $bulan)
-                    ->whereYear('jual_head.tgl_transaksi',$tahun)
+                    ->whereYear('jual_head.tgl_transaksi', $tahun)
                     ->whereNull('jual_head.jenis_jual')
                     ->where('jual_head.status_approval', 1)
                     ->groupBy('jual_detail.produk_id')
@@ -46,7 +46,10 @@ class DashbaordController extends Controller
                 $top_ten_name[] = $list->nama_produk;
                 $top_ten_value[] = $list->total;
             }
-        } 
+        } else {
+            $top_ten_name[] = "";
+            $top_ten_value[] = "";
+        }
         $data = [
             'top_ten_name' => $top_ten_name,
             'top_ten_value' => $top_ten_value,
