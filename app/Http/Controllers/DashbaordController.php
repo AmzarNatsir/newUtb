@@ -36,6 +36,7 @@ class DashbaordController extends Controller
                     ->whereNull('jual_head.jenis_jual')
                     ->where('jual_head.status_approval', 1)
                     ->groupBy('jual_detail.produk_id')
+                    ->groupBy('common_product.kode')
                     ->orderByDesc('total')
                     ->limit(10)
                     ->get();
