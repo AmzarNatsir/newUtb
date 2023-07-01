@@ -41,15 +41,6 @@
                                     <td colspan="2"><label for="checkDashboard">DASHBOARD</label></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 5%;"><div class="form-group clearfix">
-                                            <div class="icheck-success d-inline">
-                                                <input type="checkbox" id="checkSummary" name="checkMenu[1]" value="summary" {{ in_array('summary', $rolePermissions) ? 'checked' : '' }}>
-                                                <label for="checkSummary"></label>
-                                            </div>
-                                        </div></td>
-                                    <td colspan="2"><label for="checkSummary">SUMMARY</label></td>
-                                </tr>
-                                <tr>
                                     <td style="width: 5%;"></td>
                                     <td colspan="2"><label for="checkPelaporan">PELAPORAN</label></td>
                                 </tr>

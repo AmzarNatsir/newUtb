@@ -157,12 +157,39 @@
         <div class="row">
         <!-- /.col -->
             <div class="col-md-12">
-                <div class="card card-info">
+                <div class="card card-success">
                     <div class="card-header">
                         <h5 class="card-title">Grafik Pembelian</h5>
                     </div>
-                    <div class="card-body">
-                        <div class="row"></div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card-header" style="margin-top: 20px;">
+                                    <h3 class="card-title"><i class="fa fa-search"></i> Filter Data</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="inpTahun_3" class="col-sm-12 col-form-label">Periode</label>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" name="inpTahun_3" id="inpTahun_3" value="{{ date('Y') }}" maxlength="4">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-success" name="tbl-filter_3" id="tbl-filter_3" onclick="goFilterPembelian()"><i class="fa fa-search"></i> Filter</button>
+                                                <button class="btn btn-danger btn-sm" type="button" id="loaderDiv" style="display: none">
+                                                    <i class="fa fa-asterisk fa-spin text-info"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div id="dash_3"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -231,12 +258,23 @@
         let tahun = d.getFullYear();
         $("#dash_1").load(route('dashboarTopTen', [bulan, tahun]));
         $("#dash_2").load(route('dashboarPenjualan', tahun));
+        $("#dash_3").load(route('dashboarPembelian', tahun));
     });
     var goFilterProdukTerlaris = function()
     {
         let bulan = $("#selBulan_1").val();
         let tahun = $("#inpTahun_1").val();
         $("#dash_1").load(route('dashboarTopTen', [bulan, tahun]));
+    }
+    var goFilterPenjualan = function()
+    {
+        let tahun = $("#inpTahun_2").val();
+        $("#dash_2").load(route('dashboarPenjualan', tahun));
+    }
+    var goFilterPembelian = function()
+    {
+        let tahun = $("#inpTahun_3").val();
+        $("#dash_3").load(route('dashboarPembelian', tahun));
     }
 </script>
 @endsection

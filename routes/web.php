@@ -56,6 +56,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [DashbaordController::class, 'index'])->name('dashboard');
 Route::get('dashboarTopTen/{bulan}/{tahun}', [DashbaordController::class, 'dashboard_produk_terlaris'])->name('dashboarTopTen');
 Route::get('dashboarPenjualan/{tahun}', [DashbaordController::class, 'dashboard_penjualan'])->name('dashboarPenjualan');
+Route::get('dashboarPembelian/{tahun}', [DashbaordController::class, 'dashboard_pembelian'])->name('dashboarPembelian');
 
 //Common Unit
 Route::get('satuan', [UnitController::class, 'index'])->name("satuan");

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Helpers\Helper;
 use App\Models\JualHeadModel;
+use App\Models\ReceiveHeadModel;
 
 class DashbaordController extends Controller
 {
@@ -81,6 +82,31 @@ class DashbaordController extends Controller
             'periode' => $tahun,
         ];
         return view('dashboard.dashboard_2', $data);
+    }
+
+    public function dashboard_pembelian($tahun=null)
+    {
+        for($i=1; $i <= 12; $i++)
+        {
+            $bln = sprintf('%02s', $i);
+            $query_res = ReceiveHeadModel::whereMonth('tgl_tiba', $bln)
+                                        ->whereYear('tgl_tiba', $tahun)
+                                        ->whereNull('deleted_at')
+                                        ->sum('total_receive_net');
+
+            if(empty($query_res))
+            {
+                $nominal = 0;
+            } else {
+                $nominal = $query_res;
+            }
+            $data_pembelian[] = $nominal;
+        }
+        $data = [
+            'data_pembelian' => $data_pembelian,
+            'periode' => $tahun,
+        ];
+        return view('dashboard.dashboard_3', $data);
     }
     
     public function list_bulan()

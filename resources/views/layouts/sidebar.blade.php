@@ -96,16 +96,6 @@ $head_manaj_user = "";
     <a href="{{ route('dashboard') }}" class="nav-link"><i class="nav-icon fas fa-chart-pie"></i><p>Dashboard</p></a>
 </li>
 @endcan
-@can('summary')
-<li class="nav-item">
-    <a href="#" class="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i><p>Summary<i class="right fas fa-angle-left"></i></p></a>
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Best Seliing</p></a>
-        </li>
-    </ul>
-</li>
-@endcan
 @if($head_pelaporan=='y')
 <li class="nav-item">
     <a href="#" class="nav-link"><i class="nav-icon fas fa-copy"></i><p>Pelaporan<i class="right fas fa-angle-left"></i></p></a>

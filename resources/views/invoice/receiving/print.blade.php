@@ -96,7 +96,7 @@
             <td style='text-align: center'>{{ $det->qty }}</td>
             <td style='text-align: right'>{{ number_format($det->harga, 0) }}</td>
             <td style='text-align: right'>{{ number_format($det->sub_total, 0) }}</td>
-            <td style='text-align: right'>{{ (!empty($det->diskitem_persen)) ? $det->diskitem_persen.' %' : "" }}</td>
+            <td style='text-align: right'>{{ number_format($det->diskitem_rupiah, 0) }}</td>
             <td style='text-align: right'>{{ number_format($det->sub_total_net, 0) }}</td>
         </tr>
         @php
