@@ -23,6 +23,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ViaController;
 use App\Models\MerkModel;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use Symfony\Component\Finder\Iterator\CustomFilterIterator;
 
 /*
@@ -53,6 +54,9 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [DashbaordController::class, 'index'])->name('dashboard');
+Route::get('dashboarTopTen/{bulan}/{tahun}', [DashbaordController::class, 'dashboard_produk_terlaris'])->name('dashboarTopTen');
+Route::get('dashboarPenjualan/{tahun}', [DashbaordController::class, 'dashboard_penjualan'])->name('dashboarPenjualan');
+
 //Common Unit
 Route::get('satuan', [UnitController::class, 'index'])->name("satuan");
 Route::get('unitAdd', [UnitController::class, 'add'])->name("unitAdd");
@@ -146,7 +150,7 @@ Route::post('penjualanStore', [PenjualanController::class, 'store'])->name("penj
 Route::get('pemberianSampel', [ProductController::class, 'pemberian_sampel'])->name("pemberianSampel");
 Route::post('pemberianSampelStore', [ProductController::class, 'pemberian_sampel_store'])->name("pemberianSampelStore");
 
-
+Route::post('searchItemPO', [ProductController::class, 'searchItemPO'])->name('searchItemPO');
 Route::post('searchItem', [ProductController::class, 'searchItemJual'])->name('searchItem');
 Route::post('searchItemPenjualan', [ProductController::class, 'searchItemJual'])->name('searchItemPenjualan');
 //Hutang

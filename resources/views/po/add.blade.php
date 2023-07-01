@@ -165,7 +165,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "POST",
-                    url: "{{ url('searchItem') }}",
+                    url: "{{ url('searchItemPO') }}",
                     dataType: "json",
                     data: {
                         search: request.term

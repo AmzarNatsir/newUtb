@@ -254,6 +254,28 @@ class ProductController extends Controller
 
     }
 
+    public function searchItemPO(Request $request)
+    {
+        $keyword = $request->search;
+        $result = ProductModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->get();
+        $response = array();
+        foreach($result as $item){
+            $response[] = array(
+                "value"=>$item->id, 
+                "label"=> "[".$item->kode." | ".$item->nama_produk."]",
+                "kode" => $item->kode,
+                "nama_produk" => $item->nama_produk,
+                "merk" => $item->get_merk->merk,
+                "kemasan" => $item->kemasan,
+                "satuan"=>$item->get_unit->unit
+            );
+        }
+        return response()
+            ->json($response)
+            ->withCallback($request->input('callback'));
+
+    }
+
     public function searchItemJual(Request $request)
     {
         $keyword = $request->search;
@@ -342,6 +364,7 @@ class ProductController extends Controller
             ->withCallback($request->input('callback'));
 
     }
+
     public function kartu_stok_filter(Request $request)
     {
         $id_stok = $request->id_stok;
