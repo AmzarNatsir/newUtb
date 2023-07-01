@@ -54,7 +54,7 @@
                                             </li>
                                             <li class="nav-item">
                                                 <a href="#" class="nav-link">
-                                                Total Piutang <span class="float-right badge bg-danger t_piutang">Rp. 0</span>
+                                                Total Penjualan <span class="float-right badge bg-danger t_piutang">Rp. 0</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item">

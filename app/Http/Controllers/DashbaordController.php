@@ -26,7 +26,7 @@ class DashbaordController extends Controller
         $top_ten_name = array();
         $top_ten_value = array();
         $produk_terlaris_bln_ini = \DB::table('jual_head')
-                    ->selectRaw('common_product.kode, common_product.nama_produk, common_product.kemasan, common_unit.unit, common_merk.merk, SUM(jual_detail.qty) as total')
+                    ->selectRaw('common_product.nama_produk, SUM(jual_detail.qty) as total')
                     ->join('jual_detail', 'jual_detail.head_id', '=', 'jual_head.id')
                     ->join('common_product', 'common_product.id', '=', 'jual_detail.produk_id')
                     ->join('common_unit', 'common_unit.id', '=', 'common_product.unit_id')
