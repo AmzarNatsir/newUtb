@@ -43,7 +43,7 @@
     $(document).ready(function() 
     {
         $('.datatable').DataTable({
-            "dom": 'lrtip',
+            "dom": 'Blfrtip',
             "paging": true,
             "lengthChange": true,
             "searching": true,
