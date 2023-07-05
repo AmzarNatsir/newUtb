@@ -1014,11 +1014,18 @@ class PelaporanController extends Controller
                         ->selectRaw('jual_head.tgl_transaksi, common_product.nama_produk, jual_detail.qty, jual_detail.harga, jual_detail.harga, jual_detail.sub_total, jual_detail.sub_total_net, jual_detail.diskitem_persen, jual_detail.diskitem_rupiah, jual_detail.harga_beli')
                         ->get();
         $nom=1;
+        $total_harga_jual = 0;
+        $total_sub = 0;
+        $total_diskon = 0;
+        $total_sub_net = 0;
+        $total_harga_beli = 0;
+        $total_hpp = 0;
         $total_laba = 0;
         $html="";
         foreach($result as $list)
         {
-            $laba = ($list->sub_total_net - ($list->harga_beli * $list->qty));
+            $hpp = $list->harga_beli * $list->qty;
+            $laba = $list->sub_total_net - $hpp;
             $html .= "<tr>
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_transaksi), 'd-m-Y')."</td>
@@ -1029,14 +1036,26 @@ class PelaporanController extends Controller
             <td style='text-align: right;'><b>".number_format($list->diskitem_rupiah, 0)."</b></td>
             <td style='text-align: right;'><b>".number_format($list->sub_total_net, 0)."</b></td>
             <td style='text-align: right;'><b>".number_format($list->harga_beli, 0)."</b></td>
-            <td style='text-align: right;'><b>".number_format($list->harga_beli * $list->qty, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($hpp, 0)."</b></td>
             <td style='text-align: right;'><b>".number_format($laba, 0)."</b></td>
             </tr>";
             $nom++;
+            $total_harga_jual+=$list->harga;
+            $total_sub+=$list->sub_total;
+            $total_diskon+=$list->diskitem_rupiah;
+            $total_sub_net+=$list->sub_total_net;
+            $total_harga_beli+=$list->harga_beli;
+            $total_hpp+=$hpp;
             $total_laba += $laba;
         }
         $html .= "<tr>
-            <td colspan='10' style='text-align: right;'><b>TOTAL</b></td>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total_harga_jual, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_sub, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_diskon, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_sub_net, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_harga_beli, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_hpp, 0)."</b></td>
             <td style='text-align: right;'><b>".number_format($total_laba, 0)."</b></td>
         ";
         return response()

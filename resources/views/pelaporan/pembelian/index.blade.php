@@ -3,6 +3,19 @@
 @section('breadcrumb', 'Laporan Pembelian')
 @section('content')
 @routes
+<style>
+    .spinner-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 2;
+    }
+</style>
 <section class="content">
     <!-- Default box -->
     <div class="card card-danger">
@@ -63,6 +76,10 @@
             <div class="col-md-12">
                 <div class="card card-warning">
                     <div class="card-body table-responsive">
+                        <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+                            <div class="spinner-border text-primary" role="status">
+                            </div>
+                        </div>
                         <table class="table table-bordered table-hover" style="font-size: 10pt; width: 100%;">
                             <thead>
                             <tr>
@@ -104,7 +121,9 @@
 </div>
 <!-- <script type="text/javascript" src="{{ asset('assets/js/laporan/laporanPembelian.js') }}"></script> -->
 <script>
-    $(function(){});
+    $(function(){ 
+        $('#spinner-div').hide();
+    });
     var goFilter = function()
     {
         var arr_tgl_1 = $("#searchTglTrans_1").val().split('/');
@@ -130,13 +149,16 @@
                 beforeSend: function()
                 {
                     $(".viewList").empty();
-                    $("#loaderDiv").show();
+                    $('#spinner-div').show();
                 },
                 success: function(response)
                 {
                     $(".viewList").html(response.all_result);
                     $(".lbl_periode").html(response.periode);
-                    $("#loaderDiv").hide();
+                },
+                complete: function()
+                {
+                    $('#spinner-div').hide();
                 }
             });
     }
@@ -157,7 +179,10 @@
 
     var goDetail = function(el)
     {
-        $("#frm_modal").load(route('laporanPembelianDetail', $(el).val()));
+        $('#spinner-div').show();
+        $("#frm_modal").load(route('laporanPembelianDetail', $(el).val()), function() {
+            $('#spinner-div').hide();
+        });
     };
 </script>
 @endsection
