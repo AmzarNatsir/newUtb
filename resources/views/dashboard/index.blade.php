@@ -7,6 +7,19 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<style>
+    #spinner-div {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 2;
+}
+</style>
 <section class="content">
     <div class="container-fluid">
         <!-- Info boxes -->
@@ -105,6 +118,10 @@
                                 </div>
                             </div>
                             <div class="col-md-9">
+                                <div id="spinner-div" class="pt-5">
+                                    <div class="spinner-border text-primary" role="status">
+                                    </div>
+                                </div>
                                 <div id="dash_1"></div>
                             </div>
                         </div>
@@ -264,7 +281,9 @@
     {
         let bulan = $("#selBulan_1").val();
         let tahun = $("#inpTahun_1").val();
+        $('#spinner-div').show();
         $("#dash_1").load(route('dashboarTopTen', [bulan, tahun]));
+        $('#spinner-div').hide();
     }
     var goFilterPenjualan = function()
     {
