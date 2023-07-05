@@ -3,6 +3,19 @@
 @section('breadcrumb', 'Laporan Stok')
 @section('content')
 @routes
+<style>
+    .spinner-div {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 2;
+    }
+</style>
 <section class="content">
     <!-- Default box -->
     <div class="card card-danger">
@@ -53,6 +66,10 @@
             <div class="col-md-12">
                 <div class="card card-warning">
                     <div class="card-body">
+                        <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+                            <div class="spinner-border text-primary" role="status">
+                            </div>
+                        </div>
                         <table class="table table-bordered table-hover table-responsive datatable" style="font-size: 12pt; width: 100%;" id="table_stok">
                             <thead>
                             <tr>
@@ -91,7 +108,9 @@
 </div>
 <!-- <script type="text/javascript" src="{{ asset('assets/js/laporan/laporanStok.js') }}"></script> -->
 <script>
-    $(function(){});
+    $(function(){
+        $('#spinner-div').hide();
+    });
     var goFilter = function()
     {
         var arr_tgl_1 = $("#searchTglTrans_1").val().split('/');
@@ -117,7 +136,8 @@
             {
                 $(".viewList").empty();
                 $(".viewListSummary").empty();
-                $("#loaderDiv").show();
+                // $("#loaderDiv").show();
+                $('#spinner-div').show();
             },
             success: function(response)
             {
@@ -125,7 +145,11 @@
                 $(".viewListSummary").html(response.result_summary);
                 $(".lbl_periode").html(response.periode);
                 $(".lbl_periode_summary").html(response.periode);
-                $("#loaderDiv").hide();
+                // $("#loaderDiv").hide();
+            },
+            complete: function()
+            {
+                $('#spinner-div').hide();
             }
         });
     }
