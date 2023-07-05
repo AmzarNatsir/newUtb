@@ -16,7 +16,8 @@ class DashbaordController extends Controller
     public function index()
     {
         $data = [
-            'list_bulan' => $this->list_bulan()
+            'list_bulan' => $this->list_bulan(),
+            'list_tahun' => $this->list_tahun()
         ];
         return view('dashboard.index', $data);
     }
@@ -158,5 +159,16 @@ class DashbaordController extends Controller
             }
         }
         return $nama_bulan;
+    }
+
+    public function list_tahun()
+    {
+        $thn_start = 2020;
+        $thn_end = date("Y");
+        for($i = $thn_start; $i <= $thn_end; $i++)
+        {
+            $thn[] = $i;
+        }
+        return $thn;
     }
 }

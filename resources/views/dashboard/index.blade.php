@@ -106,7 +106,15 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="inpTahun_1" id="inpTahun_1" value="{{ date('Y') }}" maxlength="4">
+                                            <select class="form-control"  name="inpTahun_1" id="inpTahun_1">
+                                                @foreach($list_tahun as $thn)
+                                                    @if($thn==date("Y"))
+                                                    <option value="{{ $thn }}" selected>{{ $thn }}</option>
+                                                    @else
+                                                    <option value="{{ $thn }}">{{ $thn }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -149,7 +157,15 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="inpTahun_2" id="inpTahun_2" value="{{ date('Y') }}" maxlength="4">
+                                            <select class="form-control"  name="inpTahun_2" id="inpTahun_2">
+                                                @foreach($list_tahun as $thn)
+                                                    @if($thn==date("Y"))
+                                                    <option value="{{ $thn }}" selected>{{ $thn }}</option>
+                                                    @else
+                                                    <option value="{{ $thn }}">{{ $thn }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-sm-8">
                                             <div class="form-group">
@@ -194,7 +210,15 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" name="inpTahun_3" id="inpTahun_3" value="{{ date('Y') }}" maxlength="4">
+                                            <select class="form-control"  name="inpTahun_3" id="inpTahun_3">
+                                                @foreach($list_tahun as $thn)
+                                                    @if($thn==date("Y"))
+                                                    <option value="{{ $thn }}" selected>{{ $thn }}</option>
+                                                    @else
+                                                    <option value="{{ $thn }}">{{ $thn }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-sm-8">
                                             <div class="form-group">
@@ -208,6 +232,10 @@
                                 </div>
                             </div>
                             <div class="col-md-9">
+                                <div id="spinner-div-3" class="pt-5 justify-content-center spinner-div">
+                                    <div class="spinner-border text-primary" role="status">
+                                    </div>
+                                </div>
                                 <div id="dash_3"></div>
                             </div>
                         </div>
@@ -276,6 +304,7 @@
     $(function(){
         $('#spinner-div-1').show();
         $('#spinner-div-2').show();
+        $('#spinner-div-3').show();
         // $(document)
         //     .ajaxStart(function () {
         //     $loading_1.show();
@@ -294,7 +323,9 @@
         $("#dash_2").load(route('dashboarPenjualan', tahun), function() {
             $('#spinner-div-2').hide();
         });
-        $("#dash_3").load(route('dashboarPembelian', tahun));
+        $("#dash_3").load(route('dashboarPembelian', tahun), function() {
+            $('#spinner-div-3').hide();
+        });
     });
     var goFilterProdukTerlaris = function()
     {
@@ -315,8 +346,11 @@
     }
     var goFilterPembelian = function()
     {
+        $('#spinner-div-3').show();
         let tahun = $("#inpTahun_3").val();
-        $("#dash_3").load(route('dashboarPembelian', tahun));
+        $("#dash_3").load(route('dashboarPembelian', tahun), function () {
+            $('#spinner-div-3').hide();
+        });
     }
 </script>
 @endsection
