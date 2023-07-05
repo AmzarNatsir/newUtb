@@ -841,13 +841,20 @@ class PelaporanController extends Controller
         foreach($result as $list)
         {
             $ket = ($list->metode_bayar==1) ? 'Tunai' : 'Transfer';
+            $tgl_jto = (!empty($list->get_penjualan->tgl_jatuh_tempo)) ? date_format(date_create($list->get_penjualan->tgl_jatuh_tempo), 'd-m-Y') : "";
             $html .= "<tr>
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".$list->no_bayar."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_bayar), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$list->get_penjualan->no_invoice."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->get_penjualan->tgl_transaksi), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$tgl_jto."</td>
             <td>".$list->get_customer->nama_customer."</td>
             <td style='text-align: right;'><b>".number_format($list->nominal, 0)."</b></td>
             <td style='text-align: center;'>".$ket."</td>
+            <td style='text-align: center;'>".$list->get_via->penerimaan."</td>
+            <td style='text-align: center;'>0</td>
+            <td style='text-align: center;'></td>
             </tr>";
             $nom++;
             $total+=$list->nominal;
