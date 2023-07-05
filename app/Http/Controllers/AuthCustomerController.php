@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,19 +50,32 @@ class AuthCustomerController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-
         $user = User::create([
             'name' => $request->get('nama_customer'),
             'email' => $request->get('email'),
             'password' => Hash::make($def_pass),
+            'isUser' => 1, //Customer
         ]);
-        // $token = JWTAuth::fromUser($user);
+        $customer = CustomerModel::create([
+            'kode' => $this->create_no_customer(),
+            'nama_customer' => $request->get('nama_customer'),
+            'alamat' => $request->get('alamat'),
+            'kota' => $request->get('kota'),
+            'no_telepon' => $request->get('no_telepon'),
+            'level' => $request->get('level'),
+            'no_identitas' => $request->get('no_identitas'),
+            'lat' => $request->get('lat'),
+            'lng' => $request->get('lng'),
+            'file_identitas' => $request->get('file_identitas'),
+            'file_lokasi' => $request->get('file_lokasi'),
+            'user_id' => $user->id,
+        ]);
 
         return response()->json([
-            'message' => 'User successfully registered',
+            'message' => 'Customer successfully registered',
             'user' => $user,
-            // 'token' => $token,
-            'pass' => $def_pass
+            'customer' => $customer,
+            'pass' => $def_pass,
         ], 200);
     }
 
@@ -79,5 +93,20 @@ class AuthCustomerController extends Controller
     public function guard()
     {
         return Auth::guard();
+    }
+
+    public function create_no_customer()
+    {
+        $no_urut = 1;
+        $kd="UTB-";
+        
+        $result = CustomerModel::withTrashed()->orderby('id', 'desc')->first();
+        if(empty($result->kode)) {
+            $no_baru = $kd.sprintf('%04s', $no_urut); 
+        } else {
+            $no_trans_baru = (int)substr($result->kode, 4, 4) + 1;
+            $no_baru = $kd.sprintf('%04s', $no_trans_baru);
+        }
+        return $no_baru;
     }
 }
