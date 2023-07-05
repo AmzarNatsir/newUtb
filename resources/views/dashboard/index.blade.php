@@ -9,16 +9,16 @@
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <style>
     #spinner-div {
-  position: fixed;
-  display: none;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  z-index: 2;
-}
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 2;
+    }
 </style>
 <section class="content">
     <div class="container-fluid">
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <div id="spinner-div" class="pt-5">
+                                <div id="spinner-div" class="pt-5 justify-content-center">
                                     <div class="spinner-border text-primary" role="status">
                                     </div>
                                 </div>
@@ -270,6 +270,14 @@
 <!-- /.content -->
 <script>
     $(function(){
+        var $loading = $('#spinner-div').hide();
+        $(document)
+            .ajaxStart(function () {
+            $loading.show();
+        })
+            .ajaxStop(function () {
+            $loading.hide();
+        });
         const d = new Date();
         let bulan = d.getMonth()+1;
         let tahun = d.getFullYear();
@@ -281,9 +289,21 @@
     {
         let bulan = $("#selBulan_1").val();
         let tahun = $("#inpTahun_1").val();
-        $('#spinner-div').show();
+        // $('#spinner-div').show();
+        // $.ajax({
+        //     url: route('dashboarTopTen', [bulan, tahun]),
+        //     type: 'GET',
+        //     dataType: 'json',
+        //     success: function(res) {
+        //         console.log(res);
+        //     },
+        //     complete: function()
+        //     {
+        //         $('#spinner-div').hide();
+        //     }
+        // });
         $("#dash_1").load(route('dashboarTopTen', [bulan, tahun]));
-        $('#spinner-div').hide();
+        // $('#spinner-div').hide();
     }
     var goFilterPenjualan = function()
     {

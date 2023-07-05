@@ -59,6 +59,7 @@ class DashbaordController extends Controller
         ];
 
         return view('dashboard.dashboard_1', $data);
+        // return response()->json($data);
     }
 
     public function dashboard_penjualan($tahun=null)
