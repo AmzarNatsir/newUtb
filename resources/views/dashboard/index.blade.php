@@ -8,7 +8,7 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <style>
-    #spinner-div {
+    .spinner-div {
     position: absolute;
     display: none;
     width: 100%;
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <div id="spinner-div" class="pt-5 justify-content-center">
+                                <div id="spinner-div-1" class="pt-5 justify-content-center spinner-div">
                                     <div class="spinner-border text-primary" role="status">
                                     </div>
                                 </div>
@@ -163,6 +163,10 @@
                                 </div>
                             </div>
                             <div class="col-md-9">
+                                <div id="spinner-div-2" class="pt-5 justify-content-center spinner-div">
+                                    <div class="spinner-border text-primary" role="status">
+                                    </div>
+                                </div>
                                 <div id="dash_2"></div>
                             </div>
                         </div>
@@ -270,45 +274,44 @@
 <!-- /.content -->
 <script>
     $(function(){
-        var $loading = $('#spinner-div').hide();
-        $(document)
-            .ajaxStart(function () {
-            $loading.show();
-        })
-            .ajaxStop(function () {
-            $loading.hide();
-        });
+        $('#spinner-div-1').show();
+        $('#spinner-div-2').show();
+        // $(document)
+        //     .ajaxStart(function () {
+        //     $loading_1.show();
+        //     $loading_2.show();
+        // })
+        //     .ajaxStop(function () {
+        //     $loading_1.hide();
+        //     $loading_2.hide();
+        // });
         const d = new Date();
         let bulan = d.getMonth()+1;
         let tahun = d.getFullYear();
-        $("#dash_1").load(route('dashboarTopTen', [bulan, tahun]));
-        $("#dash_2").load(route('dashboarPenjualan', tahun));
+        $("#dash_1").load(route('dashboarTopTen', [bulan, tahun]), function() {
+            $('#spinner-div-1').hide();
+        });
+        $("#dash_2").load(route('dashboarPenjualan', tahun), function() {
+            $('#spinner-div-2').hide();
+        });
         $("#dash_3").load(route('dashboarPembelian', tahun));
     });
     var goFilterProdukTerlaris = function()
     {
+        $('#spinner-div-1').show();
         let bulan = $("#selBulan_1").val();
         let tahun = $("#inpTahun_1").val();
-        // $('#spinner-div').show();
-        // $.ajax({
-        //     url: route('dashboarTopTen', [bulan, tahun]),
-        //     type: 'GET',
-        //     dataType: 'json',
-        //     success: function(res) {
-        //         console.log(res);
-        //     },
-        //     complete: function()
-        //     {
-        //         $('#spinner-div').hide();
-        //     }
-        // });
-        $("#dash_1").load(route('dashboarTopTen', [bulan, tahun]));
-        // $('#spinner-div').hide();
+        $("#dash_1").load(route('dashboarTopTen', [bulan, tahun]), function() {
+            $('#spinner-div-1').hide();
+        });
     }
     var goFilterPenjualan = function()
     {
+        $('#spinner-div-2').show();
         let tahun = $("#inpTahun_2").val();
-        $("#dash_2").load(route('dashboarPenjualan', tahun));
+        $("#dash_2").load(route('dashboarPenjualan', tahun), function() {
+            $('#spinner-div-2').hide();
+        });
     }
     var goFilterPembelian = function()
     {
