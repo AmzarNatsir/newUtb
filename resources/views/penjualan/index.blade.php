@@ -3,6 +3,19 @@
 @section('breadcrumb', 'Penjualan')
 @section('content')
 @routes
+<style>
+    .spinner-div {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+    }
+</style>
 <!-- content -->
 <section class="content">
     <!-- Default box -->
@@ -21,6 +34,10 @@
         <form action="{{ route('penjualanStore') }}" method="post" onsubmit="return konfirm()">
         {{csrf_field()}}
             <div class="row">
+                <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+                    <div class="spinner-border text-primary" role="status">
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="card card-success">
                         <div class="card-header">
@@ -181,6 +198,7 @@
 <script>
     $(function()
     {
+        $('#spinner-div').hide();
         window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
         hapus_teks();
         var total_net = $("#inputTotalNet").val();
@@ -201,8 +219,16 @@
                     data: {
                         search: request.term
                     },
+                    beforeSend: function()
+                    {
+                        $('#spinner-div').show();
+                    },
                     success: function( data ) {
                         response(data);
+                    },
+                    complete: function()
+                    {
+                        $('#spinner-div').hide();
                     }
 
                 });

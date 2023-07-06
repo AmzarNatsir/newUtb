@@ -96,8 +96,8 @@
                                 <th style="width: 8%; text-align: center;">Tgl.JTO</th>
                                 <th>Customer</th>
                                 <th style="width: 10%; text-align: center;">Nominal</th>
-                                <th style="width: 10%; text-align: center;">Metode Bayar</th>
-                                <th style="width: 10%; text-align: center;">Bayar Via</th>
+                                <th style="width: 8%; text-align: center;">Metode Bayar</th>
+                                <th style="width: 8%; text-align: center;">Bayar Via</th>
                                 <th style="width: 10%; text-align: center;">Outstanding</th>
                                 <th style="width: 5%;"></th>
                             </tr>

@@ -28,7 +28,7 @@ class PiutangModel extends Model
 
     public function get_penjualan()
     {
-        return $this->hasMany(JualHeadModel::class, 'jual_id', 'id');
+        return $this->belongsTo(JualHeadModel::class, 'jual_id', 'id');
     }
 
     public function get_customer()

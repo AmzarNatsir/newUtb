@@ -840,6 +840,13 @@ class PelaporanController extends Controller
         $html="";
         foreach($result as $list)
         {
+            $total_terbayar_invoice = \DB::table('piutang')
+                                ->where('piutang.jual_id', $list->jual_id)
+                                ->whereNull('piutang.deleted_at')
+                                ->selectRaw('sum(piutang.nominal) as t_nominal')
+                                ->pluck('t_nominal')->first();
+
+            $outs = $list->get_penjualan->total_invoice_net - $total_terbayar_invoice;
             $ket = ($list->metode_bayar==1) ? 'Tunai' : 'Transfer';
             $tgl_jto = (!empty($list->get_penjualan->tgl_jatuh_tempo)) ? date_format(date_create($list->get_penjualan->tgl_jatuh_tempo), 'd-m-Y') : "";
             $html .= "<tr>
@@ -853,8 +860,8 @@ class PelaporanController extends Controller
             <td style='text-align: right;'><b>".number_format($list->nominal, 0)."</b></td>
             <td style='text-align: center;'>".$ket."</td>
             <td style='text-align: center;'>".$list->get_via->penerimaan."</td>
-            <td style='text-align: center;'>0</td>
-            <td style='text-align: center;'></td>
+            <td style='text-align: right;'><b>".number_format($outs, 0)."</b></td>
+            <td style='text-align: center;'><button type='button' name='print_kwitansi[]' class='btn btn-danger'><i class='fa fa-print'></i></button></td>
             </tr>";
             $nom++;
             $total+=$list->nominal;
