@@ -189,4 +189,12 @@ class PiutangController extends Controller
         return $pdf->stream();
     }
 
+    public function piutang_print($id=null)
+    {
+        $data = PiutangModel::find($id);
+        $pdf = PDF::loadview('piutang.penerimaan.print_bayar', [
+            'main' => $data
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+    }
 }

@@ -98,7 +98,6 @@
                                 <th style="width: 10%; text-align: center;">Nominal</th>
                                 <th style="width: 8%; text-align: center;">Metode Bayar</th>
                                 <th style="width: 8%; text-align: center;">Bayar Via</th>
-                                <th style="width: 10%; text-align: center;">Outstanding</th>
                                 <th style="width: 5%;"></th>
                             </tr>
                             </thead>
@@ -180,6 +179,12 @@
         var tgl_2 = arr_tgl_2[2]+"-"+arr_tgl_2[1]+"-"+arr_tgl_2[0];
         var selCustomer = ($("#sel_customer").val()==null) ? 'null' : $("#sel_customer").val();
         window.open(route('laporanPiutangPrint', [tgl_1, tgl_2, selCustomer]), "_blank");
+    }
+
+    var goPrintBukti = function(el)
+    {
+        var id_data = $(el).val();
+        window.open(route('penerimaanPiutangPrint', id_data), "_blank");
     }
 
 </script>
