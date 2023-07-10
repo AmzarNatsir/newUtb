@@ -216,7 +216,7 @@ class InvoiceController extends Controller
         }
         $html .= "<tr>
             <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
-            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+            <td style='text-align: right;'><b>".number_format($total, 0)."</b></td>
             <td></td>
         ";
         
@@ -228,4 +228,81 @@ class InvoiceController extends Controller
             ])
             ->withCallback($request->input('callback'));
     }
+
+    //invoice pemberian sample
+    public function invoice_pemberian_sample()
+    {
+        $data = [
+            'allCustomer' => CustomerModel::all()
+        ];
+        return view('invoice.pemberian_sample.index', $data);
+    }
+    public function invoice_pemberian_sample_filter(Request $request)
+    {
+        $customer = $request->selCustomer;
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+
+        if($customer==null)
+        {
+            $ket_customer = 'Semua Customer';
+            $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
+                            ->where('jenis_jual', 1)
+                            ->where('status_approval', 1)
+                            ->orderby('tgl_transaksi', 'asc')->get();
+        } else {
+            $ket_customer = CustomerModel::find($customer)->nama_supplier;
+            $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
+                            ->whereDate('tgl_transaksi', '<=', $tgl_akhir)
+                            ->where('jenis_jual', 1)
+                            ->where('status_approval', 1)
+                            ->where('customer_id', $customer)
+                            ->orderby('tgl_transaksi', 'asc')->get();
+        }
+        
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            $tot_produk = $list->get_detail->sum('qty');
+            $html .= "<tr>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->no_invoice."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_invoice), 'd-m-Y')."</td>
+            <td>".$list->get_customer->nama_customer."</td>
+            <td style='text-align: right;'><b>".number_format($tot_produk, 0)."</b></td>
+            <td style='text-align: left;'>".$list->keterangan."</td>
+            <td style='text-align: center;'><button type='button' class='btn btn-success' value=".$list->id." onClick='goPrint(this)'><i class='fa fa-print'></i></button></td>
+            </tr>";
+            $nom++;
+            $total+=$tot_produk;
+        }
+        $html .= "<tr>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, 0)."</b></td>
+            <td></td>
+        ";
+        
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode,
+                'customer' => "Customer : ".$ket_customer
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function invoice_pemberian_sample_print($invoice_id)
+    {
+        $result = JualHeadModel::find($invoice_id);
+        
+        $pdf = PDF::loadview('invoice.pemberian_sample.print', [
+            'dt_head' => $result
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+
+    }
+
 }

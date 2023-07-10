@@ -249,6 +249,7 @@ Route::get('laporanHutangKontainerPrint/{param1}/{param2}/{param3}', [PelaporanC
 //laporan hpp
 Route::get('laporanHPP', [PelaporanController::class, 'laporan_hpp'])->name('laporanHPP');
 Route::post('laporanHPPFilter', [PelaporanController::class, 'laporan_hpp_filter'])->name('laporanHPPFilter');
+
 //Invoice
 //PO
 Route::get('invoicePO', [InvoiceController::class, 'invoice_po'])->name('invoicePO');
@@ -263,6 +264,10 @@ Route::get('invoiceReceivingPrint/{param1}', [InvoiceController::class, 'invoice
 Route::get('invoicePenjualan', [InvoiceController::class, 'invoice_penjualan'])->name('invoicePenjualan');
 Route::post('invoicePenjualanFilter', [InvoiceController::class, 'invoice_penjualan_filter'])->name('invoicePenjualanFilter');
 
+//Pemberian Sample
+Route::get('invoicePemberianSample', [InvoiceController::class, 'invoice_pemberian_sample'])->name('invoicePemberianSample');
+Route::post('invoicePemberianSampleFilter', [InvoiceController::class, 'invoice_pemberian_sample_filter'])->name('invoicePemberianSampleFilter');
+Route::get('printInvoicePemberianSample/{param1}', [InvoiceController::class, 'invoice_pemberian_sample_print'])->name('printInvoicePemberianSample');
 //Persetujuan
 //penjualan
 Route::get('persetujuanPenjualan', [PersetujuanController::class, 'persetujuan_penjualan'])->name('persetujuanPenjualan');

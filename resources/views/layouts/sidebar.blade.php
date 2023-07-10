@@ -251,6 +251,9 @@ $head_manaj_user = "";
             @can('daftar_transaksi_penjualan')
             <a href="{{ route('invoicePenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
             @endcan
+            @can('daftar_transaksi_pemberian_sample')
+            <a href="{{ route('invoicePemberianSample') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pemberian Sample</p></a>
+            @endcan
         </li>
     </ul>
 </li>
