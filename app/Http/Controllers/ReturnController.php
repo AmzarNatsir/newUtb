@@ -90,6 +90,7 @@ class ReturnController extends Controller
             $id_head = $save_head->id;
             //store detail
             $jml_item = count($request->item_id);
+
             foreach(array($request) as $key => $value)
             {
                 for($i=0; $i<$jml_item; $i++)
@@ -99,7 +100,7 @@ class ReturnController extends Controller
                         $newdetail = new ReturnBeliDetailModel();
                         $newdetail->head_id = $id_head;
                         $newdetail->produk_id = $value['item_id'][$i];
-                        $newdetail->qty = $value['item_qty'][$i];
+                        $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
                         $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
                         $newdetail->sub_total = str_replace(",","", $value['item_sub_total'][$i]);
                         $newdetail->save();
@@ -215,7 +216,7 @@ class ReturnController extends Controller
                         $newdetail = new ReturnJualDetailModel();
                         $newdetail->head_id = $id_head;
                         $newdetail->produk_id = $value['item_id'][$i];
-                        $newdetail->qty = $value['item_qty'][$i];
+                        $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
                         $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
                         $newdetail->sub_total = str_replace(",","", $value['item_sub_total'][$i]);
                         $newdetail->save();

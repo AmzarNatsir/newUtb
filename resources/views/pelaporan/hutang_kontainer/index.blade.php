@@ -107,7 +107,7 @@
     $(function(){
         $('.select2bs4_kontainer').select2({
             theme: 'bootstrap4',
-            placeholder: "Select Supplier",
+            placeholder: "Select Container",
             allowClear: true
         });
     });

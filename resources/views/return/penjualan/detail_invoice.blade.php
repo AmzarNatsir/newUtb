@@ -26,7 +26,7 @@
             <td><div class="icheck-primary"><input type="hidden" name="item_id[]" id="item_id[]" value="{{ $list->produk_id }}"><input type="checkbox" value="" name="checkItem[]" id="{{ $list->id }}" onclick="checkItem(this)"><label for="{{ $list->id }}"></label></div><input type="hidden" name="selectItem[]" id="selectItem[]" value="0"></td>
             <td>{{ $list->get_produk->nama_produk }} ({{ $list->get_sub_produk->nama_produk }})</td>
             <td class="text-center">{{ $list->get_produk->kemasan }} {{ $list->get_produk->get_unit->unit }}</td>
-            <td align="center"><input type="hidden" name="temp_qty[]" id="temp_qty[]" value="{{ $list->qty }}"><input type="text" min="1" max="1000" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="{{ $list->qty }}" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)" disabled></td>
+            <td align="center"><input type="hidden" name="temp_qty[]" id="temp_qty[]" value="{{ $list->qty }}"><input type="text" min="1" max="1000" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="{{ $list->qty }}" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)" readonly></td>
             <td class="text-right"><input type="hidden" name="temp_harga_satuan[]" id="temp_harga_satuan[]" value="{{ $list->harga }}"><input type="text" class="form-control form-control-sm angka" id="harga_satuan[]" name="harga_satuan[]" value="{{ $list->harga }}" style="text-align: right" readonly></td>
             <td class="text-right"><input type="hidden" name="temp_item_sub_total[]" id="temp_item_sub_total[]" value="{{ $list->sub_total }}"><input type="text" name="item_sub_total[]" value="{{ $list->sub_total }}" class="form-control form-control-sm text-right angka" readonly></td>
             <td class="text-right"><input type="hidden" name="temp_item_diskon[]" id="temp_item_diskon[]" value="{{ (empty($list->diskitem_persen)) ? 0 : $list->diskitem_persen }}"><input type="text" name="item_diskon[]" value="{{ (empty($list->diskitem_persen)) ? 0 : $list->diskitem_persen }}" class="form-control form-control-sm text-right angka_dec" readonly></td>
@@ -101,11 +101,11 @@
     {
         var currentRow=$(el).closest("tr");
         if($(el).prop('checked')){
-            currentRow.find('td:eq(3) input[name="item_qty[]"]').attr('disabled', false);
+            currentRow.find('td:eq(3) input[name="item_qty[]"]').attr('readonly', false);
             currentRow.find('td:eq(0) input[name="selectItem[]"]').val("1");
             // hitungSubTotal(el);
         } else {
-            currentRow.find('td:eq(3) input[name="item_qty[]"]').attr('disabled', true);
+            currentRow.find('td:eq(3) input[name="item_qty[]"]').attr('readonly', true);
             currentRow.find('td:eq(0) input[name="selectItem[]"]').val("0");
             ResetSubTotal(el);
         }
