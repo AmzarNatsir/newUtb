@@ -52,9 +52,9 @@
                         <td class="text-center">
                             @if(empty($list->status_approval)) 
                                 @if(empty($list->approved) || (empty($list->approved_2)))
-                                <span class='badge bg-info'>Proses Approval</span>
-                                @else 
                                 <span class='badge bg-primary'>Draft</span>
+                                @else 
+                                <span class='badge bg-info'>Proses Approval</span>
                                 @endif
                             @elseif($list->status_approval==1)
                             <span class='badge bg-success'>Approved</span>
