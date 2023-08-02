@@ -1,5 +1,6 @@
 import './bootstrap';
 import './client/app.jsx'
+import '../css/app.css'
 // import ReactDOM from 'react-dom/client';
 // import ClientApp from './client/app.jsx';
 
