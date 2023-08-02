@@ -6,6 +6,17 @@
     {
     -moz-appearance: textfield;
     }
+    .spinner-div {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+    }
 </style>
 <div class="modal-header">
     <h4 class="modal-title">Add Purchase Order</h4>
@@ -16,6 +27,10 @@
 {{csrf_field()}}
     <div class="modal-body">
         <div class="row">
+            <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+                <div class="spinner-border text-primary" role="status">
+                </div>
+            </div>
             <div class="col-md-12">
                 <div class="card card-success">
                     <div class="card-header">
@@ -149,6 +164,7 @@
 <script type="text/javascript" src="{{ asset('assets/js/initAll.js') }}"></script>
 <script>
     $(function(){
+        $('#spinner-div').hide();
         $('.datepicker').datepicker({
             autoclose: true
         });
@@ -170,8 +186,16 @@
                     data: {
                         search: request.term
                     },
+                    beforeSend: function()
+                    {
+                        $('#spinner-div').show();
+                    },
                     success: function( data ) {
                         response(data);
+                    },
+                    complete: function()
+                    {
+                        $('#spinner-div').hide();
                     }
 
                 });

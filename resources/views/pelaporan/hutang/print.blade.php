@@ -41,11 +41,14 @@
     <thead>
     <tr style="background-color: #808080; color:azure">
         <th style="width: 5%; text-align: center; height: 30px">No.</th>
-        <th style="width: 10%; text-align: center;">No.Bayar</th>
-        <th style="width: 10%; text-align: center;">Tgl.Bayar</th>
+        <th style="width: 8%; text-align: center;">No.Bayar</th>
+        <th style="width: 8%; text-align: center;">Tgl.Bayar</th>
+        <th style="width: 8%; text-align: center;">No.Invoice</th>
+        <th style="width: 8%; text-align: center;">Tgl.Invoice</th>
+        <th style="width: 8%; text-align: center;">Tgl.JTO</th>
         <th>Supplier</th>
         <th style="width: 15%; text-align: right;">Nominal</th>
-        <th style="width: 15%; text-align: center;">Keterangan</th>
+        <th style="width: 15%; text-align: center;">Metode Bayar</th>
     </tr>
     </thead>
     <tbody>
@@ -53,10 +56,16 @@
     $no_urut=1;
     $total=0;  @endphp
     @foreach($list_data as $list)
+    @php
+    $tgl_jto = (!empty($list->get_receive->tgl_jatuh_tempo)) ? date_format(date_create($list->get_receive->tgl_jatuh_tempo), 'd-m-Y') : "";
+    @endphp
     <tr>
         <td style='text-align: center; height: 25px;'>{{ $no_urut }}</td>
         <td style='text-align: center;'>{{ $list->no_bayar }}</td>
         <td style='text-align: center;'>{{ date_format(date_create($list->tgl_bayar), 'd-m-Y') }}</td>
+        <td style='text-align: center;'>{{ $list->get_receive->no_invoice }}</td>
+        <td style='text-align: center;'>{{ date_format(date_create($list->get_receive->tgl_invoice), 'd-m-Y') }}</td>
+        <td style='text-align: center;'>{{ $tgl_jto }}</td>
         <td>{{ $list->get_supplier->nama_supplier }}</td>
         <td style='text-align: right;'><b>{{ number_format($list->nominal, 0, ",", ".") }}</b></td>
         <td style='text-align: center;'>{{ ($list->metode_bayar==1) ? 'Tunai' : 'Transfer' }}</td>
@@ -66,7 +75,7 @@
     $total+=$list->nominal; @endphp
     @endforeach
     <tr style="background-color: #808080; color:azure">
-        <td colspan="4" style="text-align: right;"><b>TOTAL</b></td>
+        <td colspan="7" style="text-align: right;"><b>TOTAL</b></td>
         <td style='text-align: right; height:30px'><b>{{ number_format($total, 0, ",", ".") }}</b></td>
         <td></td>
     </tr>

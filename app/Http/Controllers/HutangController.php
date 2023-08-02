@@ -334,4 +334,22 @@ class HutangController extends Controller
         ])->setPaper('A4', "Potrait");
         return $pdf->stream();
     }
+
+    public function hutang_print($id=null)
+    {
+        $data = HutangModel::find($id);
+        $pdf = PDF::loadview('hutang.pembayaran.print_bayar', [
+            'main' => $data
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+    }
+
+    public function hutang_kontainer_print($id=null)
+    {
+        $data = HutangKontainerModel::find($id);
+        $pdf = PDF::loadview('hutang.kontainer.print_bayar', [
+            'main' => $data
+        ])->setPaper('A4', "Potrait");
+        return $pdf->stream();
+    }
 }

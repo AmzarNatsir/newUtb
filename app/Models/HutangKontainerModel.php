@@ -27,7 +27,7 @@ class HutangKontainerModel extends Model
 
     public function get_receive()
     {
-        return $this->hasMany(ReceiveHeadModel::class, 'receive_id', 'id');
+        return $this->belongsTo(ReceiveHeadModel::class, 'receive_id', 'id');
     }
 
     public function get_kontainer()

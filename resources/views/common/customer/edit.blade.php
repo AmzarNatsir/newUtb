@@ -9,7 +9,7 @@
     <div class="modal-body">
         <div class="form-group">
             <label for="inp_kode">Kode</label>
-            <input type="text" name="inp_kode" id="inp_kode" class="form-control" maxlength="20" value="{{ $res->kode}}" required>
+            <input type="text" name="inp_kode" id="inp_kode" class="form-control" maxlength="20" value="{{ $res->kode}}" readonly>
         </div>
         <div class="form-group">
             <label for="inp_nama">Nama Customer</label>
@@ -37,8 +37,8 @@
         </div>
     </div>
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-outline-success">Save changes</button>
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-outline-success">Simpan</button>
     </div>
 </form>
 <script>

@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-outline-success">Save changes</button>
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-outline-success">Simpan</button>
     </div>
 </form>

@@ -18,6 +18,15 @@ class CustomerModel extends Model
         'alamat',
         'kota',
         'no_telepon',
-        'level' //1. Customer, 2. Agent, 3. Reseller
+        'level', //1. Customer, 2. Agent, 3. Reseller
+        'no_identitas',
+        'lat',
+        'lng',
+        'file_identitas',
+        'file_lokasi',
+        'status',
+        'approve_by',
+        'approve_date',
+        'user_id'
     ];
 }

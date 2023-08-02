@@ -305,6 +305,16 @@
                                     </tr>
                                     <tr>
                                         <td style="width: 5%;"></td>
+                                        <td style="width: 5%;"><div class="form-group clearfix">
+                                                <div class="icheck-danger d-inline">
+                                                    <input type="checkbox" id="checkDaftarTransPemberianSample" name="checkMenu[41]" value="daftar_transaksi_pemberian_sample">
+                                                    <label for="checkDaftarTransPemberianSample"></label>
+                                                </div>
+                                            </div></td>
+                                        <td><label for="checkDaftarTransPemberianSample">Pemberian Sample</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 5%;"></td>
                                         <td colspan="2"><label for="checkTransaksi">TRANSAKSI</label></td>
                                     </tr>
                                     <tr>

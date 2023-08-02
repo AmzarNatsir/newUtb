@@ -197,6 +197,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         // App\Providers\GlobalServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     ],
 
     /*
@@ -217,6 +218,9 @@ return [
         'Helper' => App\Helpers\Helper::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
 
+        'Jwt' => Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     ])->toArray(),
 
 ];

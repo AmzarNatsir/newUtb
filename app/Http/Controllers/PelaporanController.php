@@ -750,13 +750,18 @@ class PelaporanController extends Controller
         foreach($result as $list)
         {
             $ket = ($list->metode_bayar==1) ? 'Tunai' : 'Transfer';
+            $tgl_jto = (!empty($list->get_receive->tgl_jatuh_tempo)) ? date_format(date_create($list->get_receive->tgl_jatuh_tempo), 'd-m-Y') : "";
             $html .= "<tr>
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".$list->no_bayar."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_bayar), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$list->get_receive->no_invoice."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->get_receive->tgl_invoice), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$tgl_jto."</td>
             <td>".$list->get_supplier->nama_supplier."</td>
             <td style='text-align: right;'><b>".number_format($list->nominal, 0)."</b></td>
             <td style='text-align: center;'>".$ket."</td>
+            <td style='text-align: center;'><button type='button' name='printBukti[]' class='btn btn-danger' onclick='goPrintBukti(this)' value=".$list->id."><i class='fa fa-print'></i></button></td>
             </tr>";
             $nom++;
             $total+=$list->nominal;
@@ -802,7 +807,7 @@ class PelaporanController extends Controller
             'list_data' => $result,
             'periode' => $ket_periode,
             'supplier' => $ket_supplier
-        ])->setPaper('A4', "Potrait");
+        ])->setPaper('A4', "landscape");
         return $pdf->stream();
     }
 
@@ -841,21 +846,27 @@ class PelaporanController extends Controller
         foreach($result as $list)
         {
             $ket = ($list->metode_bayar==1) ? 'Tunai' : 'Transfer';
+            $tgl_jto = (!empty($list->get_penjualan->tgl_jatuh_tempo)) ? date_format(date_create($list->get_penjualan->tgl_jatuh_tempo), 'd-m-Y') : "";
             $html .= "<tr>
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".$list->no_bayar."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_bayar), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$list->get_penjualan->no_invoice."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->get_penjualan->tgl_transaksi), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$tgl_jto."</td>
             <td>".$list->get_customer->nama_customer."</td>
             <td style='text-align: right;'><b>".number_format($list->nominal, 0)."</b></td>
             <td style='text-align: center;'>".$ket."</td>
+            <td style='text-align: center;'>".$list->get_via->penerimaan."</td>
+            <td style='text-align: center;'><button type='button' name='printBukti[]' class='btn btn-danger' onclick='goPrintBukti(this)' value=".$list->id."><i class='fa fa-print'></i></button></td>
             </tr>";
             $nom++;
             $total+=$list->nominal;
         }
         $html .= "<tr>
-            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td colspan='7' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total, )."</b></td>
-            <td></td>
+            <td colspan='3'></td>
         ";
         
         return response()
@@ -893,7 +904,7 @@ class PelaporanController extends Controller
             'list_data' => $result,
             'periode' => $ket_periode,
             'customer' => $ket_customer
-        ])->setPaper('A4', "Potrait");
+        ])->setPaper('A4', "landscape");
         return $pdf->stream();
     }
 
@@ -936,17 +947,21 @@ class PelaporanController extends Controller
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".$list->no_bayar."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_bayar), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$list->get_receive->no_invoice."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->get_receive->tgl_invoice), 'd-m-Y')."</td>
+            <td style='text-align: center;'>".$list->get_receive->invoice_kontainer."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->get_receive->tgl_tiba), 'd-m-Y')."</td>
             <td>".$list->get_kontainer->nama_kontainer."</td>
             <td style='text-align: right;'><b>".number_format($list->nominal, 0)."</b></td>
             <td style='text-align: center;'>".$ket."</td>
-            </tr>";
+            <td style='text-align: center;'><button type='button' name='printBukti[]' class='btn btn-danger' onclick='goPrintBukti(this)' value=".$list->id."><i class='fa fa-print'></i></button></td></tr>";
             $nom++;
             $total+=$list->nominal;
         }
         $html .= "<tr>
-            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td colspan='8' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total, )."</b></td>
-            <td></td>
+            <td colspan='2'></td>
         ";
         
         return response()
@@ -984,7 +999,7 @@ class PelaporanController extends Controller
             'list_data' => $result,
             'periode' => $ket_periode,
             'kontainer' => $ket_kontainer
-        ])->setPaper('A4', "Potrait");
+        ])->setPaper('A4', "landscape");
         return $pdf->stream();
     }
 
@@ -1014,11 +1029,18 @@ class PelaporanController extends Controller
                         ->selectRaw('jual_head.tgl_transaksi, common_product.nama_produk, jual_detail.qty, jual_detail.harga, jual_detail.harga, jual_detail.sub_total, jual_detail.sub_total_net, jual_detail.diskitem_persen, jual_detail.diskitem_rupiah, jual_detail.harga_beli')
                         ->get();
         $nom=1;
+        $total_harga_jual = 0;
+        $total_sub = 0;
+        $total_diskon = 0;
+        $total_sub_net = 0;
+        $total_harga_beli = 0;
+        $total_hpp = 0;
         $total_laba = 0;
         $html="";
         foreach($result as $list)
         {
-            $laba = ($list->sub_total_net - ($list->harga_beli * $list->qty));
+            $hpp = $list->harga_beli * $list->qty;
+            $laba = $list->sub_total_net - $hpp;
             $html .= "<tr>
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".date_format(date_create($list->tgl_transaksi), 'd-m-Y')."</td>
@@ -1029,14 +1051,26 @@ class PelaporanController extends Controller
             <td style='text-align: right;'><b>".number_format($list->diskitem_rupiah, 0)."</b></td>
             <td style='text-align: right;'><b>".number_format($list->sub_total_net, 0)."</b></td>
             <td style='text-align: right;'><b>".number_format($list->harga_beli, 0)."</b></td>
-            <td style='text-align: right;'><b>".number_format($list->harga_beli * $list->qty, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($hpp, 0)."</b></td>
             <td style='text-align: right;'><b>".number_format($laba, 0)."</b></td>
             </tr>";
             $nom++;
+            $total_harga_jual+=$list->harga;
+            $total_sub+=$list->sub_total;
+            $total_diskon+=$list->diskitem_rupiah;
+            $total_sub_net+=$list->sub_total_net;
+            $total_harga_beli+=$list->harga_beli;
+            $total_hpp+=$hpp;
             $total_laba += $laba;
         }
         $html .= "<tr>
-            <td colspan='10' style='text-align: right;'><b>TOTAL</b></td>
+            <td colspan='4' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total_harga_jual, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_sub, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_diskon, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_sub_net, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_harga_beli, 0)."</b></td>
+            <td style='text-align: right;'><b>".number_format($total_hpp, 0)."</b></td>
             <td style='text-align: right;'><b>".number_format($total_laba, 0)."</b></td>
         ";
         return response()

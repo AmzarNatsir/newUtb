@@ -257,7 +257,7 @@ class ProductController extends Controller
     public function searchItemPO(Request $request)
     {
         $keyword = $request->search;
-        $result = ProductModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->get();
+        $result = ProductModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->limit(10)->get();
         $response = array();
         foreach($result as $item){
             $response[] = array(

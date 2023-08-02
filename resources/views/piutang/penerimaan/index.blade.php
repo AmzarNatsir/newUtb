@@ -3,6 +3,19 @@
 @section('breadcrumb', 'Piutang')
 @section('content')
 @routes
+<style>
+    .spinner-div {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+    }
+</style>
 <section class="content">
     <!-- Default box -->
     <div class="card card-warning">
@@ -10,6 +23,10 @@
         <h3 class="card-title">Penerimaan Piutang</h3>
     </div>
     <div class="card-body">
+        <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+            <div class="spinner-border text-primary" role="status">
+            </div>
+        </div>
         <form action="{{ route('penerimaanPiutangStore') }}" method="post" onsubmit="return konfirm()">
         {{csrf_field()}}
         <input type="hidden" name="id_invoice" id="id_invoice">
@@ -194,6 +211,7 @@
 </div>
 <script>
     $(function(){
+        $('#spinner-div').hide();
         window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
         reset_teks();
         aktif_teks(true);
@@ -219,7 +237,7 @@
                 $(".t_hutang").empty();
                 $(".t_terbayar").empty;
                 $(".t_outstanding").empty();
-                $("#loaderDiv").show();
+                $('#spinner-div').show();
             },
             success: function(response)
             {
@@ -228,7 +246,10 @@
                 $(".t_piutang").html('Rp. '+response.totalPiutang);
                 $(".t_terbayar").html('Rp. '+response.totalTerbayar);
                 $(".t_outstanding").html('Rp. '+response.sisaOutstanding);
-                $("#loaderDiv").hide();
+            },
+            complete: function()
+            {
+                $('#spinner-div').hide();
             }
         });
     }
@@ -248,7 +269,7 @@
             {
                 reset_teks();
                 aktif_teks(true);
-                $("#loaderDiv2").show();
+                $('#spinner-div').show();
             },
             success: function(response)
             {
@@ -260,7 +281,11 @@
                 $("#inpBayar").val(response.total_oustanding);
                 $("#inpSisaPiutang").val(response.total_oustanding);
                 aktif_teks(false);
-                $("#loaderDiv2").hide();
+                // $("#loaderDiv2").hide();
+            },
+            complete: function()
+            {
+                $('#spinner-div').hide();
             }
         });
     }

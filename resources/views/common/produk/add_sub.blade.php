@@ -12,7 +12,11 @@
             <input type="text" name="inp_kode" id="inp_kode" class="form-control" maxlength="50" value="{{ $kode_sub }}" readonly>
         </div>
         <div class="form-group">
-            <label for="inp_nama">Nama Produk</label>
+            <label for="inp_produk_utama">Nama Produk</label>
+            <input type="text" name="inp_produk_utama" id="inp_produk_utama" class="form-control" value="{{ $main->nama_produk }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="inp_nama">Nama Sub Produk</label>
             <input type="text" name="inp_nama" id="inp_nama" class="form-control" maxlength="150" value="{{ $main->nama_produk }} / {{ substr($kode_sub, 13, 4) }}" required>
         </div>
         <div class="form-group">
@@ -55,8 +59,8 @@
         </div>
     </div>
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-outline-success">Save changes</button>
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-outline-success">Simpan</button>
     </div>
 </form>
 <script type="text/javascript" src="{{ asset('assets/js/initAll.js') }}"></script>

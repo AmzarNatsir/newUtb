@@ -12,7 +12,7 @@
         <div class="card-tools">
             <ul class="nav nav-pills ml-auto">
             <li class="nav-item">
-                <button type="button" class="btn btn-outline-success btn-block btn-sm" data-toggle="modal" data-target="#modal-form" id="tbl_setting" name="tbl_setting"><i class="fa fa-plus"></i> Setting Stok Awal</button>
+                <button type="button" class="btn btn-outline-success btn-block btn-sm" data-toggle="modal" data-target="#modal-form" id="tbl_setting" name="tbl_setting"><i class="fa fa-plus"></i> Setting Harga</button>
             </li>
             </ul>
         </div>

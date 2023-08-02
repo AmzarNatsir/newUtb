@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Daftar Transaksi')
-@section('breadcrumb', 'Penjualan')
+@section('breadcrumb', 'Pemberian Sample')
 @section('content')
 @routes
 <style>
@@ -20,7 +20,7 @@
     <!-- Default box -->
     <div class="card card-success">
     <div class="card-header">
-        <h3 class="card-title">Daftar Penjualan</h3>
+        <h3 class="card-title">Daftar Pemberian Sample</h3>
     </div>
     <div class="card-body">
         <div class="row">
@@ -83,7 +83,7 @@
                         <table class="table table-bordered table-hover" style="font-size: 11pt; width: 100%;" id="table_penjualan">
                             <thead>
                             <tr>
-                                <td style="text-align: left;" colspan="10"><h4>Daftar Penjualan</h4>
+                                <td style="text-align: left;" colspan="10"><h4>Daftar Pemberian Sample</h4>
                                 <p class="lbl_periode"></p>
                                 <p class="lbl_supplier"></p>
                                 </td>
@@ -93,8 +93,8 @@
                                 <th style="width: 10%; text-align: center;">No.Invoice</th>
                                 <th style="width: 10%; text-align: center;">Tgl.Invoice</th>
                                 <th>Customer</th>
-                                <th style="width: 15%; text-align: center;">Nominal</th>
-                                <th style="width: 15%; text-align: center;">Cara Bayar</th>
+                                <th style="width: 15%; text-align: center;">Total Produk</th>
+                                <th style="width: 20%;">Keterangan</th>
                                 <th style="width: 10%; text-align: center;">Act</th>
                             </tr>
                             </thead>
@@ -139,7 +139,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url : route("invoicePenjualanFilter"),
+            url : route("invoicePemberianSampleFilter"),
             contentType: "application/json",
             method : 'post',
             dataType: "json",
@@ -165,7 +165,7 @@
     var goPrint = function(el)
     {
         var id_data = $(el).val();
-        window.open(route('printInvoice', id_data), "_blank");
+        window.open(route('printInvoicePemberianSample', id_data), "_blank");
     }
 </script>
 @endsection
