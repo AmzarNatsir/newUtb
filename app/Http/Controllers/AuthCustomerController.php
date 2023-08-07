@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use JWTAuth;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AuthCustomerController extends Controller
 {
@@ -37,6 +38,7 @@ class AuthCustomerController extends Controller
 
     public function register(Request $request)
     {
+        try {
         $def_pass = Str::random(8);
         $validator = Validator::make($request->all(), [
             'nama_customer' =>  'required|string|between:2,100',
@@ -45,7 +47,9 @@ class AuthCustomerController extends Controller
             'no_telepon' => 'required|string|between:2,50',
             'level' => 'required',
             'no_identitas' => 'required|string|between:2,50',
-            'email' => 'required|string|email|max:100|unique:users'
+            'email' => 'required|string|email|max:100|unique:users',
+            'file_identitas' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file_lokasi' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
@@ -56,6 +60,10 @@ class AuthCustomerController extends Controller
             'password' => Hash::make($def_pass),
             'isUser' => 1, //Customer
         ]);
+
+        $nmFileId = $request->file_identitas->store('customer');
+        $nmFileLokasi = $request->file_lokasi->store('customer');
+
         $customer = CustomerModel::create([
             'kode' => $this->create_no_customer(),
             'nama_customer' => $request->get('nama_customer'),
@@ -66,8 +74,8 @@ class AuthCustomerController extends Controller
             'no_identitas' => $request->get('no_identitas'),
             'lat' => $request->get('lat'),
             'lng' => $request->get('lng'),
-            'file_identitas' => $request->get('file_identitas'),
-            'file_lokasi' => $request->get('file_lokasi'),
+            'file_identitas' => $nmFileId,
+            'file_lokasi' => $nmFileLokasi,
             'user_id' => $user->id,
         ]);
 
@@ -77,6 +85,13 @@ class AuthCustomerController extends Controller
             'customer' => $customer,
             'pass' => $def_pass,
         ], 200);
+        } catch(\Exception $e){
+            return response()->json([
+                'message' => 'Customer failed registered',
+                'error' => $e->getMessage(),
+            ], 500);
+            throw new HttpException(500, $e->getMessage());
+        }
     }
 
     protected function respondWithToken($token, $user)
@@ -99,10 +114,10 @@ class AuthCustomerController extends Controller
     {
         $no_urut = 1;
         $kd="UTB-";
-        
+
         $result = CustomerModel::withTrashed()->orderby('id', 'desc')->first();
         if(empty($result->kode)) {
-            $no_baru = $kd.sprintf('%04s', $no_urut); 
+            $no_baru = $kd.sprintf('%04s', $no_urut);
         } else {
             $no_trans_baru = (int)substr($result->kode, 4, 4) + 1;
             $no_baru = $kd.sprintf('%04s', $no_trans_baru);
