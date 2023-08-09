@@ -17,7 +17,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        $query_user = User::all();
+        $query_user = User::whereNull('isUser')->get();
         $data = [
             'all_users' => $query_user
         ];
@@ -49,9 +49,10 @@ class UsersController extends Controller
             'password' => Hash::make($request->password),
             'active' => 'y',
             'approver' => $approver,
-            'lvl_approver' => $lvl_approver
+            'lvl_approver' => $lvl_approver,
+            'isUser' => 1
         ]);
-            
+
         $excec_role_user = $user->assignRole($request->checkRole);
         if($excec_role_user)
         {
