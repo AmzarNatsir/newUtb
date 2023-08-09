@@ -115,4 +115,11 @@ class CustomerController extends Controller
         $data['allCustomer'] = $query;
         return view('customer.submission.index', $data);
     }
+
+    public function detailPengajuan($id)
+    {
+        $query = CustomerModel::find($id);
+        $data['profil'] = $query;
+        return view('customer.submission.approval', $data);
+    }
 }

@@ -326,3 +326,4 @@ Route::get('users_delete/{id}', [UsersController::class, 'users_delete'])->name(
 
 //customer submission
 Route::get('submissionCustomer', [CustomerController::class, 'listPengajuan'])->name('submissionCustomer');
+Route::get('submissionCustomerApproval/{id}', [CustomerController::class, 'detailPengajuan'])->name('submissionCustomerApproval');

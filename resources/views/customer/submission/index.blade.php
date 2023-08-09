@@ -74,13 +74,21 @@
 </section>
 <!-- Modal -->
 <div class="modal fade" id="modal-form" data-backdrop="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div id="frm_modal"></div>
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('assets/js/common/customer.js') }}"></script>
+<script>
+    $(function(){
+        let APP_URL_ADD = route('kontainerAdd');
+        window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
+    });
+    var goApprove = function(el) {
+        $("#frm_modal").load(route('submissionCustomerApproval', $(el).val()));
+    }
+</script>
 @endsection
 
 

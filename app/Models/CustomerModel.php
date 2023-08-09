@@ -30,4 +30,9 @@ class CustomerModel extends Model
         'user_id',
         'isCustomer'
     ];
+
+    public function get_email()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
