@@ -19,7 +19,7 @@
     }
 </style>
 <div class="modal-header">
-    <h4 class="modal-title">Add Purchase Order</h4>
+    <h4 class="modal-title">Tambah data PO</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span></button>
 </div>
@@ -157,8 +157,8 @@
         </div>
     </div>
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-outline-success" id="tbl_submit">Save changes</button>
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-outline-success" id="tbl_submit">Simpan</button>
     </div>
 </form>
 <script type="text/javascript" src="{{ asset('assets/js/initAll.js') }}"></script>

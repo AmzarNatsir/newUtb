@@ -233,8 +233,8 @@
         </div>
     </div>
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-outline-success" id="tbl_submit">Save changes</button>
+        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-outline-success" id="tbl_submit">Simpan</button>
     </div>
 </form>
 <script>
