@@ -27,6 +27,7 @@ class CustomerModel extends Model
         'status',
         'approve_by',
         'approve_date',
-        'user_id'
+        'user_id',
+        'isCustomer'
     ];
 }

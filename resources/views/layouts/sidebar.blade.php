@@ -202,7 +202,7 @@ $head_manaj_user = "";
         @endcan
         @can('customer_submission')
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Submission Approval</p></a>
+            <a href="{{ route('submissionCustomer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Submission Approval</p></a>
         </li>
         @endcan
         @can('customer_switch_level')

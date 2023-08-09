@@ -15,7 +15,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $query = CustomerModel::all();
+        $query = CustomerModel::where('isCustomer', 1)->get();
         $data['allCustomer'] = $query;
         return view('common.customer.index', $data);
     }
@@ -38,6 +38,7 @@ class CustomerController extends Controller
             $save->kota = $request->inp_kota;
             $save->no_telepon = $request->inp_notel;
             $save->level = $request->inp_level;
+            $save->isCustomer = 1; //customer
             $exec = $save->save();
             if($exec)
             {
@@ -97,14 +98,21 @@ class CustomerController extends Controller
     {
         $no_urut = 1;
         $kd="UTB-";
-        
+
         $result = CustomerModel::orderby('id', 'desc')->first();
         if(empty($result->kode)) {
-            $no_baru = $kd.sprintf('%04s', $no_urut); 
+            $no_baru = $kd.sprintf('%04s', $no_urut);
         } else {
             $no_trans_baru = (int)substr($result->kode, 4, 4) + 1;
             $no_baru = $kd.sprintf('%04s', $no_trans_baru);
         }
         return $no_baru;
+    }
+
+    public function listPengajuan()
+    {
+        $query = CustomerModel::whereNull('isCustomer')->get();
+        $data['allCustomer'] = $query;
+        return view('customer.submission.index', $data);
     }
 }

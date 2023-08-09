@@ -323,3 +323,6 @@ Route::put('users_update/{id}', [UsersController::class, 'users_update'])->name(
 Route::get('users_delete/{id}', [UsersController::class, 'users_delete'])->name('users_delete');
 
 //export excell
+
+//customer submission
+Route::get('submissionCustomer', [CustomerController::class, 'listPengajuan'])->name('submissionCustomer');
