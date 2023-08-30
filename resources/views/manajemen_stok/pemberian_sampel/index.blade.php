@@ -4,6 +4,19 @@
 @section('content')
 @routes
 <!-- content -->
+<style>
+    .spinner-div {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+    }
+</style>
 <section class="content">
     <!-- Default box -->
     <div class="card card-success">
@@ -20,6 +33,10 @@
         @endif
         <form action="{{ route('pemberianSampelStore') }}" method="post" onsubmit="return konfirm()">
         {{csrf_field()}}
+            <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+                <div class="spinner-border text-primary" role="status">
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-5">
                     <div class="card">
@@ -38,7 +55,7 @@
                             <div class="form-group">
                                 <label for="sel_customer">Customer</label>
                                 <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>
-                                <option></option> 
+                                <option></option>
                                 @foreach($allCustomer as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->nama_customer }}</option>
                                 @endforeach
@@ -102,6 +119,7 @@
 </section>
 <script>
     $(function(){
+        $('#spinner-div').hide();
         window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
         $("#inputSearch").autocomplete({
             source: function(request, response) {
@@ -116,8 +134,16 @@
                     data: {
                         search: request.term
                     },
+                    beforeSend: function()
+                    {
+                        $('#spinner-div').show();
+                    },
                     success: function( data ) {
                         response(data);
+                    },
+                    complete: function()
+                    {
+                        $('#spinner-div').hide();
                     }
 
                 });

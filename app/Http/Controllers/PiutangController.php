@@ -35,7 +35,7 @@ class PiutangController extends Controller
         $total_invoice = 0;
         $total_piutang = 0;
         $id_customer = $request->customer;
-        $result = JualHeadModel::where('customer_id', $id_customer)->where('bayar_via', 2)->get();
+        $result = JualHeadModel::where('customer_id', $id_customer)->where('bayar_via', 2)->whereNull('status_piutang')->get();
         // dd($result);
         $total_terbayar = \DB::table('piutang')
                                 ->join('jual_head', 'jual_head.id', '=', 'piutang.jual_id')
@@ -141,6 +141,19 @@ class PiutangController extends Controller
             $save->keterangan = $request->inpKeterangan;
             $save->user_id = auth()->user()->id;
             $save->save();
+            $total_invoice = str_replace(",","", $request->inpTotalInvoice);
+            $total_terbayar_invoice = \DB::table('piutang')
+                    ->where('piutang.jual_id', $request->id_invoice)
+                    ->whereNull('piutang.deleted_at')
+                    ->selectRaw('sum(piutang.nominal) as t_nominal')
+                    ->pluck('t_nominal')->first();
+            $selisih_hutang = $total_invoice - $total_terbayar_invoice;
+            if($selisih_hutang==0)
+            {
+                $update = JualHeadModel::find($request->id_invoice);
+                $update->status_piutang = 1;
+                $exec = $update->save();
+            }
             if($save)
             {
                 return redirect('penerimaanPiutang')->with('message', 'Pembayaran Piutang berhasil disimpan');
@@ -159,10 +172,10 @@ class PiutangController extends Controller
         $kd="PT";
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
-        
+
         $result = PiutangModel::whereYear('tgl_bayar', $tahun)->orderby('id', 'desc')->first();
         if(empty($result->no_bayar)) {
-            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
         } else {
             $no_trans_baru = (int)substr($result->no_bayar, 9, 4) + 1;
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);

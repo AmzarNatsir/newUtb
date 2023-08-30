@@ -35,7 +35,7 @@ class HutangController extends Controller
         $total_invoice = 0;
         $total_hutang = 0;
         $id_supplier = $request->supplier;
-        $result = ReceiveHeadModel::where('supplier_id', $id_supplier)->where('cara_bayar', 2)->get();
+        $result = ReceiveHeadModel::where('supplier_id', $id_supplier)->where('cara_bayar', 2)->whereNull('status_hutang')->get();
         // dd($result);
         $total_terbayar = \DB::table('hutang')
                                 ->join('receive_head', 'receive_head.id', '=', 'hutang.receive_id')
@@ -141,6 +141,19 @@ class HutangController extends Controller
             $save->keterangan = $request->inpKeterangan;
             $save->user_id = auth()->user()->id;
             $save->save();
+            $total_invoice = str_replace(",","", $request->inpTotalInvoice);
+            $total_terbayar_invoice = \DB::table('hutang')
+                                ->where('hutang.receive_id', $request->id_receive)
+                                ->whereNull('hutang.deleted_at')
+                                ->selectRaw('sum(hutang.nominal) as t_nominal')
+                                ->pluck('t_nominal')->first();
+            $selisih_hutang = $total_invoice - $total_terbayar_invoice;
+            if($selisih_hutang==0)
+            {
+                $update = ReceiveHeadModel::find($request->id_receive);
+                $update->status_hutang = 1;
+                $exec = $update->save();
+            }
             if($save)
             {
                 return redirect('pembayaranHutang')->with('message', 'Pembayaran Hutang berhasil disimpan');
@@ -159,10 +172,10 @@ class HutangController extends Controller
         $kd="HT";
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
-        
+
         $result = HutangModel::whereYear('tgl_bayar', $tahun)->orderby('id', 'desc')->first();
         if(empty($result->no_bayar)) {
-            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
         } else {
             $no_trans_baru = (int)substr($result->no_bayar, 9, 4) + 1;
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);
@@ -205,7 +218,7 @@ class HutangController extends Controller
         $total_hutang = 0;
         $nom=1;
         $id_kontainer = $request->kontainer;
-        $result = ReceiveHeadModel::where('kontainer_id', $id_kontainer)->get();
+        $result = ReceiveHeadModel::where('kontainer_id', $id_kontainer)->whereNull('status_hutang_kontainer')->get();
         $total_terbayar = \DB::table('hutang_kontainer')
                                 ->join('receive_head', 'receive_head.id', '=', 'hutang_kontainer.receive_id')
                                 ->where('receive_head.kontainer_id', $id_kontainer)
@@ -222,8 +235,8 @@ class HutangController extends Controller
                                 ->pluck('t_nominal')->first();
             $html .= '<tr>
             <td>'.$nom.'</td>
-            <td>'.$list->invoice_kontainer.'</td>     
-            <td>'.date_format(date_create($list->tgl_tiba), "d-m-Y").'</td> 
+            <td>'.$list->invoice_kontainer.'</td>
+            <td>'.date_format(date_create($list->tgl_tiba), "d-m-Y").'</td>
             <td style="text-align: right"><b>'.number_format($list->nilai_kontainer, 0).'</b></td>
             <td style="text-align: right"><span class="float-right badge bg-danger" style="font-size: 10pt"><b>'.number_format($list->nilai_kontainer - $total_terbayar_invoice, 0).'</b></span></td>
             <td><button type="button" class="btn btn-primary btn-sm tbl_mutasi" data-toggle="modal" data-target="#modal-form" onclick="goMutasi('.$list->id.')">Mutasi</button>';
@@ -236,7 +249,7 @@ class HutangController extends Controller
                     <i class="fa fa-asterisk fa-spin text-info"></i>
                 </button>';
             }
-            
+
             $html .= '</tr>';
             $total_invoice++;
             $nom++;
@@ -287,6 +300,22 @@ class HutangController extends Controller
             $save->keterangan = $request->inpKeterangan;
             $save->user_id = auth()->user()->id;
             $save->save();
+
+            $total_invoice = str_replace(",","", $request->inpTotalInvoice);
+            $total_terbayar_invoice = \DB::table('hutang_kontainer')
+                ->where('hutang_kontainer.receive_id', $request->id_receive)
+                ->whereNull('hutang_kontainer.deleted_at')
+                ->selectRaw('sum(hutang_kontainer.nominal) as t_nominal')
+                ->pluck('t_nominal')->first();
+
+            $selisih_hutang = $total_invoice - $total_terbayar_invoice;
+            if($selisih_hutang==0)
+            {
+                $update = ReceiveHeadModel::find($request->id_receive);
+                $update->status_hutang_kontainer = 1;
+                $exec = $update->save();
+            }
+
             if($save)
             {
                 return redirect('pembayaranHutangKontainer')->with('message', 'Pembayaran Hutang Kontainer berhasil disimpan');
@@ -305,10 +334,10 @@ class HutangController extends Controller
         $kd="HTC";
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
-        
+
         $result = HutangKontainerModel::whereYear('tgl_bayar', $tahun)->orderby('id', 'desc')->first();
         if(empty($result->no_bayar)) {
-            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
         } else {
             $no_trans_baru = (int)substr($result->no_bayar, 10, 4) + 1;
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);

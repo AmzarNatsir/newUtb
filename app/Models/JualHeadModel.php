@@ -40,7 +40,8 @@ class JualHeadModel extends Model
         'approved_note_2',
         'status_approval',
         'tgl_transaksi',
-        'via_id'
+        'via_id',
+        'status_piutang'
     ];
 
     public function get_customer()

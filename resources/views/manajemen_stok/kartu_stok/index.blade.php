@@ -7,36 +7,47 @@
 <!-- content -->
 <style type="text/css">
 html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
-.ui-menu {
-    list-style:none;
-    padding: 2px;
-    margin: 0;
-    display:block;
-    float: left;
-}
-.ui-menu .ui-menu {
-    margin-top: -3px;
-}
-.ui-menu .ui-menu-item {
-    margin:0;
-    padding: 0;
-    zoom: 1;
-    float: left;
-    clear: left;
-    width: 100%;
-}
-.ui-menu .ui-menu-item a {
-    text-decoration:none;
-    display:block;
-    padding:.2em .4em;
-    line-height:1.5;
-    zoom:1;
-}
-.ui-menu .ui-menu-item a.ui-state-hover,
-.ui-menu .ui-menu-item a.ui-state-active {
-    font-weight: normal;
-    margin: -1px;
-}
+    .ui-menu {
+        list-style:none;
+        padding: 2px;
+        margin: 0;
+        display:block;
+        float: left;
+    }
+    .ui-menu .ui-menu {
+        margin-top: -3px;
+    }
+    .ui-menu .ui-menu-item {
+        margin:0;
+        padding: 0;
+        zoom: 1;
+        float: left;
+        clear: left;
+        width: 100%;
+    }
+    .ui-menu .ui-menu-item a {
+        text-decoration:none;
+        display:block;
+        padding:.2em .4em;
+        line-height:1.5;
+        zoom:1;
+    }
+    .ui-menu .ui-menu-item a.ui-state-hover,
+    .ui-menu .ui-menu-item a.ui-state-active {
+        font-weight: normal;
+        margin: -1px;
+    }
+    .spinner-div {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+    }
 </style>
 <section class="content">
     <!-- Default box -->
@@ -52,6 +63,10 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
             {!! session('message') !!}
         </div>
         @endif
+        <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+            <div class="spinner-border text-primary" role="status">
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -277,7 +292,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                         </table>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -299,6 +314,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
 
 <script>
     $(function(){
+        $('#spinner-div').hide();
         $("#inputSearch").autocomplete({
             source: function(request, response) {
                 //Fetch data
@@ -312,8 +328,16 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                     data: {
                         search: request.term
                     },
+                    beforeSend: function()
+                    {
+                        $('#spinner-div').show();
+                    },
                     success: function( data ) {
                         response(data);
+                    },
+                    complete: function()
+                    {
+                        $('#spinner-div').hide();
                     }
 
                 });
@@ -361,6 +385,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                 $(".all_items_jual").empty();
                 $(".all_items_pemberian_sampel").empty();
                 $(".all_items_return_beli").empty();
+                $('#spinner-div').show();
             },
             success: function(response)
             {
@@ -464,6 +489,10 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                 </tr>");
                 $(".total_keluar").html("TOTAL STOK KELUAR : "+ (total_3 + total_4 + total_5));
                 $("#loaderDiv").hide();
+            },
+            complete: function()
+            {
+                $('#spinner-div').hide();
             }
         });
     }

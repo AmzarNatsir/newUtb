@@ -96,7 +96,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sel_supplier">Supplier</label>
-                            
+
                             <input type="text" class="form-control" value="{{ $resHead->get_supplier->nama_supplier }}" readonly>
                         </div>
                         <div class="row">
@@ -125,7 +125,7 @@
                                     <input type="text" class="form-control" value="{{ ($resHead->cara_bayar==1) ? 'Tunai' : 'Kredit' }}" readonly>
                                 </div>
                             </div>
-                            @if($resHead->cara_bayar==1) 
+                            @if($resHead->cara_bayar==1)
                             @php $ket_jtp = "disabled" @endphp
                             @else
                             @php $ket_jtp = "" @endphp
@@ -191,7 +191,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="sel_kontainer">Kontainer</label>
-                            <select class="form-control select2bs4" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" placeholder="Pilihan Kontainer" required>   
+                            <select class="form-control select2bs4" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" placeholder="Pilihan Kontainer" required>
                                 <option></optionn>
                                 @foreach($listKontainer as $kontainer)
 
@@ -226,7 +226,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -333,10 +333,10 @@ var hitungSubTotal = function(el){
     var sub_total_setelah_diskon = sub_total - hasil_diskon;
     currentRow.find('td:eq(8) input[name="item_sub_total_net[]"]').val(sub_total_setelah_diskon);
     total();
-}  
+}
 
 var total = function(){
-    
+
     var total = 0;
     var sub_total = 0;
     var total_qty=0;
@@ -352,7 +352,7 @@ var total = function(){
     $("#inputTotal").val(total);
     $("#total_qty").val(total_qty);
     hitung_total_net();
-} 
+}
 
 function hitung_total_net()
 {

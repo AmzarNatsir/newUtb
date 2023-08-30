@@ -2,12 +2,29 @@
 @section('title', 'Transaksi')
 @section('breadcrumb', 'Hutang')
 @section('content')
+<style>
+    .spinner-div {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+    }
+</style>
 @routes
 <section class="content">
     <!-- Default box -->
     <div class="card card-warning">
     <div class="card-header">
         <h3 class="card-title">Pembayaran Hutang</h3>
+    </div>
+    <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+        <div class="spinner-border text-primary" role="status">
+        </div>
     </div>
     <div class="card-body">
         <form action="{{ route('pembayaranHutangStore') }}" method="post" onsubmit="return konfirm()">
@@ -22,7 +39,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="sel_supplier">Supplier</label>
-                            <select class="form-control select2bs4" name="sel_supplier" id="sel_supplier" style="width: 100%;" required>   
+                            <select class="form-control select2bs4" name="sel_supplier" id="sel_supplier" style="width: 100%;" required>
                                 @foreach($allSupplier as $supplier)
                                 <option value="{{ $supplier->id }}">{{ $supplier->nama_supplier }}</option>
                                 @endforeach
@@ -182,6 +199,7 @@
 </div>
 <script>
     $(function(){
+        $('#spinner-div').hide();
         window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
         reset_teks();
         aktif_teks(true);
@@ -207,7 +225,7 @@
                 $(".t_hutang").empty();
                 $(".t_terbayar").empty;
                 $(".t_outstanding").empty();
-                $("#loaderDiv").show();
+                $('#spinner-div').show();
             },
             success: function(response)
             {
@@ -216,7 +234,10 @@
                 $(".t_hutang").html('Rp. '+response.totalHutang);
                 $(".t_terbayar").html('Rp. '+response.totalTerbayar);
                 $(".t_outstanding").html('Rp. '+response.sisaOutstanding);
-                $("#loaderDiv").hide();
+            },
+            complete: function()
+            {
+                $('#spinner-div').hide();
             }
         });
     }
@@ -236,7 +257,7 @@
             {
                 reset_teks();
                 aktif_teks(true);
-                $("#loaderDiv2").show();
+                $('#spinner-div').show();
             },
             success: function(response)
             {
@@ -248,7 +269,10 @@
                 $("#inpBayar").val(response.total_terhutang);
                 $("#inpSisaHutang").val(response.total_terhutang);
                 aktif_teks(false);
-                $("#loaderDiv2").hide();
+            },
+            complete: function()
+            {
+                $('#spinner-div').hide();
             }
         });
     }
@@ -261,7 +285,7 @@
             $(el).val(n_terhutang);
             $("#inpSisaHutang").val(n_terhutang);
         }
-        
+
     }
 
     var getSisaHutang = function(el)
