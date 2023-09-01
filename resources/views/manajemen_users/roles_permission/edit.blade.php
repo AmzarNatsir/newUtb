@@ -388,7 +388,7 @@
                                                     <label for="checkTransReturnPemberianSample"></label>
                                                 </div>
                                             </div></td>
-                                        <td><label for="checkTransReturnJual">Return Pemberian Sample</label></td>
+                                        <td><label for="checkTransReturnPemberianSample">Return Pemberian Sample</label></td>
                                     </tr>
 
                                     <tr>
