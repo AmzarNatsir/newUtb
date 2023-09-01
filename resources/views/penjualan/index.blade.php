@@ -104,8 +104,8 @@
                                 <div class="col-md-9">
                                     <div class="form-group">
                                         <label for="sel_customer">Customer</label>
-                                        <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>
-                                        <option></option> 
+                                        <select class="select2bs4 form-control" name="sel_customer" id="sel_customer" style="width: 100%;" required>
+                                        <option></option>
                                         @foreach($allCustomer as $customer)
                                         <option value="{{ $customer->id }}">{{ $customer->nama_customer }}</option>
                                         @endforeach
@@ -188,7 +188,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </form>
     </div>
     <!-- /.card-body -->
@@ -395,10 +395,10 @@
         var sub_total_setelah_diskon = sub_total - hasil_diskon;
         currentRow.find('td:eq(9) input[name="item_sub_total_net[]"]').val(sub_total_setelah_diskon);
         total();
-    }  
+    }
 
     var total = function(){
-        
+
         var total = 0;
         var sub_total = 0;
         $.each($('input[name="item_sub_total_net[]"]'),function(key, value){
@@ -407,7 +407,7 @@
         })
         $("#inputTotal").val(total);
         hitung_total_net();
-    } 
+    }
 
     function hitung_total_net()
     {

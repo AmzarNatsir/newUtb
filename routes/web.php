@@ -194,6 +194,12 @@ Route::get('returnPenjualanFilter/{param}', [ReturnController::class, 'filter_in
 Route::post('returnPenjualanSearch', [ReturnController::class, 'search_invoice_penjualan'])->name('returnPenjualanSearch');
 Route::get('returnPenjualanDetailInvoice/{param}', [ReturnController::class, 'filter_invoice_penjualan_detail'])->name('returnPenjualanDetailInvoice');
 Route::post('returnPenjualanStore', [ReturnController::class, 'return_penjualan_store'])->name('returnPenjualanStore');
+//Return pemberian sample
+Route::get('returnPemberianSample', [ReturnController::class, 'return_pemberian_sample'])->name('returnPemberianSample');
+Route::post('returnPemberianSampleSearch', [ReturnController::class, 'search_invoice_pemberian_sample'])->name('returnPemberianSampleSearch');
+Route::get('returnPemberianSampleDetailInvoice/{param}', [ReturnController::class, 'filter_invoice_pemberian_sample_detail'])->name('returnPemberianSampleDetailInvoice');
+Route::get('returnPemberianSampleFilter/{param}', [ReturnController::class, 'filter_invoice_pemberian_sample'])->name('returnPemberianSampleFilter');
+Route::post('returnPemberianSampleStore', [ReturnController::class, 'return_pemberian_sample_store'])->name('returnPemberianSampleStore');
 //Pelaporan
 //Pembelian
 Route::get('laporanPembelian', [PelaporanController::class, 'laporan_pembelian'])->name("laporanPembelian");

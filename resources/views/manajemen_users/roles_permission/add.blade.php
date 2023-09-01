@@ -377,6 +377,16 @@
                                             </div></td>
                                         <td><label for="checkTransReturnJual">Return Penjualan</label></td>
                                     </tr>
+                                    <tr>
+                                        <td style="width: 5%;"></td>
+                                        <td style="width: 5%;"><div class="form-group clearfix">
+                                                <div class="icheck-danger d-inline">
+                                                    <input type="checkbox" id="checkTransReturnPemberianSample" name="checkMenu[42]" value="transaksi_return_pemberian_sample">
+                                                    <label for="checkTransReturnPemberianSample"></label>
+                                                </div>
+                                            </div></td>
+                                        <td><label for="checkTransReturnJual">Return Pemberian Sample</label></td>
+                                    </tr>
 
                                     <tr>
                                         <td style="width: 5%;"></td>
@@ -475,7 +485,7 @@
                             </td>
                         </tr>
                         </table>
-                        
+
                     </div>
                 </div>
             </div>

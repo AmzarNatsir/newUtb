@@ -121,7 +121,7 @@
         currentRow.find('td:eq(8) input[name="item_sub_total_net[]"]').val(sub_total_setelah_diskon);
         currentRow.find('td:eq(8) input[name="change_net[]"]').val(sub_total_setelah_diskon);
         total();
-    }  
+    }
     var ResetSubTotal = function(el){
         var currentRow=$(el).closest("tr");
         currentRow.find('td:eq(3) input[name="item_qty[]"]').val(currentRow.find('td:eq(3) input[name="temp_qty[]"]').val());
@@ -129,7 +129,7 @@
         currentRow.find('td:eq(8) input[name="item_sub_total_net[]"]').val(currentRow.find('td:eq(8) input[name="temp_item_sub_total_net[]"]').val());
         currentRow.find('td:eq(8) input[name="change_net[]"]').val(0);
         total();
-    }  
+    }
     var changeToNull = function(el)
     {
         if($(el).val()=="")
@@ -138,7 +138,7 @@
         }
     }
     var total = function(){
-    
+
         var total = 0;
         var sub_total = 0;
         $.each($('input[name="change_net[]"]'),function(key, value){
@@ -146,7 +146,7 @@
             total += parseFloat($(value).val());
         })
         $("#inputTotal").val(total);
-    } 
+    }
     function konfirm()
     {
         var psn = confirm("Yakin akan menyimpan data ?");

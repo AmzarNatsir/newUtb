@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="sel_supplier">Customer</label>
-                            <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>   
+                            <select class="form-control select2bs4" name="sel_customer" id="sel_customer" style="width: 100%;" required>
                                 @foreach($allCustomer as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->nama_customer }}</option>
                                 @endforeach
@@ -298,7 +298,7 @@
             $(el).val(n_outstanding);
             $("#inpSisaPiutang").val(n_outstanding);
         }
-        
+
     }
 
     var getSisaHutang = function(el)

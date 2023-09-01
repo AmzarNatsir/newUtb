@@ -10,6 +10,8 @@ use App\Models\ReturnBeliDetailModel;
 use App\Models\ReturnBeliHeadModel;
 use App\Models\ReturnJualDetailModel;
 use App\Models\ReturnJualHeadModel;
+use App\Models\ReturnPemberianSampleDetailModel;
+use App\Models\ReturnPemberianSampleHeadModel;
 use App\Models\SupplierModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -35,7 +37,7 @@ class ReturnController extends Controller
 
     public function search_invoice_pembelian(Request $request)
     {
-        
+
         $keyword = $request->search;
         $result = ReceiveHeadModel::where('nomor_receive', $keyword)->first();
         if(empty($result->id))
@@ -77,7 +79,7 @@ class ReturnController extends Controller
     public function return_pembelian_store(Request $request)
     {
         try {
-            
+
             $save_head = new ReturnBeliHeadModel();
             //store header
             $save_head->no_return = $this->create_no_return_beli();
@@ -117,7 +119,7 @@ class ReturnController extends Controller
             } else {
                 return redirect('returnPembelian')->with('message', 'Return Pembelian Gagal Disimpan');
             }
-            
+
         } catch (QueryException $e)
         {
             return redirect('returnPembelian')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
@@ -130,10 +132,10 @@ class ReturnController extends Controller
         $kd="RTB";
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
-        
+
         $result = ReturnBeliHeadModel::whereYear('tgl_return', $tahun)->orderby('id', 'desc')->first();
         if(empty($result->no_return)) {
-            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
         } else {
             $no_trans_baru = (int)substr($result->no_return, 10, 4) + 1;
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);
@@ -152,7 +154,7 @@ class ReturnController extends Controller
 
     public function search_invoice_penjualan(Request $request)
     {
-        
+
         $keyword = $request->search;
         $result = JualHeadModel::where('no_invoice', $keyword)->whereNull('jenis_jual')->first();
         if(empty($result->id))
@@ -194,7 +196,7 @@ class ReturnController extends Controller
     public function return_penjualan_store(Request $request)
     {
         try {
-            
+
             $save_head = new ReturnJualHeadModel();
             //store header
             $save_head->no_return = $this->create_no_return_jual();
@@ -233,7 +235,7 @@ class ReturnController extends Controller
             } else {
                 return redirect('returnPenjualan')->with('message', 'Return Penjualan Gagal Disimpan');
             }
-            
+
         } catch (QueryException $e)
         {
             return redirect('returnPenjualan')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
@@ -246,12 +248,124 @@ class ReturnController extends Controller
         $kd="RTJ"; //Return Jual
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
-        
+
         $result = ReturnJualHeadModel::whereYear('tgl_return', $tahun)->orderby('id', 'desc')->first();
         if(empty($result->no_return)) {
-            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
         } else {
             $no_trans_baru = (int)substr($result->no_return, 10, 4) + 1;
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);
+        }
+        return $no_baru;
+    }
+
+    //return pemberian sample
+    public function return_pemberian_sample()
+    {
+        $data = [
+            'allCustomer' => CustomerModel::all()
+        ];
+        return view('return.pemberianSample.index', $data);
+    }
+    public function search_invoice_pemberian_sample(Request $request)
+    {
+        $keyword = $request->search;
+        $result = JualHeadModel::where('no_invoice', $keyword)->where('jenis_jual', 1)->first();
+        if(empty($result->id))
+        {
+            $response = [
+                'success' => 'false',
+                'message' => 'Nomor Invoice Tidak Ditemukan',
+                'data' => ''
+            ];
+        } else {
+            $response = [
+                'success' => 'true',
+                'message' => 'Nomor Invoice Ditemukan. Melanjutkan ke Form Return ?',
+                'data' => $result
+            ];
+        }
+        return response()
+            ->json($response)
+            ->withCallback($request->input('callback'));
+    }
+
+    public function filter_invoice_pemberian_sample_detail($id_invoice)
+    {
+        $data = [
+            'dtHead' => JualHeadModel::with('get_detail', 'get_detail.get_produk')->find($id_invoice)
+        ];
+        return view('return.pemberianSample.detail_invoice', $data);
+    }
+    public function filter_invoice_pemberian_sample($id_customer)
+    {
+        $result = JualHeadModel::with('get_detail')->where('customer_id', $id_customer)->where('jenis_jual', 1)->orderby('tgl_invoice', 'desc')->get();
+
+        $data = [
+            'list_invoice' => $result
+        ];
+        return view('return.pemberianSample.daftar_invoice', $data);
+    }
+
+    public function return_pemberian_sample_store(Request $request)
+    {
+        try {
+
+            $save_head = new ReturnPemberianSampleHeadModel();
+            //store header
+            $save_head->no_return = $this->create_no_return_pemberian_sample();
+            $save_head->jual_id = $request->inpInvoiceId;
+            $save_head->tgl_return = ($request->inpTglReturn=="") ? NULL : date("Y-m-d", strtotime(str_replace("/", "-", $request->inpTglReturn)));
+            $save_head->total_qty = str_replace(",","", $request->inputTotal);
+            $save_head->keterangan = $request->inpKeterangan;
+            $save_head->user_id = auth()->user()->id;
+            $save_head->save();
+            $id_head = $save_head->id;
+            //store detail
+            $jml_item = count($request->item_id);
+            foreach(array($request) as $key => $value)
+            {
+                for($i=0; $i<$jml_item; $i++)
+                {
+                    if($value['selectItem'][$i]=="1")
+                    {
+                        $newdetail = new ReturnPemberianSampleDetailModel();
+                        $newdetail->head_id = $id_head;
+                        $newdetail->produk_id = $value['item_id'][$i];
+                        $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
+                        $newdetail->save();
+                        //Update Stok
+                        $update = ProductModel::find($value['item_id'][$i]);
+                        $update->stok_akhir = ((int)$update->stok_akhir +  (int)str_replace(",","", $value['item_qty'][$i]));
+                        $update->save();
+                    }
+                }
+            }
+            if($id_head)
+            {
+                return redirect('returnPemberianSample')->with('message', 'Return Pemberian Sample Berhasil Disimpan');
+            } else {
+                return redirect('returnPemberianSample')->with('message', 'Return Pemberian Sample Gagal Disimpan');
+            }
+
+        } catch (QueryException $e)
+        {
+            return redirect('returnPemberianSample')->with('message', 'Proses Gagal. Pesan Error : '.$e->getMessage());
+        }
+    }
+
+    public function create_no_return_pemberian_sample()
+    {
+        $no_urut = 1;
+        $kd="RTPS"; //Return Jual
+        $bulan = sprintf('%02s', date('m'));
+        $tahun = date('Y');
+
+        $result = ReturnPemberianSampleHeadModel::whereYear('tgl_return', $tahun)->orderby('id', 'desc')->first();
+        if(empty($result->no_return)) {
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
+        } else {
+            $no_trans_baru = (int)substr($result->no_return, 11, 4) + 1;
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);
         }
         return $no_baru;

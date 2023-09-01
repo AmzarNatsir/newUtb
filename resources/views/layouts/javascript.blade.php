@@ -40,7 +40,7 @@
 <!-- <script src="{{asset('assets/AdminLTE/dist/js/pages/dashboard2.js')}}"></script> -->
 
 <script type="text/javascript">
-    $(document).ready(function() 
+    $(document).ready(function()
     {
         $('.datatable').DataTable({
             "dom": 'Blfrtip',
@@ -60,7 +60,7 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4',
             placeholder: "Select",
-            allowClear: true
+            allowClear: true,
         });
         $('.angka').number( true, 0 );
         $('.angka_dec').number( true, 2);

@@ -287,6 +287,9 @@ $head_manaj_user = "";
             @can('transaksi_return_jual')
             <a href="{{ route('returnPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Penjualan</p></a>
             @endcan
+            @can('transaksi_return_pemberian_sample')
+            <a href="{{ route('returnPemberianSample') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Pemberian Sample</p></a>
+            @endcan
         </li>
     </ul>
 </li>
