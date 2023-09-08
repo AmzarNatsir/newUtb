@@ -8,7 +8,7 @@
     <thead>
         <tr>
             <th style="width: 50%;">No. Return : {{ $head->no_return }}</th>
-            <th>Supplier : {{ $head->get_invoice->get_customer->nama_customer }}</th>
+            <th>Customer : {{ $head->get_invoice->get_customer->nama_customer }}</th>
         </tr>
         <tr>
             <th style="width: 50%;">Tgl. Return : {{ date_format(date_create($head->tgl_return), 'd-m-Y')  }}</th>

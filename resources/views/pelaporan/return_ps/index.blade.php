@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Pelaporan')
-@section('breadcrumb', 'Laporan Return Penjualan')
+@section('breadcrumb', 'Laporan Return Pemberian Sample')
 @section('content')
 @routes
 <style>
@@ -85,7 +85,7 @@
                         <table class="table table-bordered table-hover  table-responsive" style="font-size: 11pt; width: 100%;" id="table_penjualan">
                             <thead>
                             <tr>
-                                <td style="text-align: left;" colspan="10"><h4>Laporan Return Penjualan</h4>
+                                <td style="text-align: left;" colspan="10"><h4>Laporan Return Pemberian Sample</h4>
                                 <p class="lbl_periode"></p>
                                 </td>
                             </tr>
