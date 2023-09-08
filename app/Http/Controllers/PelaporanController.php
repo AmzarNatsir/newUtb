@@ -266,6 +266,13 @@ class PelaporanController extends Controller
                                 ->whereNull('return_jual_head.deleted_at')
                                 ->selectRaw('sum(return_jual_detail.qty) as t_return_jual_awal')
                                 ->pluck('t_return_jual_awal')->first();
+            $qty_return_sp_awal = \DB::table('return_pemberian_sample_head')
+                                ->join('return_pemberian_sample_detail', 'return_pemberian_sample_head.id', '=', 'return_pemberian_sample_detail.head_id')
+                                ->whereDate('return_pemberian_sample_head.tgl_return', '<', $tgl_1)
+                                ->where('return_pemberian_sample_detail.produk_id', $list->id)
+                                ->whereNull('return_pemberian_sample_head.deleted_at')
+                                ->selectRaw('sum(return_pemberian_sample_detail.qty) as t_return_sp_awal')
+                                ->pluck('t_return_sp_awal')->first();
             //-
             $qty_penjualan_awal = \DB::table('jual_head')
                                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
@@ -294,7 +301,7 @@ class PelaporanController extends Controller
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
 
-            $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
+            $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal + $qty_return_sp_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
 
             //range date selected
             //stok masuk
@@ -314,6 +321,14 @@ class PelaporanController extends Controller
                     ->whereNull('return_jual_head.deleted_at')
                     ->selectRaw('sum(return_jual_detail.qty) as t_return_jual')
                     ->pluck('t_return_jual')->first();
+            $qty_return_ps = \DB::table('return_pemberian_sample_head')
+                    ->join('return_pemberian_sample_detail', 'return_pemberian_sample_head.id', '=', 'return_pemberian_sample_detail.head_id')
+                    ->whereDate('return_pemberian_sample_head.tgl_return', '>=', $tgl_1)
+                    ->whereDate('return_pemberian_sample_head.tgl_return', '<=', $tgl_2)
+                    ->where('return_pemberian_sample_detail.produk_id', $list->id)
+                    ->whereNull('return_pemberian_sample_head.deleted_at')
+                    ->selectRaw('sum(return_pemberian_sample_detail.qty) as t_return_ps')
+                    ->pluck('t_return_ps')->first();
             //stok keluar
             $qty_penjualan = \DB::table('jual_head')
                     ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
@@ -344,20 +359,27 @@ class PelaporanController extends Controller
                     ->pluck('t_return_beli')->first();
 
             //stok akhir
-            $stok_masuk = $qty_pembelian + $qty_return_jual;
+            $stok_masuk = $qty_pembelian + $qty_return_jual + $qty_return_ps;
             $stok_keluar = $qty_penjualan + $qty_return_beli + $qty_pemberian_sampel;
             //stok akhir
             $current_qty = ($stok_awal + $stok_masuk) - $stok_keluar;
+            if($current_qty == 0){
+                $lbl_current_stok = "<span class='badge bg-warning' style='font-size: 12pt;'>".$current_qty."</span>";
+            } else if($current_qty > 0) {
+                $lbl_current_stok = "<span class='badge bg-success' style='font-size: 12pt;'>".$current_qty."</span>";
+            } else {
+                $lbl_current_stok = "<span class='badge bg-danger' style='font-size: 12pt;'>".$current_qty."</span>";
+            }
             $html .= "<tr>
             <td style='text-align: center;'>".$nom."</td>
             <td style='text-align: center;'>".$list->kode."</td>
             <td>".$list->nama_produk."</td>
             <td style='text-align: center;'>".$list->get_merk->merk."</td>
             <td style='text-align: center;'>".$list->kemasan." ".$list->get_unit->unit."</td>
-            <td style='text-align: center;'><span class='badge bg-info' style='font-size: 12pt;'>".$stok_awal."</span></td>
-            <td style='text-align: center;'><span class='badge bg-warning' style='font-size: 12pt;'>".((!empty($stok_masuk)) ? $stok_masuk : 0)."</span></td>
-            <td style='text-align: center;'><span class='badge bg-success' style='font-size: 12pt;'>".((!empty($stok_keluar)) ? $stok_keluar : 0)."</span></td>
-            <td style='text-align: center;'><span class='badge bg-primary' style='font-size: 12pt;'>".$current_qty."</span></td>
+            <td style='text-align: center;'><b>".$stok_awal."</b></td>
+            <td style='text-align: center;'><b>".((!empty($stok_masuk)) ? $stok_masuk : 0)."</b></td>
+            <td style='text-align: center;'><b>".((!empty($stok_keluar)) ? $stok_keluar : 0)."</b></td>
+            <td style='text-align: center;'>".$lbl_current_stok."</td>
             </tr>";
             $nom++;
         }
@@ -400,6 +422,14 @@ class PelaporanController extends Controller
                                 ->whereNull('return_jual_head.deleted_at')
                                 ->selectRaw('sum(return_jual_detail.qty) as t_return_jual_awal')
                                 ->pluck('t_return_jual_awal')->first();
+
+            $qty_return_sp_awal = \DB::table('return_pemberian_sample_head')
+                                ->join('return_pemberian_sample_detail', 'return_pemberian_sample_head.id', '=', 'return_pemberian_sample_detail.head_id')
+                                ->whereDate('return_pemberian_sample_head.tgl_return', '<', $tgl_1)
+                                ->where('return_pemberian_sample_detail.produk_id', $list->id)
+                                ->whereNull('return_pemberian_sample_head.deleted_at')
+                                ->selectRaw('sum(return_pemberian_sample_detail.qty) as t_return_sp_awal')
+                                ->pluck('t_return_sp_awal')->first();
             //-
             $qty_penjualan_awal = \DB::table('jual_head')
                                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
@@ -428,7 +458,7 @@ class PelaporanController extends Controller
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
 
-            $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
+            $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal + $qty_return_sp_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
 
             //range date selected
             //stok masuk
@@ -448,6 +478,15 @@ class PelaporanController extends Controller
                     ->whereNull('return_jual_head.deleted_at')
                     ->selectRaw('sum(return_jual_detail.qty) as t_return_jual')
                     ->pluck('t_return_jual')->first();
+
+            $qty_return_ps = \DB::table('return_pemberian_sample_head')
+                    ->join('return_pemberian_sample_detail', 'return_pemberian_sample_head.id', '=', 'return_pemberian_sample_detail.head_id')
+                    ->whereDate('return_pemberian_sample_head.tgl_return', '>=', $tgl_1)
+                    ->whereDate('return_pemberian_sample_head.tgl_return', '<=', $tgl_2)
+                    ->where('return_pemberian_sample_detail.produk_id', $list->id)
+                    ->whereNull('return_pemberian_sample_head.deleted_at')
+                    ->selectRaw('sum(return_pemberian_sample_detail.qty) as t_return_ps')
+                    ->pluck('t_return_ps')->first();
             //stok keluar
             $qty_penjualan = \DB::table('jual_head')
                     ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
@@ -478,7 +517,7 @@ class PelaporanController extends Controller
                     ->pluck('t_return_beli')->first();
 
             //stok akhir
-            $stok_masuk = $qty_pembelian + $qty_return_jual;
+            $stok_masuk = $qty_pembelian + $qty_return_jual + $qty_return_ps;
             $stok_keluar = $qty_penjualan + $qty_return_beli + $qty_pemberian_sampel;
             //stok akhir
             $current_qty = ($stok_awal + $stok_masuk) - $stok_keluar;

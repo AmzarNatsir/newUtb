@@ -194,7 +194,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="card card-primary">
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fa fa-table"></i> Rincian Stok Masuk</h3>
@@ -203,8 +203,9 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                         <table style="font-size: 10pt; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th style="width: 50%;" class="text-center">Receiving</th>
-                                                <th style="width: 50%;" class="text-center">Return Penjualan</th>
+                                                <th style="width: 33%;" class="text-center">Receiving</th>
+                                                <th style="width: 34%;" class="text-center">Return Penjualan</th>
+                                                <th style="width: 33%;" class="text-center">Return Pemberian Sampel</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -229,16 +230,26 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                                                     <tbody class="all_items_return_jual"></tbody>
                                                     </table>
                                                 </td>
+                                                <td style="vertical-align: top;">
+                                                    <table class="table" style="font-size: 10pt; width: 100%;" border='1'>
+                                                    <thead>
+                                                        <th style="width: 5%;">No.</th>
+                                                        <th style="width: 25%;">Tanggal</th>
+                                                        <th style="width: 20%;" class="text-center">Qty</th>
+                                                    </thead>
+                                                    <tbody class="all_items_return_ps"></tbody>
+                                                    </table>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" class="total_masuk"></td>
+                                                <td colspan="3" class="total_masuk"></td>
                                             </tr>
                                         </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="card card-success">
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fa fa-table"></i> Rincian Stok Keluar</h3>
@@ -382,6 +393,7 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
             {
                 $(".all_items_beli").empty();
                 $(".all_items_return_jual").empty();
+                $(".all_items_return_ps").empty();
                 $(".all_items_jual").empty();
                 $(".all_items_pemberian_sampel").empty();
                 $(".all_items_return_beli").empty();
@@ -429,7 +441,25 @@ html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% i
                     <td colspan='2'><b>Total Return</b></td>\
                     <td style='text-align: center'><b>"+total_2+"</b></td>\
                 </tr>");
-                $(".total_masuk").html("TOTAL STOK MASUK : "+ (total_1 + total_2));
+                //return ps
+                var nom_3=1;
+                var total_2_3=0;
+                $.each(response.rincian_return_ps, function(key, dataItems) {
+                    var createdDate = new Date(dataItems.tgl_return);
+                    var tgl_transaksi = createdDate.getDate().toString().padStart(2, 0) + "/" + (createdDate.getMonth() + 1).toString().padStart(2, 0) + "/" + createdDate.getFullYear();
+                    $(".all_items_return_ps").append("<tr>\
+                        <td>"+nom_3+"</td>\
+                        <td>"+tgl_transaksi+"</td>\
+                        <td style='text-align: center'>"+dataItems.qty+"</td>\
+                    </tr>");
+                    total_2_3+=parseInt(dataItems.qty);
+                    nom_3++;
+                });
+                $(".all_items_return_ps").append("<tr style='background: #ffecb3'>\
+                    <td colspan='2'><b>Total Return Pemberian Sample</b></td>\
+                    <td style='text-align: center'><b>"+total_2_3+"</b></td>\
+                </tr>");
+                $(".total_masuk").html("TOTAL STOK MASUK : "+ (total_1 + total_2 + total_2_3));
                 //keluar
                 var nom=1;
                 var total_3=0;

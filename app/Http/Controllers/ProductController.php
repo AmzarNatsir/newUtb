@@ -47,10 +47,10 @@ class ProductController extends Controller
         $sub = 1;
         $no_item = 1;
         $kd="UTB/Pupuk-";
-        
+
         $result = ProductModel::orderby('kode', 'desc')->first();
         if(empty($result->kode)) {
-            $no_baru = $kd.sprintf('%02s', $no_item); 
+            $no_baru = $kd.sprintf('%02s', $no_item);
         } else {
             $no_trans_baru = (int)substr($result->kode, 11, 2) + 1;
             $no_baru = $kd.sprintf('%02s', $no_trans_baru);
@@ -76,7 +76,7 @@ class ProductController extends Controller
             } else {
                 return redirect('stok')->with('message', 'Data gagal disimpan');
             }
-           
+
         } catch (QueryException $e)
         {
             return redirect('stok')->with('message', 'Proses gagal. Error : '.$e->getMessage());
@@ -161,7 +161,7 @@ class ProductController extends Controller
             } else {
                 return redirect('stok')->with('message', 'Sub Item Produk gagal disimpan');
             }
-           
+
         } catch (QueryException $e)
         {
             return redirect('stok')->with('message', 'Proses gagal. Error : '.$e->getMessage());
@@ -219,10 +219,10 @@ class ProductController extends Controller
         $no_item = 1;
         $head = ProductModel::find($id_head);
         $kd = $head->kode;
-        
+
         $result = ProductSubModel::where('head_id', $id_head)->orderby('kode', 'desc')->first();
         if(empty($result->kode)) {
-            $no_baru = $kd.".".sprintf('%04s', $no_item); 
+            $no_baru = $kd.".".sprintf('%04s', $no_item);
         } else {
             $no_trans_baru = (int)substr($result->kode, 14, 4) + 1;
             $no_baru = $kd.".".sprintf('%04s', $no_trans_baru);
@@ -237,7 +237,7 @@ class ProductController extends Controller
         $response = array();
         foreach($result as $item){
             $response[] = array(
-                "value"=>$item->id, 
+                "value"=>$item->id,
                 "label"=>$item->nama_produk,
                 "kode"=>$item->kode,
                 "satuan"=>$item->get_unit->unit,
@@ -261,7 +261,7 @@ class ProductController extends Controller
         $response = array();
         foreach($result as $item){
             $response[] = array(
-                "value"=>$item->id, 
+                "value"=>$item->id,
                 "label"=> "[".$item->kode." | ".$item->nama_produk."]",
                 "kode" => $item->kode,
                 "nama_produk" => $item->nama_produk,
@@ -283,7 +283,7 @@ class ProductController extends Controller
         $response = array();
         foreach($result as $item){
             $response[] = array(
-                "value"=>$item->id, 
+                "value"=>$item->id,
                 "label"=> "[".$item->kode." | ".$item->nama_produk." | Stok : ".$item->get_product->stok_akhir." ".$item->get_product->get_unit->unit."]",
                 "id_head_produk"=>$item->get_product->id,
                 "kode"=>$item->kode,
@@ -350,7 +350,7 @@ class ProductController extends Controller
         $response = array();
         foreach($result as $item){
             $response[] = array(
-                "value"=>$item->id, 
+                "value"=>$item->id,
                 "label"=> "[".$item->kode." | ".$item->nama_produk."]",
                 "kode" => $item->kode,
                 "nama_produk" => $item->nama_produk,
@@ -388,7 +388,13 @@ class ProductController extends Controller
                             ->whereNull('return_jual_head.deleted_at')
                             ->selectRaw('sum(return_jual_detail.qty) as t_return_jual_awal')
                             ->pluck('t_return_jual_awal')->first();
-
+        $qty_return_sp_awal = \DB::table('return_pemberian_sample_head')
+                            ->join('return_pemberian_sample_detail', 'return_pemberian_sample_head.id', '=', 'return_pemberian_sample_detail.head_id')
+                            ->whereDate('return_pemberian_sample_head.tgl_return', '<', $tgl_1)
+                            ->where('return_pemberian_sample_detail.produk_id', $id_stok)
+                            ->whereNull('return_pemberian_sample_head.deleted_at')
+                            ->selectRaw('sum(return_pemberian_sample_detail.qty) as t_return_sp_awal')
+                            ->pluck('t_return_sp_awal')->first();
         //-
         $qty_penjualan_awal = \DB::table('jual_head')
                             ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
@@ -416,7 +422,7 @@ class ProductController extends Controller
                             ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                             ->pluck('t_penjualan_awal')->first();
 
-        $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
+        $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal + $qty_return_sp_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
 
         //range date selected
         //stok masuk
@@ -436,6 +442,14 @@ class ProductController extends Controller
                 ->whereNull('return_jual_head.deleted_at')
                 ->selectRaw('sum(return_jual_detail.qty) as t_return_jual')
                 ->pluck('t_return_jual')->first();
+        $qty_return_ps = \DB::table('return_pemberian_sample_head')
+                ->join('return_pemberian_sample_detail', 'return_pemberian_sample_head.id', '=', 'return_pemberian_sample_detail.head_id')
+                ->whereDate('return_pemberian_sample_head.tgl_return', '>=', $tgl_1)
+                ->whereDate('return_pemberian_sample_head.tgl_return', '<=', $tgl_2)
+                ->where('return_pemberian_sample_detail.produk_id', $id_stok)
+                ->whereNull('return_pemberian_sample_head.deleted_at')
+                ->selectRaw('sum(return_pemberian_sample_detail.qty) as t_return_ps')
+                ->pluck('t_return_ps')->first();
         //stok keluar
         $qty_penjualan = \DB::table('jual_head')
                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
@@ -480,6 +494,14 @@ class ProductController extends Controller
                 ->where('return_jual_detail.produk_id', $id_stok)
                 ->whereNull('return_jual_head.deleted_at')
                 ->get();
+
+        $rincian_return_ps = \DB::table('return_pemberian_sample_head')
+                ->join('return_pemberian_sample_detail', 'return_pemberian_sample_head.id', '=', 'return_pemberian_sample_detail.head_id')
+                ->whereDate('return_pemberian_sample_head.tgl_return', '>=', $tgl_1)
+                ->whereDate('return_pemberian_sample_head.tgl_return', '<=', $tgl_2)
+                ->where('return_pemberian_sample_detail.produk_id', $id_stok)
+                ->whereNull('return_pemberian_sample_head.deleted_at')
+                ->get();
         //keluar
         $rincian_penjualan = \DB::table('jual_head')
                 ->join('jual_detail', 'jual_head.id', '=', 'jual_detail.head_id')
@@ -506,7 +528,7 @@ class ProductController extends Controller
                 ->where('jual_head.jenis_jual', 1)
                 ->get();
         //summary
-        $stok_masuk = $qty_pembelian + $qty_return_jual;
+        $stok_masuk = $qty_pembelian + $qty_return_jual + $qty_return_ps;
         $stok_keluar = $qty_penjualan + $qty_return_beli + $qty_pemberian_sampel;
         //stok akhir
         $current_qty = ($stok_awal + $stok_masuk) - $stok_keluar;
@@ -521,7 +543,8 @@ class ProductController extends Controller
                 'rincian_return_jual' => $rincian_return_jual,
                 'rincian_jual' => $rincian_penjualan,
                 'rincian_return_beli' => $rincian_return_beli,
-                'rincian_sampel' => $rincian_pemberian_sampel
+                'rincian_sampel' => $rincian_pemberian_sampel,
+                'rincian_return_ps' => $rincian_return_ps
             ]);
     }
 
@@ -591,10 +614,10 @@ class ProductController extends Controller
         $kd="SPL";
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
-        
+
         $result = JualHeadModel::orderby('id', 'desc')->first();
         if(empty($result->no_invoice)) {
-            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut); 
+            $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
         } else {
             $no_trans_baru = (int)substr($result->no_invoice, 10, 4) + 1;
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_trans_baru);
@@ -603,5 +626,5 @@ class ProductController extends Controller
     }
 
 
-    //export 
+    //export
 }
