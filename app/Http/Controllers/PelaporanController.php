@@ -14,6 +14,8 @@ use App\Models\ReceiveDetailModel;
 use App\Models\ReceiveHeadModel;
 use App\Models\ReturnBeliHeadModel;
 use App\Models\ReturnJualHeadModel;
+use App\Models\ReturnPemberianSampleDetailModel;
+use App\Models\ReturnPemberianSampleHeadModel;
 use App\Models\SupplierModel;
 use Illuminate\Http\Request;
 use PDF;
@@ -58,7 +60,7 @@ class PelaporanController extends Controller
                 $total_terbayar_invoice = $list->total_receive_net;
                 $outs_invoice = 0;
             }
-            
+
             $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
 
             $html .= "<tr>
@@ -91,7 +93,7 @@ class PelaporanController extends Controller
                 'periode' => "Periode : ".$request->ket_periode
             ])
             ->withCallback($request->input('callback'));
-        
+
     }
 
     public function laporan_pembelian_detail($id)
@@ -108,7 +110,7 @@ class PelaporanController extends Controller
         $arr_tgl_2 = explode('-', $tgl_2);
         $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
         $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
-        
+
         $result = ReceiveHeadModel::whereDate('tgl_tiba', '>=', $tgl_1)
                         ->whereDate('tgl_tiba', '<=', $tgl_2)->get();
 
@@ -207,7 +209,7 @@ class PelaporanController extends Controller
         return view('pelaporan.penjualan.detail', $data);
     }
 
-    
+
     public function laporan_penjualan_print($tgl_1=null, $tgl_2=null, $view_detail=null)
     {
         $arr_tgl_1 = explode('-', $tgl_1);
@@ -220,7 +222,7 @@ class PelaporanController extends Controller
                             ->whereDate('tgl_invoice', '<=', $tgl_2)
                             ->whereNULL('jenis_jual')
                             ->where('status_approval', 1)->get();
-        
+
         $pdf = PDF::loadview('pelaporan.penjualan.print', [
             'list_data' => $result,
             'periode' => $ket_periode,
@@ -291,7 +293,7 @@ class PelaporanController extends Controller
                                 ->where('jual_head.jenis_jual', 1)
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
-            
+
             $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
 
             //range date selected
@@ -425,7 +427,7 @@ class PelaporanController extends Controller
                                 ->where('jual_head.jenis_jual', 1)
                                 ->selectRaw('sum(jual_detail.qty) as t_penjualan_awal')
                                 ->pluck('t_penjualan_awal')->first();
-            
+
             $stok_awal = ($qty_awal + $qty_pembelian_awal + $qty_return_jual_awal) - ($qty_penjualan_awal + $qty_return_beli_awal + $qty_pemberian_sampel);
 
             //range date selected
@@ -542,7 +544,7 @@ class PelaporanController extends Controller
             <td style='text-align: center;'>".$total."</td>
             <td></td>
         ";
-        
+
         return response()
             ->json([
                 'all_result' => $html,
@@ -566,7 +568,7 @@ class PelaporanController extends Controller
 
         $result = JualHeadModel::whereDate('tgl_transaksi', '>=', $tgl_awal)
                             ->whereDate('tgl_transaksi', '<=', $tgl_akhir)->where('jenis_jual', 1)->get();
-        
+
         $pdf = PDF::loadview('pelaporan.pemberian_sampel.print', [
             'list_data' => $result,
             'periode' => $ket_periode,
@@ -610,7 +612,7 @@ class PelaporanController extends Controller
             <td colspan='5' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total, )."</b></td>
         ";
-        
+
         return response()
             ->json([
                 'all_result' => $html,
@@ -632,7 +634,7 @@ class PelaporanController extends Controller
         $arr_tgl_2 = explode('-', $tgl_2);
         $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
         $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
-        
+
         $result = ReturnBeliHeadModel::whereDate('tgl_return', '>=', $tgl_1)
                         ->whereDate('tgl_return', '<=', $tgl_2)->get();
 
@@ -680,7 +682,7 @@ class PelaporanController extends Controller
             <td colspan='5' style='text-align: right;'><b>TOTAL</b></td>
             <td style='text-align: right;'><b>".number_format($total, )."</b></td>
         ";
-        
+
         return response()
             ->json([
                 'all_result' => $html,
@@ -702,7 +704,7 @@ class PelaporanController extends Controller
         $arr_tgl_2 = explode('-', $tgl_2);
         $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
         $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
-        
+
         $result = ReturnJualHeadModel::whereDate('tgl_return', '>=', $tgl_1)
                         ->whereDate('tgl_return', '<=', $tgl_2)->get();
 
@@ -743,7 +745,7 @@ class PelaporanController extends Controller
                             ->where('supplier_id', $supplier)
                             ->orderby('tgl_bayar', 'asc')->get();
         }
-        
+
         $nom=1;
         $total = 0;
         $html="";
@@ -771,7 +773,7 @@ class PelaporanController extends Controller
             <td style='text-align: right;'><b>".number_format($total, )."</b></td>
             <td></td>
         ";
-        
+
         return response()
             ->json([
                 'all_result' => $html,
@@ -788,7 +790,7 @@ class PelaporanController extends Controller
         $arr_tgl_2 = explode('-', $tgl_2);
         $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
         $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
-        
+
         if($supplier_id=='null')
         {
             $ket_supplier = 'Semua Supplier';
@@ -839,7 +841,7 @@ class PelaporanController extends Controller
                             ->where('customer_id', $customer)
                             ->orderby('tgl_bayar', 'asc')->get();
         }
-        
+
         $nom=1;
         $total = 0;
         $html="";
@@ -868,7 +870,7 @@ class PelaporanController extends Controller
             <td style='text-align: right;'><b>".number_format($total, )."</b></td>
             <td colspan='3'></td>
         ";
-        
+
         return response()
             ->json([
                 'all_result' => $html,
@@ -885,7 +887,7 @@ class PelaporanController extends Controller
         $arr_tgl_2 = explode('-', $tgl_2);
         $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
         $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
-        
+
         if($customer_id=='null')
         {
             $ket_customer = 'Semua Customer';
@@ -936,7 +938,7 @@ class PelaporanController extends Controller
                             ->where('kontainer_id', $kontainer)
                             ->orderby('tgl_bayar', 'asc')->get();
         }
-        
+
         $nom=1;
         $total = 0;
         $html="";
@@ -963,7 +965,7 @@ class PelaporanController extends Controller
             <td style='text-align: right;'><b>".number_format($total, )."</b></td>
             <td colspan='2'></td>
         ";
-        
+
         return response()
             ->json([
                 'all_result' => $html,
@@ -980,7 +982,7 @@ class PelaporanController extends Controller
         $arr_tgl_2 = explode('-', $tgl_2);
         $ket_tgl_2 = $arr_tgl_2[2]."-".$arr_tgl_2[1]."-".$arr_tgl_2[0];
         $ket_periode = $ket_tgl_1." s/d ".$ket_tgl_2;
-        
+
         if($kontainer_id=='null')
         {
             $ket_kontainer = 'Semua Kontainer';
@@ -1080,5 +1082,56 @@ class PelaporanController extends Controller
             ])
             ->withCallback($request->input('callback'));
 
+    }
+
+    public function laporan_return_ps()
+    {
+        return view('pelaporan.return_ps.index');
+    }
+
+    public function laporan_return_ps_filter(Request $request)
+    {
+        $tgl_awal = $request->tgl_1;
+        $tgl_akhir = $request->tgl_2;
+        $result = ReturnPemberianSampleHeadModel::whereDate('tgl_return', '>=', $tgl_awal)
+                            ->whereDate('tgl_return', '<=', $tgl_akhir)
+                            ->orderby('tgl_return', 'asc')->get();
+        $nom=1;
+        $total = 0;
+        $html="";
+        foreach($result as $list)
+        {
+            $tot_qty = $list->get_detail->sum('qty');
+            $tbl_aksi = '<button type="button" class="btn btn-block btn-outline-danger btn-sm" name="tbl-detail[]" id="tbl" title="Klik untuk melihat detail" data-toggle="modal" data-target="#modal-form" onClick="goDetail(this)" value="'.$list->id.'"><i class="fa fa-nav-icon far fa-plus-square"></i></button>';
+
+            $html .= "<tr>
+            <td style='text-align: center;'>".$tbl_aksi."</td>
+            <td style='text-align: center;'>".$nom."</td>
+            <td style='text-align: center;'>".$list->no_return."</td>
+            <td style='text-align: center;'>".date_format(date_create($list->tgl_return), 'd-m-Y')."</td>
+            <td>".$list->get_invoice->get_customer->nama_customer."</td>
+            <td style='text-align: right;'><b>".number_format($list->total_qty, 0)."</b></td>
+            </tr>";
+            $nom++;
+            $total+=$list->total_qty;
+        }
+        $html .= "<tr>
+            <td colspan='5' style='text-align: right;'><b>TOTAL</b></td>
+            <td style='text-align: right;'><b>".number_format($total, )."</b></td>
+        ";
+
+        return response()
+            ->json([
+                'all_result' => $html,
+                'periode' => "Periode : ".$request->ket_periode
+            ])
+            ->withCallback($request->input('callback'));
+    }
+
+    public function laporan_return_ps_detail($id)
+    {
+        $data['head'] = ReturnPemberianSampleHeadModel::find($id);
+        $data['detail'] = ReturnPemberianSampleDetailModel::where('head_id', $id)->get();
+        return view('pelaporan.return_ps.detail', $data);
     }
 }

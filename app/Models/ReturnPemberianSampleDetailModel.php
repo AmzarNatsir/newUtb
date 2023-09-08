@@ -18,6 +18,10 @@ class ReturnPemberianSampleDetailModel extends Model
         'qty',
     ];
 
+    public function get_header()
+    {
+        return $this->belongsTo(ReturnPemberianSampleHeadModel::class, 'head_id', 'id');
+    }
     public function get_produk()
     {
         return $this->belongsTo(ProductModel::class, 'produk_id', 'id');

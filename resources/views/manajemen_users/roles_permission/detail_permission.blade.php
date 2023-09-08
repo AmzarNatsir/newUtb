@@ -39,6 +39,16 @@
                 <td style="width: 5%;"></td>
                 <td style="width: 5%;"><div class="form-group clearfix">
                         <div class="icheck-danger d-inline">
+                            <input type="checkbox" id="checkPelaporanReturnPS" name="checkMenu[43]" value="laporan_return_ps" {{ in_array('laporan_return_ps', $rolePermissions) ? 'checked' : '' }} disabled>
+                            <label for="checkPelaporanReturnPS"></label>
+                        </div>
+                    </div></td>
+                <td><label for="checkPelaporanReturnPS">Return Pembelian Sample</label></td>
+            </tr>
+            <tr>
+                <td style="width: 5%;"></td>
+                <td style="width: 5%;"><div class="form-group clearfix">
+                        <div class="icheck-danger d-inline">
                             <input type="checkbox" id="checkPelaporanPembelian" name="checkMenu[4]" value="laporan_pembelian" {{ in_array('laporan_pembelian', $rolePermissions) ? 'checked' : '' }} disabled>
                             <label for="checkPelaporanPembelian"></label>
                         </div>

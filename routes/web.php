@@ -237,6 +237,10 @@ Route::post('laporanReturnPenjualanFilter', [PelaporanController::class, 'lapora
 Route::get('laporanReturnPenjualanDetail/{id}', [PelaporanController::class, 'laporan_return_penjualan_detail'])->name('laporanReturnPenjualanDetail');
 Route::get('laporanReturnPenjualanPrint/{param1}/{param2}/{param3}', [PelaporanController::class, 'laporan_return_penjualan_print'])->name('laporanReturnPenjualanPrint');
 
+//laporan return pemberian sample
+Route::get('laporanReturnPS', [PelaporanController::class, 'laporan_return_ps'])->name("laporanReturnPS");
+Route::post('laporanReturnPSFilter', [PelaporanController::class, 'laporan_return_ps_filter'])->name("laporanReturnPSFilter");
+Route::get('laporanReturnPSDetail/{id}', [PelaporanController::class, 'laporan_return_ps_detail'])->name('laporanReturnPSDetail');
 //laporan hutang
 Route::get('laporanHutang', [PelaporanController::class, 'laporan_hutang'])->name("laporanHutang");
 Route::post('laporanHutangFilter', [PelaporanController::class, 'laporan_hutang_filter'])->name("laporanHutangFilter");

@@ -110,19 +110,24 @@ $head_manaj_user = "";
             <a href="{{ route('laporanPemerianSampel') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pemberian Sampel</p></a>
         </li>
         @endcan
+        @can('laporan_return_ps')
+        <li class="nav-item">
+            <a href="{{ route('laporanReturnPS') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Pemberian Sample</p></a>
+        </li>
+        @endcan
         @can('laporan_pembelian')
         <li class="nav-item">
             <a href="{{ route('laporanPembelian') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembelian</p></a>
         </li>
         @endcan
-        @can('laporan_penjualan')
-        <li class="nav-item">
-            <a href="{{ route('laporanPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
-        </li>
-        @endcan
         @can('laporan_return_pembelian')
         <li class="nav-item">
             <a href="{{ route('laporanReturnPembelian') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Return Pembelian</p></a>
+        </li>
+        @endcan
+        @can('laporan_penjualan')
+        <li class="nav-item">
+            <a href="{{ route('laporanPenjualan') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penjualan</p></a>
         </li>
         @endcan
         @can('laporan_return_penjualan')
@@ -135,14 +140,14 @@ $head_manaj_user = "";
             <a href="{{ route('laporanHutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang</p></a>
         </li>
         @endcan
-        @can('laporan_terima_piutang')
-        <li class="nav-item">
-            <a href="{{ route('laporanPiutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penerimaan Piutang</p></a>
-        </li>
-        @endcan
         @can('laporan_hutang_kontainer')
         <li class="nav-item">
             <a href="{{ route('laporanHutangKontainer') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Pembayaran Hutang Kontainer</p></a>
+        </li>
+        @endcan
+        @can('laporan_terima_piutang')
+        <li class="nav-item">
+            <a href="{{ route('laporanPiutang') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Penerimaan Piutang</p></a>
         </li>
         @endcan
         @can('laporan_hpp')

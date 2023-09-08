@@ -67,6 +67,16 @@
                                     <td style="width: 5%;"></td>
                                     <td style="width: 5%;"><div class="form-group clearfix">
                                             <div class="icheck-danger d-inline">
+                                                <input type="checkbox" id="checkPelaporanReturnPS" name="checkMenu[43]" value="laporan_return_ps">
+                                                <label for="checkPelaporanReturnPS"></label>
+                                            </div>
+                                        </div></td>
+                                    <td><label for="checkPelaporanReturnPS">Return Pemberian Sample</label></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 5%;"></td>
+                                    <td style="width: 5%;"><div class="form-group clearfix">
+                                            <div class="icheck-danger d-inline">
                                                 <input type="checkbox" id="checkPelaporanPembelian" name="checkMenu[4]" value="laporan_pembelian">
                                                 <label for="checkPelaporanPembelian"></label>
                                             </div>

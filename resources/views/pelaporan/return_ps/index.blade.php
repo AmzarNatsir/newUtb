@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Pelaporan')
-@section('breadcrumb', 'Laporan Pemberian Sampel')
+@section('breadcrumb', 'Laporan Return Penjualan')
 @section('content')
 @routes
 <style>
@@ -20,74 +20,82 @@
     <!-- Default box -->
     <div class="card card-danger">
     <div class="card-header">
-        <h3 class="card-title">Laporan Pemberian Sampel</h3>
+        <h3 class="card-title">Laporan Return Pemberian Sample</h3>
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title"><i class="fa fa-search"></i> Filter Data</h3>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="form-group col-md-2">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="far fa-calendar-alt"></i>
-                                    </span>
+                        <div class="form-group">
+                            <label for="searchTglTrans">Periode</label>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        </div>
+                                        <input class="form-control dtpicker input-sm" id="searchTglTrans_1" name="searchTglTrans_1" type="text" placeholder="Tanggal Awal" value="{{ date('d/m/Y') }}">
                                     </div>
-                                    <input class="form-control dtpicker input-sm" id="searchTglTrans_1" name="searchTglTrans_1" type="text" placeholder="Tanggal Awal" value="{{ date('d/m/Y') }}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        </div>
+                                        <input class="form-control dtpicker input-sm" id="searchTglTrans_2" name="searchTglTrans_2" type="text" placeholder="Tanggal Akhir" value="{{ date('d/m/Y') }}">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-2">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="far fa-calendar-alt"></i>
-                                    </span>
-                                    </div>
-                                    <input class="form-control dtpicker input-sm" id="searchTglTrans_2" name="searchTglTrans_2" type="text" placeholder="Tanggal Akhir" value="{{ date('d/m/Y') }}">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <button type="button" class="btn btn-success" name="tbl-filter" id="tbl-filter" onclick="goFilter()"><i class="fa fa-search"></i> Filter</button>
-                                <button type="button" class="btn btn-danger" onclick="goPrint()"><i class="fa fa-print"></i> Print</button>
-                                <button class="btn btn-primary" name="tbl-export" id="tbl-export" onclick="goExport('table_penjualan', 'laporan_penjualan')"><i class="fa fa-table"></i> Export</button>
-                                <button class="btn btn-danger" type="button" id="loaderDiv" style="display: none">
-                                    <i class="fa fa-asterisk fa-spin text-info"></i>
-                                </button>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <div class="form-group clearfix">
-                                    <div class="icheck-success d-inline">
-                                        <input type="checkbox" id="checkPpnPersen">
-                                        <label for="checkPpnPersen">Include Detail (* Print)
-                                        </label>
-                                    </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success" name="tbl-filter" id="tbl-filter" onclick="goFilter()"><i class="fa fa-search"></i> Filter</button>
+                            <button type="button" class="btn btn-danger" onclick="goPrint()"><i class="fa fa-print"></i> Print</button>
+                            <button class="btn btn-primary" name="tbl-export" id="tbl-export" onclick="goExport('table_penjualan', 'laporan_penjualan')"><i class="fa fa-table"></i> Export</button>
+                            <button class="btn btn-danger" type="button" id="loaderDiv" style="display: none">
+                                <i class="fa fa-asterisk fa-spin text-info"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group clearfix">
+                                <div class="icheck-success d-inline">
+                                    <input type="checkbox" id="checkPpnPersen">
+                                    <label for="checkPpnPersen">Include Detail (* Print)
+                                    </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="card card-warning">
                     <div class="card-body">
                         <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
                             <div class="spinner-border text-primary" role="status">
                             </div>
                         </div>
-                        <table class="table table-bordered table-hover datatable" style="font-size: 10pt; width: 100%;">
+                        <table class="table table-bordered table-hover  table-responsive" style="font-size: 11pt; width: 100%;" id="table_penjualan">
                             <thead>
+                            <tr>
+                                <td style="text-align: left;" colspan="10"><h4>Laporan Return Penjualan</h4>
+                                <p class="lbl_periode"></p>
+                                </td>
+                            </tr>
                             <tr>
                                 <th style="width: 5%; text-align: center;">Act</th>
                                 <th style="width: 5%; text-align: center;">No.</th>
-                                <th style="width: 15%; text-align: center;">Tanggal</th>
+                                <th style="width: 10%; text-align: center;">No.Return</th>
+                                <th style="width: 10%; text-align: center;">Tgl.Return</th>
                                 <th>Customer</th>
-                                <th style="width: 15%; text-align: center;">Total Produk</th>
-                                <th style="width: 30%;">Keterangan</th>
+                                <th style="width: 15%; text-align: center;">Total</th>
                             </tr>
                             </thead>
                             <tbody class="viewList"></tbody>
@@ -129,7 +137,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url : route("laporanPemerianSampelFilter"),
+            url : route("laporanReturnPSFilter"),
             contentType: "application/json",
             method : 'post',
             dataType: "json",
@@ -152,6 +160,14 @@
         // return false;
     };
 
+    var goDetail = function(el)
+    {
+        $('#spinner-div').show();
+        $("#frm_modal").load(route('laporanReturnPSDetail', $(el).val()), function() {
+            $('#spinner-div').hide();
+        });
+    };
+
     var goPrint = function ()
     {
         var arr_tgl_1 = $("#searchTglTrans_1").val().split('/');
@@ -163,16 +179,9 @@
         } else {
             var check_detail = 'false';
         }
-        window.open(route('laporanPemerianSampelPrint', [tgl_1, tgl_2, check_detail]), "_blank");
+        window.open(route('laporanReturnPenjualanPrint', [tgl_1, tgl_2, check_detail]), "_blank");
     }
 
-    var goDetail = function(el)
-    {
-        $('#spinner-div').show();
-        $("#frm_modal").load(route('laporanPemerianSampelDetail', $(el).val()), function() {
-            $('#spinner-div').hide();
-        });
-    };
 </script>
 @endsection
 
