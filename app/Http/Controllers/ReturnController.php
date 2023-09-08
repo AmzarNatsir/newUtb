@@ -361,7 +361,7 @@ class ReturnController extends Controller
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
 
-        $result = ReturnPemberianSampleHeadModel::whereYear('tgl_return', $tahun)->orderby('id', 'desc')->first();
+        $result = ReturnPemberianSampleHeadModel::whereYear('create_at', $tahun)->orderby('id', 'desc')->first();
         if(empty($result->no_return)) {
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
         } else {
