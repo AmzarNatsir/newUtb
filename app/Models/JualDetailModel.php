@@ -24,7 +24,8 @@ class JualDetailModel extends Model
         'sub_total_net',
         'status_item',
         'kat_harga',
-        'harga_beli'
+        'harga_beli',
+        'qty_return'
     ];
 
     public function get_produk()

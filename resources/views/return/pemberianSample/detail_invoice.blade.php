@@ -8,16 +8,18 @@
                     <th class="text-center" style="width: 2%; vertical-align: middle;">#</th>
                     <th style="vertical-align: middle;">Nama Produk</th>
                     <th class="text-center">Satuan</th>
-                    <th class="text-center">Qty</th>
+                    <th class="text-center" style="width: 15%">Qty</th>
+                    <th class="text-center" style="width: 15%">Return</th>
                 </tr>
             </thead>
             <tbody>
             @foreach($dtHead->get_detail as $list)
             <tr>
-                <td><div class="icheck-primary"><input type="hidden" name="item_id[]" id="item_id[]" value="{{ $list->produk_id }}"><input type="checkbox" value="" name="checkItem[]" id="{{ $list->id }}" onclick="checkItem(this)"><label for="{{ $list->id }}"></label></div><input type="hidden" name="selectItem[]" id="selectItem[]" value="0"></td>
+                <td><div class="icheck-primary"><input type="hidden" name="id_detail[]" id="id_detail[]" value="{{ $list->id }}" ><input type="hidden" name="item_id[]" id="item_id[]" value="{{ $list->produk_id }}"><input type="checkbox" value="" name="checkItem[]" id="{{ $list->id }}" onclick="checkItem(this)"><label for="{{ $list->id }}"></label></div><input type="hidden" name="selectItem[]" id="selectItem[]" value="0"></td>
                 <td>{{ $list->get_produk->nama_produk }}</td>
                 <td class="text-center">{{ $list->get_produk->kemasan }} {{ $list->get_produk->get_unit->unit }}</td>
-                <td align="center"><input type="hidden" name="temp_qty[]" id="temp_qty[]" value="{{ $list->qty }}"><input type="text" min="1" max="1000" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="{{ $list->qty }}" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)" readonly><input type="hidden" name="change_net[]" id="change_net[]" value="0"></td>
+                <td align="center"><input type="hidden" name="temp_qty[]" id="temp_qty[]" value="{{ $list->qty }}"><input type="text" min="1" max="1000" id="item_qty[]" name="item_qty[]" class="form-control form-control-sm angka" value="{{ $list->qty - $list->qty_return }}" style="text-align:center" readonly></td>
+                <td><input type="text" class="form-control form-control-sm angka" name="qty_return[]" id="qty_return[]" value="0" style="text-align:center" onkeyup="hitungSubTotal(this)" onblur="changeToNull(this)" readonly></td>
             </tr>
             @endforeach
             </tbody>
@@ -87,10 +89,11 @@
         {
             var currentRow=$(el).closest("tr");
             if($(el).prop('checked')){
-                currentRow.find('td:eq(3) input[name="item_qty[]"]').attr('readonly', false);
+                currentRow.find('td:eq(4) input[name="qty_return[]"]').attr('readonly', false);
                 currentRow.find('td:eq(0) input[name="selectItem[]"]').val("1");
+                total();
             } else {
-                currentRow.find('td:eq(3) input[name="item_qty[]"]').attr('readonly', true);
+                currentRow.find('td:eq(4) input[name="qty_return[]"]').attr('readonly', true);
                 currentRow.find('td:eq(0) input[name="selectItem[]"]').val("0");
                 ResetSubTotal(el);
             }
@@ -98,13 +101,17 @@
         var hitungSubTotal = function(el){
             var currentRow=$(el).closest("tr");
             var jumlah = $(el).parent().parent().find('input[name="item_qty[]"]').val();
-            currentRow.find('td:eq(3) input[name="change_net[]"]').val(jumlah);
-            total();
+            var return_val = currentRow.find('td:eq(4) input[name="qty_return[]"]').val();
+            if( parseFloat(return_val) > parseFloat(jumlah)) {
+                currentRow.find('td:eq(4) input[name="qty_return[]"]').val(0)
+                total();
+            } else {
+                total();
+            }
         }
         var ResetSubTotal = function(el){
             var currentRow=$(el).closest("tr");
-            currentRow.find('td:eq(3) input[name="item_qty[]"]').val(currentRow.find('td:eq(3) input[name="temp_qty[]"]').val());
-            currentRow.find('td:eq(3) input[name="change_net[]"]').val(0);
+            currentRow.find('td:eq(4) input[name="qty_return[]"]').val(0);
             total();
         }
         var changeToNull = function(el)
@@ -118,7 +125,7 @@
 
             var total = 0;
             var sub_total = 0;
-            $.each($('input[name="change_net[]"]'),function(key, value){
+            $.each($('input[name="qty_return[]"]'),function(key, value){
                 sub_total = $(value).val() ?  $(value).val() : 0;
                 total += parseFloat($(value).val());
             })

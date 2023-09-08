@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomerModel;
+use App\Models\JualDetailModel;
 use App\Models\JualHeadModel;
 use App\Models\ProductModel;
 use App\Models\ReceiveHeadModel;
@@ -332,11 +333,15 @@ class ReturnController extends Controller
                         $newdetail = new ReturnPemberianSampleDetailModel();
                         $newdetail->head_id = $id_head;
                         $newdetail->produk_id = $value['item_id'][$i];
-                        $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
+                        $newdetail->qty = str_replace(",","", $value['qty_return'][$i]);
                         $newdetail->save();
+                        //update invoice
+                        $update_invoice = JualDetailModel::find($value['id_detail'][$i]);
+                        $update_invoice->qty_return = ((int)$update_invoice->qty_return +  (int)str_replace(",","", $value['qty_return'][$i]));
+                        $update_invoice->save();
                         //Update Stok
                         $update = ProductModel::find($value['item_id'][$i]);
-                        $update->stok_akhir = ((int)$update->stok_akhir +  (int)str_replace(",","", $value['item_qty'][$i]));
+                        $update->stok_akhir = ((int)$update->stok_akhir +  (int)str_replace(",","", $value['qty_return'][$i]));
                         $update->save();
                     }
                 }
@@ -361,7 +366,7 @@ class ReturnController extends Controller
         $bulan = sprintf('%02s', date('m'));
         $tahun = date('Y');
 
-        $result = ReturnPemberianSampleHeadModel::whereYear('create_at', $tahun)->orderby('id', 'desc')->first();
+        $result = ReturnPemberianSampleHeadModel::whereYear('created_at', $tahun)->orderby('id', 'desc')->first();
         if(empty($result->no_return)) {
             $no_baru = $kd.$tahun.$bulan.sprintf('%04s', $no_urut);
         } else {

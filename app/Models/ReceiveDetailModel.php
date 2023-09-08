@@ -21,7 +21,8 @@ class ReceiveDetailModel extends Model
         'status_item',
         'diskitem_persen',
         'diskitem_rupiah',
-        'sub_total_net'
+        'sub_total_net',
+        'qty_return'
     ];
 
     public function get_produk()
