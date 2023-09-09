@@ -79,4 +79,27 @@ class JualHeadModel extends Model
     {
         return $this->belongsTo(User::class, 'approved_by_2', 'id');
     }
+
+    public function get_return_jual_sum_qty($id)
+    {
+        $total_qty_return = \DB::table('jual_head')
+                    ->join('return_jual_head', 'return_jual_head.jual_id', '=', 'jual_head.id')
+                    ->join('return_jual_detail', 'return_jual_detail.head_id', '=', 'return_jual_head.id')
+                    ->where('jual_head.id', $id)
+                    ->selectRaw('sum(return_jual_detail.qty) as t_qty')
+                    ->pluck('t_qty')->first();
+
+        return $total_qty_return;
+    }
+    public function get_return_jual_sum_total($id)
+    {
+        $total_harga_return = \DB::table('jual_head')
+                    ->join('return_jual_head', 'return_jual_head.jual_id', '=', 'jual_head.id')
+                    ->join('return_jual_detail', 'return_jual_detail.head_id', '=', 'return_jual_head.id')
+                    ->where('jual_head.id', $id)
+                    ->selectRaw('sum(return_jual_detail.qty * return_jual_detail.harga) as t_harga')
+                    ->pluck('t_harga')->first();
+
+        return $total_harga_return;
+    }
 }

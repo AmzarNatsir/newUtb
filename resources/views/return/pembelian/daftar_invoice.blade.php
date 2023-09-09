@@ -18,11 +18,10 @@
                     </tr>
                     <tr>
                         <td><span class="float-left badge bg-success">Rp. {{ number_format($list->total_receive_net, 0) }}/ Qty : {{ number_format($list->get_detail->sum('qty'), 0) }}</span></td>
-                        <td><span class="float-left badge bg-danger">Rp. {{ number_format($total_return, 0) }}/ Qty : {{ $qty_return }}</span></td>
+                        <td><span class="float-left badge bg-danger">Rp. {{ number_format($total_return, 0) }}/ Qty : {{ number_format($qty_return, 0) }}</span></td>
                     </tr>
                 </table>
                 </a>
-                <hr>
             </li>
             @endif
             @endforeach

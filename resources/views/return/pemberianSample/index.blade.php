@@ -2,12 +2,29 @@
 @section('title', 'Transaksi')
 @section('breadcrumb', 'Return')
 @section('content')
+<style>
+    .spinner-div {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+    }
+</style>
 @routes
 <section class="content">
     <!-- Default box -->
     <div class="card card-success">
     <div class="card-header">
         <h3 class="card-title">Return Pemberian Sample</h3>
+    </div>
+    <div id="spinner-div" class="pt-5 justify-content-center spinner-div">
+        <div class="spinner-border text-primary" role="status">
+        </div>
     </div>
     <div class="card-body">
         <div class="row">
@@ -76,6 +93,7 @@
 </section>
 <script>
     $(function(){
+        $('#spinner-div').hide();
         window.setTimeout(function () { $("#success-alert").alert('close'); }, 2000);
     });
 
@@ -91,6 +109,10 @@
             dataType: "json",
             data: {
                 search: keyWord
+            },
+            beforeSend: function()
+            {
+                $('#spinner-div').show();
             },
             success: function( data ) {
                 // alert(data.success);
@@ -133,6 +155,10 @@
                     }
                     })
                 }
+            },
+            complete: function()
+            {
+                $('#spinner-div').hide();
             }
 
         })
@@ -143,14 +169,20 @@
 
     var goFilter = function()
     {
+        $('#spinner-div').show();
         var customer = $("#sel_customer").val();
-        $(".viewList").load("{{ url('returnPemberianSampleFilter') }}/"+customer);
+        $(".viewList").load("{{ url('returnPemberianSampleFilter') }}/"+customer, function(){
+            $('#spinner-div').hide();
+        });
     }
 
     var viewInvoice = function(el)
     {
+        $('#spinner-div').show();
         var id_invoice = el.id;
-        $("#viewInvoice").load("{{ url('returnPemberianSampleDetailInvoice') }}/"+id_invoice);
+        $("#viewInvoice").load("{{ url('returnPemberianSampleDetailInvoice') }}/"+id_invoice, function(){
+            $('#spinner-div').hide();
+        });
         $('.angka').number( true, 0 );
     }
 </script>
