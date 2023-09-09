@@ -6,8 +6,8 @@
             $qty_return = $list->get_return_beli_sum_qty($list->id);
             $total_return = $list->get_return_beli_sum_total($list->id);
             $selisih = $list->get_detail->sum('qty') - $list->get_detail->sum('qty_return');
-
             @endphp
+            @if($selisih > 0)
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" onClick="viewInvoice(this)" id="{{ $list->id }}">
                 {{ $list->nomor_receive }} | {{ date_format(date_create($list->tanggal_receive), 'd-m-Y') }}
@@ -24,6 +24,7 @@
                 </a>
                 <hr>
             </li>
+            @endif
             @endforeach
         </ul>
     </div>
