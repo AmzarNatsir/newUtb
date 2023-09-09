@@ -62,4 +62,27 @@ class ReceiveHeadModel extends Model
 
         return $total_terbayar_invoice;
     }
+
+    public function get_return_beli_sum_qty($id)
+    {
+        $total_qty_return = \DB::table('receive_head')
+                    ->join('return_beli_head', 'return_beli_head.receive_id', '=', 'receive_head.id')
+                    ->join('return_beli_detail', 'return_beli_detail.head_id', '=', 'return_beli_head.id')
+                    ->where('receive_head.id', $id)
+                    ->selectRaw('sum(return_beli_detail.qty) as t_qty')
+                    ->pluck('t_qty')->first();
+
+        return $total_qty_return;
+    }
+    public function get_return_beli_sum_total($id)
+    {
+        $total_harga_return = \DB::table('receive_head')
+                    ->join('return_beli_head', 'return_beli_head.receive_id', '=', 'receive_head.id')
+                    ->join('return_beli_detail', 'return_beli_detail.head_id', '=', 'return_beli_head.id')
+                    ->where('receive_head.id', $id)
+                    ->selectRaw('sum(return_beli_detail.qty * return_beli_detail.harga) as t_harga')
+                    ->pluck('t_harga')->first();
+
+        return $total_harga_return;
+    }
 }

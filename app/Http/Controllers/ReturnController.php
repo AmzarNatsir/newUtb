@@ -6,6 +6,7 @@ use App\Models\CustomerModel;
 use App\Models\JualDetailModel;
 use App\Models\JualHeadModel;
 use App\Models\ProductModel;
+use App\Models\ReceiveDetailModel;
 use App\Models\ReceiveHeadModel;
 use App\Models\ReturnBeliDetailModel;
 use App\Models\ReturnBeliHeadModel;
@@ -103,13 +104,17 @@ class ReturnController extends Controller
                         $newdetail = new ReturnBeliDetailModel();
                         $newdetail->head_id = $id_head;
                         $newdetail->produk_id = $value['item_id'][$i];
-                        $newdetail->qty = str_replace(",","", $value['item_qty'][$i]);
+                        $newdetail->qty = str_replace(",","", $value['qty_return'][$i]);
                         $newdetail->harga = str_replace(",","", $value['harga_satuan'][$i]);
-                        $newdetail->sub_total = str_replace(",","", $value['item_sub_total'][$i]);
+                        $newdetail->sub_total = str_replace(",","", $value['return_sub_total'][$i]);
                         $newdetail->save();
+                        //update invoice
+                        $update_invoice = ReceiveDetailModel::find($value['id_detail'][$i]);
+                        $update_invoice->qty_return = ((int)$update_invoice->qty_return + (int)str_replace(",","", $value['qty_return'][$i]));
+                        $update_invoice->save();
                         //Update Stok
                         $update = ProductModel::find($value['item_id'][$i]);
-                        $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['item_qty'][$i]));
+                        $update->stok_akhir = ((int)$update->stok_akhir -  (int)str_replace(",","", $value['qty_return'][$i]));
                         $update->save();
                     }
                 }

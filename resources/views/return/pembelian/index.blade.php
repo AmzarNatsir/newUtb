@@ -27,7 +27,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sel_supplier">Supplier</label>
-                            <select class="form-control select2bs4" name="sel_supplier" id="sel_supplier" style="width: 100%;" required>   
+                            <select class="form-control select2bs4" name="sel_supplier" id="sel_supplier" style="width: 100%;" required>
                                 @foreach($allSupplier as $supplier)
                                 <option value="{{ $supplier->id }}">{{ $supplier->nama_supplier }}</option>
                                 @endforeach
