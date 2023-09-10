@@ -49,6 +49,12 @@ class HutangController extends Controller
                                 ->whereNull('receive_head.deleted_at')
                                 ->selectRaw('sum(receive_head.total_receive_net) as t_hutang')
                                 ->pluck('t_hutang')->first();
+        $total_invoice_all = \DB::table('receive_head')
+                                ->where('receive_head.supplier_id', $id_supplier)
+                                ->where('receive_head.cara_bayar', 2)
+                                ->whereNull('receive_head.deleted_at')
+                                ->selectRaw('count(receive_head.id) as t_invoice')
+                                ->pluck('t_invoice')->first();
 
         foreach($result as $list)
         {
@@ -105,10 +111,10 @@ class HutangController extends Controller
         return response()
             ->json([
                 'all_result' => $html,
-                'totalInvoice' => $total_invoice,
+                'totalInvoice' => $total_invoice_all,
                 'totalHutang' => number_format($total_terhutang, 0),
                 'totalTerbayar' => number_format($total_terbayar, 0),
-                'sisaOutstanding' => number_format($total_hutang - $total_terbayar, 0)
+                'sisaOutstanding' => number_format($total_terhutang - $total_terbayar, 0)
             ])
             ->withCallback($request->input('callback'));
     }
