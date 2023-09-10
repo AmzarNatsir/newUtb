@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="sel_kontainer">Kontainer</label>
-                            <select class="form-control select2bs4" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" required>   
+                            <select class="form-control select2bs4" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" required>
                                 @foreach($allKontainer as $kontainer)
                                 <option value="{{ $kontainer->id }}">{{ $kontainer->nama_kontainer }}</option>
                                 @endforeach
@@ -279,7 +279,7 @@
             $(el).val(n_terhutang);
             $("#inpSisaHutang").val(n_terhutang);
         }
-        
+
     }
 
     var getSisaHutang = function(el)
