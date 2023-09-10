@@ -102,7 +102,7 @@ class HutangController extends Controller
                 'totalInvoice' => $total_invoice,
                 'totalHutang' => number_format($total_hutang, 0),
                 'totalTerbayar' => number_format($total_terbayar, 0),
-                'sisaOutstanding' => number_format($total_hutang - $total_terbayar, 0)
+                'sisaOutstanding' => number_format(($total_hutang - $total_terbayar), 0)
             ])
             ->withCallback($request->input('callback'));
     }
