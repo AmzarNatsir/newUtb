@@ -238,6 +238,17 @@ class HutangController extends Controller
                                 ->selectRaw('sum(hutang_kontainer.nominal) as t_nominal')
                                 ->pluck('t_nominal')->first();
 
+        $total_terhutang = \DB::table('receive_head')
+                                ->where('receive_head.kontainer_id', $id_kontainer)
+                                ->whereNull('receive_head.deleted_at')
+                                ->selectRaw('sum(receive_head.nilai_kontainer) as t_hutang')
+                                ->pluck('t_hutang')->first();
+        $total_invoice_all = \DB::table('receive_head')
+                                ->where('receive_head.kontainer_id', $id_kontainer)
+                                ->whereNull('receive_head.deleted_at')
+                                ->selectRaw('count(receive_head.id) as t_invoice')
+                                ->pluck('t_invoice')->first();
+
         foreach($result as $list)
         {
             $total_terbayar_invoice = \DB::table('hutang_kontainer')
@@ -270,10 +281,10 @@ class HutangController extends Controller
         return response()
             ->json([
                 'all_result' => $html,
-                'totalInvoice' => $total_invoice,
-                'totalHutang' => number_format($total_hutang, 0),
+                'totalInvoice' => $total_invoice_all,
+                'totalHutang' => number_format($total_terhutang, 0),
                 'totalTerbayar' => number_format($total_terbayar, 0),
-                'sisaOutstanding' => number_format($total_hutang - $total_terbayar, 0)
+                'sisaOutstanding' => number_format($total_terhutang - $total_terbayar, 0)
             ])
             ->withCallback($request->input('callback'));
     }
