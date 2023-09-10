@@ -76,7 +76,7 @@
                                             </li>
                                             <li class="nav-item">
                                                 <a href="#" class="nav-link">
-                                                Total Terbayar <span class="float-right badge bg-danger t_terbayar">Rp. 0</span>
+                                                Total Terbayar <span class="float-right badge bg-success t_terbayar">Rp. 0</span>
                                                 </a>
                                             </li>
                                             <li class="nav-item">
