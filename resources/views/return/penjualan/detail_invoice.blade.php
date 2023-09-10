@@ -53,7 +53,7 @@
                 <div class="form-group row">
                     <label for="inpTglInvoice" class="col-sm-6 col-form-label">Tgl. Invoice</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control input-sm" name="inpTglInvoice" id="inpTglInvoice" value="{{ date_format(date_create($dtHead->tgl_invoice), 'd-m-Y') }}" readonly>
+                        <input type="text" class="form-control input-sm" name="inpTglInvoice" id="inpTglInvoice" value="{{ date_format(date_create($dtHead->tgl_transaksi), 'd-m-Y') }}" readonly>
                     </div>
                 </div>
                 <div class="form-group">
