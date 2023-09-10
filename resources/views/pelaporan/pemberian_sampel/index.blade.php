@@ -85,7 +85,7 @@
                                 <tr>
                                     <th style="width: 5%; text-align: center;">Act</th>
                                     <th style="width: 5%; text-align: center;">No.</th>
-                                    <th style="width: 15%; text-align: center;">Tanggal</th>
+                                    <th style="width: 10%; text-align: center;">Tanggal</th>
                                     <th>Customer</th>
                                     <th style="width: 15%; text-align: center;">Total Produk</th>
                                     <th style="width: 30%;">Keterangan</th>

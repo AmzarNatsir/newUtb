@@ -36,62 +36,79 @@
         <th style="width: 10%; text-align: center;">Tgl.Invoice</th>
         <th>Customer</th>
         <th style="width: 15%; text-align: center;">Total Produk</th>
-        <th style="width: 25%; text-align: center;">Keterangan</th>
+        <th style="width: 40%; text-align: center;">Keterangan</th>
     </tr>
     </thead>
     <tbody>
     @php
     $no_urut=1;
-    $total=0;  @endphp
+    $total=0;
+    $total_qty_return=0;  @endphp
     @foreach($list_data as $list)
-    @php $tot_qty = $list->get_detail->sum('qty'); @endphp
-    <tr>
-        <td style='text-align: center; height: 25px;'>{{ $no_urut }}</td>
-        <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
-        <td>{{ $list->get_customer->nama_customer }}</td>
-        <td style='text-align: center;'>{{ $tot_qty }}</td>
-        <td>{{ $list->keterangan }}</td>
-    </tr>
-    @if($check_view_detail=='true')
-    <tr>
-        <td colspan="5">
-        <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
-            <tr>
-                <th style="text-align: center; width: 5%;">#</th>
-                <th style="text-align: center; width: 20%;">Kode</th>
-                <th>Nama Produk</th>
-                <th style="text-align: center; width: 15%;">Kemasan</th>
-                <th style="text-align: center; width: 10%">Qty</th>
-                <th style="width: 10%; color:red">Return</th>
-            </tr>
-            <tbody>
-            @php $nom=1; $total_qty=0; $total_qty_return=0; @endphp
-            @foreach($list->get_detail as $det)
+        @php
+        $tot_qty = $list->get_detail->sum('qty');
+        $tot_qty_return = $list->get_detail->sum('qty_return');
+        @endphp
+        @if($check_view_detail=='true')
+        <tr style="background-color: #e0dfde; color:black">
+        @else
+        <tr>
+        @endif
+            <td style='text-align: center; height: 25px;'>{{ $no_urut }}</td>
+            <td style='text-align: center;'>{{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}</td>
+            <td>{{ $list->get_customer->nama_customer }}</td>
+            <td style='text-align: center;'>{{ $tot_qty }}</td>
+            <td>{{ $list->keterangan }}</td>
+        </tr>
+        @if($check_view_detail=='true')
+        <tr>
+            <td colspan="5">
+            <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
                 <tr>
-                <td style="text-align: center;">{{ $nom }}</td>
-                <td style="text-align: center;">{{ $det->get_produk->kode }}</td>
-                <td>{{ $det->get_produk->nama_produk }}</td>
-                <td style='text-align: center'>{{ $det->get_produk->kemasan }} {{ $det->get_produk->get_unit->unit }}</td>
-                <td style='text-align: center'>{{ number_format($det->qty, 0) }}</td>
-                <td style='text-align: center; color:red'>{{ number_format($det->qty_return, 0) }}</td>
+                    <th style="text-align: center; width: 5%;">#</th>
+                    <th style="text-align: center; width: 20%;">Kode</th>
+                    <th>Nama Produk</th>
+                    <th style="text-align: center; width: 15%;">Kemasan</th>
+                    <th style="text-align: center; width: 10%">Qty</th>
+                    <th style="text-align: center; width: 10%; color:red">Return</th>
                 </tr>
-                @php $nom++ @endphp
-            @endforeach
-            
-            <tr><td colspan="6">&nbsp;</td></tr>
-            </tbody>
-        </table>
-        </td>
-    </tr>
-    @endif
+                <tbody>
+                @php $nom=1; @endphp
+                @foreach($list->get_detail as $det)
+                    <tr>
+                    <td style="text-align: center;">{{ $nom }}</td>
+                    <td style="text-align: center;">{{ $det->get_produk->kode }}</td>
+                    <td>{{ $det->get_produk->nama_produk }}</td>
+                    <td style='text-align: center'>{{ $det->get_produk->kemasan }} {{ $det->get_produk->get_unit->unit }}</td>
+                    <td style='text-align: center'>{{ number_format($det->qty, 0) }}</td>
+                    <td style='text-align: center; color:red'>{{ number_format($det->qty_return, 0) }}</td>
+                    </tr>
+                    @php $nom++ @endphp
+                @endforeach
+
+                <tr><td colspan="6">&nbsp;</td></tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+        @endif
     @php
     $total+=$tot_qty;
-    $total_qty_return+=$det->qty_return; @endphp
+    $total_qty_return+=$tot_qty_return; @endphp
     @endforeach
-    <tr style="background-color: #808080; color:azure">
-        <td colspan="3" class="text-right"><b>TOTAL</b></td>
-        <td style='text-align: center; height:30px'><b>{{ $total }}</b></td>
-        <td></td>
+</table>
+<table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
+    <tr>
+        <td style='text-align: right; width: 90%'><b>TOTAL PEMBERIAN SAMPLE</b>&nbsp;&nbsp;</td>
+        <td style='text-align: left;'><b>&nbsp;&nbsp;{{ $total }}</b></td>
+    </tr>
+    <tr>
+        <td style='text-align: right; color:red'><b>TOTAL RETURN</b>&nbsp;&nbsp;</td>
+        <td style='text-align: left; color:red'><b>&nbsp;&nbsp;{{ $total_qty_return }}</b></td>
+    </tr>
+    <tr>
+        <td style='text-align: right; color:green'><b>NET</b>&nbsp;&nbsp;</td>
+        <td style='text-align: left; color:green'><b>&nbsp;&nbsp;{{ $total - $total_qty_return }}</b></td>
     </tr>
     </tbody>
 </table>

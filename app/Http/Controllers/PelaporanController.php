@@ -573,7 +573,7 @@ class PelaporanController extends Controller
             <td style='text-align: center;'>".date_format(date_create($list->tgl_transaksi), 'd-m-Y')."</td>
             <td>".$list->get_customer->nama_customer."</td>
             <td style='text-align: center;'>".$tot_qty."</td>
-            <td style='text-align: center;'>".$list->keterangan."</td>
+            <td style='text-align: left;'>".$list->keterangan."</td>
             </tr>";
             $nom++;
             $total+=$tot_qty;
