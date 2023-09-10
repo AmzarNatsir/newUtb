@@ -44,6 +44,19 @@ class PiutangController extends Controller
                                 ->selectRaw('sum(piutang.nominal) as t_nominal')
                                 ->pluck('t_nominal')->first();
 
+        $total_terhutang = \DB::table('jual_head')
+                                ->where('bayar_via', 2)
+                                ->where('jual_head.customer_id', $id_customer)
+                                ->whereNull('jual_head.deleted_at')
+                                ->selectRaw('sum(jual_head.total_invoice_net) as t_hutang')
+                                ->pluck('t_hutang')->first();
+        $total_invoice_all = \DB::table('jual_head')
+                                ->where('bayar_via', 2)
+                                ->where('jual_head.customer_id', $id_customer)
+                                ->whereNull('jual_head.deleted_at')
+                                ->selectRaw('count(jual_head.id) as t_invoice')
+                                ->pluck('t_invoice')->first();
+
         foreach($result as $list)
         {
             $total_terbayar_invoice = \DB::table('piutang')
@@ -99,10 +112,10 @@ class PiutangController extends Controller
         return response()
             ->json([
                 'all_result' => $html,
-                'totalInvoice' => $total_invoice,
-                'totalPiutang' => number_format($total_piutang, 0),
+                'totalInvoice' => $total_invoice_all,
+                'totalPiutang' => number_format($total_terhutang, 0),
                 'totalTerbayar' => number_format($total_terbayar, 0),
-                'sisaOutstanding' => number_format($total_piutang - $total_terbayar, 0)
+                'sisaOutstanding' => number_format($total_terhutang - $total_terbayar, 0)
             ])
             ->withCallback($request->input('callback'));
     }
