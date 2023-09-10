@@ -35,17 +35,17 @@ class HutangController extends Controller
         $total_invoice = 0;
         $total_hutang = 0;
         $id_supplier = $request->supplier;
-        $result = ReceiveHeadModel::where('supplier_id', $id_supplier)->where('cara_bayar', 2)->whereNull('status_hutang')->get();
+        $result = ReceiveHeadModel::where('kontainer_id', $id_supplier)->where('cara_bayar', 2)->whereNull('status_hutang')->get();
         // dd($result);
         $total_terbayar = \DB::table('hutang')
                                 ->join('receive_head', 'receive_head.id', '=', 'hutang.receive_id')
-                                ->where('receive_head.supplier_id', $id_supplier)
+                                ->where('receive_head.kontainer_id', $id_supplier)
                                 ->whereNull('hutang.deleted_at')
                                 ->selectRaw('sum(hutang.nominal) as t_nominal')
                                 ->pluck('t_nominal')->first();
 
         $total_terhutang = \DB::table('receive_head')
-                                ->where('receive_head.supplier_id', $id_supplier)
+                                ->where('receive_head.kontainer_id', $id_supplier)
                                 ->whereNull('receive_head.deleted_at')
                                 ->selectRaw('sum(receive_head.total_receive_net) as t_hutang')
                                 ->pluck('t_hutang')->first();
