@@ -40,7 +40,7 @@
     </tr>
     </thead>
     <tbody>
-    @php 
+    @php
     $no_urut=1;
     $total=0;  @endphp
     @foreach($list_data as $list)
@@ -57,32 +57,36 @@
         <td colspan="5">
         <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; border-collapse: collapse;" border="1">
             <tr>
-                <th class="text-center" style="width: 5%;">#</th>
-                <th class="text-center" style="width: 20%;">Kode</th>
+                <th style="text-align: center; width: 5%;">#</th>
+                <th style="text-align: center; width: 20%;">Kode</th>
                 <th>Nama Produk</th>
-                <th class="text-center" style="width: 10%;">Kemasan</th>
-                <th class="text-center" style="width: 10%;">Satuan</th>
-                <th class="text-center" style="width: 10%">Qty</th>
+                <th style="text-align: center; width: 15%;">Kemasan</th>
+                <th style="text-align: center; width: 10%">Qty</th>
+                <th style="width: 10%; color:red">Return</th>
             </tr>
             <tbody>
-            @php $nom=1 @endphp
+            @php $nom=1; $total_qty=0; $total_qty_return=0; @endphp
             @foreach($list->get_detail as $det)
                 <tr>
-                <td class="text-center">{{ $nom }}</td>
-                <td class="text-center">{{ $det->get_produk->kode }}</td>
+                <td style="text-align: center;">{{ $nom }}</td>
+                <td style="text-align: center;">{{ $det->get_produk->kode }}</td>
                 <td>{{ $det->get_produk->nama_produk }}</td>
-                <td style='text-align: center'>{{ $det->get_produk->kemasan }}</td>
-                <td style='text-align: center'>{{ $det->get_produk->get_unit->unit }}</td>
-                <td style='text-align: center'>{{ $det->qty }}</td>
+                <td style='text-align: center'>{{ $det->get_produk->kemasan }} {{ $det->get_produk->get_unit->unit }}</td>
+                <td style='text-align: center'>{{ number_format($det->qty, 0) }}</td>
+                <td style='text-align: center; color:red'>{{ number_format($det->qty_return, 0) }}</td>
                 </tr>
                 @php $nom++ @endphp
             @endforeach
+            
+            <tr><td colspan="6">&nbsp;</td></tr>
             </tbody>
         </table>
         </td>
     </tr>
     @endif
-    $total+=$tot_qty; @endphp
+    @php
+    $total+=$tot_qty;
+    $total_qty_return+=$det->qty_return; @endphp
     @endforeach
     <tr style="background-color: #808080; color:azure">
         <td colspan="3" class="text-right"><b>TOTAL</b></td>

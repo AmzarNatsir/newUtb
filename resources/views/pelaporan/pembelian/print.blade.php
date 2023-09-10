@@ -52,14 +52,14 @@
         <th style="width: 7%; text-align:right">Total Net</th>
         <th style="width: 7%; text-align:right">Pembayaran</th>
         <th style="width: 7%; text-align:right">Outstanding</th>
-        <th style="width: 5%; text-align: center;">Cara Bayar</th>
+        <th style="width: 5%; text-align: center;">Cara&nbsp;Bayar</th>
         <th style="width: 7%; text-align: center;">Ket.</th>
     </tr>
     </thead>
     <tbody>
-    @php 
+    @php
     $no_urut=1;
-    $total=0;  
+    $total=0;
     $total_bayar = 0;
     $total_outs = 0;
     @endphp
@@ -97,44 +97,58 @@
         <td colspan="13">
         <table class="table table-bordered table-vcenter" style="font-size: 8pt; font-family: Arial, Helvetica, sans-serif; width: 100%; border-collapse: collapse;" border="1">
             <tr>
-                <th rowspan="2" style="width: 2%; text-align: center; vertical-align: middle;">#</th>
-                <th rowspan="2" style="vertical-align: middle;">Nama Produk</th>
-                <th colspan="3" style="text-align: center;">Satuan</th>
-                <th rowspan="2" style="width: 12%; text-align: right; vertical-align: middle;" >Sub Total</th>
-                <th colspan="2" style="text-align: center;">Potongan</th>
-                <th rowspan="2" style="width: 12%; text-align: right; vertical-align: middle;">Sub Total Net</th>
+                <th rowspan="2" class="text-center" style="width: 2%;">#</th>
+                <th rowspan="2" style="width: 10%;">Kode</th>
+                <th rowspan="2">Nama Produk</th>
+                <th rowspan="2" style="text-align:center; width: 5%">Kemasan</th>
+                <th colspan="5" style="text-align:center;">Receive</th>
+                <th colspan="2" style="text-align:center; color:red">Return</th>
             </tr>
             <tr>
-                <th style="width: 10%; text-align: center;">Satuan</th>
-                <th style="width: 5%; text-align: center;">Qty</th>
-                <th style="width: 12%; text-align: right;">Harga Satuan</th>
-                <th style="width: 5%; text-align: right;">%</th>
-                <th style="width: 12%; text-align: right;">Nilai</th>
+                <th style="text-align:center; width: 5%">Qty</th>
+                <th style="text-align:right; width: 10%">Harga Satuan</th>
+                <th style="text-align:right; width: 10%;" >Sub Total</th>
+                <th style="text-align:center; width: 5%">Diskon</th>
+                <th style="text-align:right; width: 10%;" >Sub Total Net</th>
+                <th style="text-align:center; width: 5%; color:red">Qty</th>
+                <th style="text-align:right; width: 10%; color:red">Sub Total</th>
             </tr>
             <tbody>
-            @php $nom=1 @endphp
+            @php $nom=1;
+            $total_qty=0;
+            $total_harga=0;
+            $total_subtotal=0;
+            $total_subtotal_net=0;
+            $total_return=0;
+            @endphp
             @foreach($list->get_detail as $det)
+            @php $sub_total_return = $det->harga * $det->qty_return; @endphp
                 <tr>
-                <td>{{ $nom }}</td>
-                <td>{{ $det->get_produk->kode }} | {{ $det->get_produk->nama_produk }}</td>
-                <td style='text-align: center'>{{ $det->get_produk->get_unit->unit }}</td>
-                <td style='text-align: center'>{{ $det->qty }}</td>
-                <td style='text-align: right'>{{ number_format($det->harga, 0, ",", ".") }}</td>
-                <td style='text-align: right'>{{ number_format($det->sub_total, 0, ",", ".") }}</td>
-                <td style='text-align: right'>{{ $det->diskitem_persen }}</td>
-                <td style='text-align: right'>{{ number_format($det->diskitem_rupiah, 0, ",", ".") }}</td>
-                <td style='text-align: right'>{{ number_format($det->sub_total_net, 0, ",", ".") }}</td>
+                    <td>{{ $nom }}</td>
+                    <td>{{ $det->get_produk->kode }}</td>
+                    <td>{{ $det->get_produk->nama_produk }}</td>
+                    <td style='text-align: center'>{{ $det->get_produk->kemasan }} {{ $det->get_produk->get_unit->unit }}</td>
+                    <td style='text-align: center'>{{ $det->qty }}</td>
+                    <td style='text-align: right'>{{ number_format($det->harga, 0) }}</td>
+                    <td style='text-align: right'>{{ number_format($det->sub_total, 0) }}</td>
+                    <td style='text-align: right'>{{ (!empty($det->diskitem_persen)) ? $det->diskitem_persen.' %' : "0" }}</td>
+                    <td style='text-align: right'>{{ number_format($det->sub_total_net, 0) }}</td>
+                    <td style='text-align: center; color:red'>{{ $det->qty_return }}</td>
+                    <td style='text-align: right; color:red'>{{ number_format($sub_total_return, 0) }}</td>
                 </tr>
-                @php $nom++ @endphp
+                @php
+                $nom++;
+                $total_return+=$sub_total_return;
+                @endphp
             @endforeach
             </tbody>
         </table>
         </td>
     </tr>
     @endif
-    @php 
+    @php
     $no_urut++;
-    $total+=$list->total_receive_net; 
+    $total+=$list->total_receive_net;
     $total_bayar+=$total_terbayar_invoice;
     $total_outs+=$outs_invoice;
     @endphp

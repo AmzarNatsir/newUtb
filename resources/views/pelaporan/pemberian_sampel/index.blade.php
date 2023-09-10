@@ -79,19 +79,21 @@
                             <div class="spinner-border text-primary" role="status">
                             </div>
                         </div>
-                        <table class="table table-bordered table-hover datatable" style="font-size: 10pt; width: 100%;">
-                            <thead>
-                            <tr>
-                                <th style="width: 5%; text-align: center;">Act</th>
-                                <th style="width: 5%; text-align: center;">No.</th>
-                                <th style="width: 15%; text-align: center;">Tanggal</th>
-                                <th>Customer</th>
-                                <th style="width: 15%; text-align: center;">Total Produk</th>
-                                <th style="width: 30%;">Keterangan</th>
-                            </tr>
-                            </thead>
-                            <tbody class="viewList"></tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table-bordered table-hover datatable" style="font-size: 10pt; width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th style="width: 5%; text-align: center;">Act</th>
+                                    <th style="width: 5%; text-align: center;">No.</th>
+                                    <th style="width: 15%; text-align: center;">Tanggal</th>
+                                    <th>Customer</th>
+                                    <th style="width: 15%; text-align: center;">Total Produk</th>
+                                    <th style="width: 30%;">Keterangan</th>
+                                </tr>
+                                </thead>
+                                <tbody class="viewList"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                             <div class="spinner-border text-primary" role="status">
                             </div>
                         </div>
-                        <table class="table table-bordered table-hover" style="font-size: 10pt; width: 100%;">
+                        <table class="table-bordered table-hover" style="font-size: 10pt; width: 100%;">
                             <thead>
                             <tr>
                                 <td style="text-align: left;" colspan="10"><h4>Laporan Pembelian</h4>
@@ -121,7 +121,7 @@
 </div>
 <!-- <script type="text/javascript" src="{{ asset('assets/js/laporan/laporanPembelian.js') }}"></script> -->
 <script>
-    $(function(){ 
+    $(function(){
         $('#spinner-div').hide();
     });
     var goFilter = function()

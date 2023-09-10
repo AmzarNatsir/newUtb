@@ -57,15 +57,15 @@
     </tr>
     </thead>
     <tbody>
-    @php 
+    @php
     $no_urut=1;
-    $total=0; 
+    $total=0;
     $total_bayar = 0;
     $total_outs = 0;
-    $ket_via = ""; 
+    $ket_via = "";
     @endphp
     @foreach($list_data as $list)
-    @php 
+    @php
     if($list->bayar_via==2)
     {
         $total_terbayar_invoice = $list->get_piut_terbayar($list->id);
@@ -101,38 +101,53 @@
         <td colspan="13">
         <table class="table-bordered table-vcenter" style="font-size: 8pt; width: 100%; font-family: Arial, Helvetica, sans-serif;">
             <tr>
-                <th class="text-center" style="width: 2%;">#</th>
-                <th class="text-center" style="width: 10%;">Kode</th>
-                <th>Nama</th>
-                <th class="text-center" style="width: 10%;">Kemasan</th>
-                <th class="text-center" style="width: 10%;">Satuan</th>
-                <th class="text-center" style="width: 5%">Qty</th>
-                <th class="text-right" style="width: 15%">Harga Satuan</th>
-                <th class="text-right" style="width: 15%;" >Sub Total</th>
+                <th rowspan="2" style="text-align:center; width: 2%;">#</th>
+                <th rowspan="2" style="text-align:center; width: 10%;">Kode</th>
+                <th rowspan="2">Nama Produk</th>
+                <th rowspan="2" style="text-align:center;width: 5%">Kemasan</th>
+                <th colspan="3" style="text-align:center;">Penjualan</th>
+                <th colspan="2" style="text-align:center; color:red">Return</th>
+            </tr>
+            <tr>
+                <th style="text-align:center; width: 5%">Qty</th>
+                <th style="text-align:right; width: 12%">Harga Satuan</th>
+                <th style="text-align:right; width: 12%;" >Sub Total</th>
+                <th style="text-align:center; width: 5%; color:red">Qty</th>
+                <th style="text-align:right; width: 12%; color:red">Sub Total</th>
             </tr>
             <tbody>
-            @php $nom=1 @endphp
+            @php $nom=1;
+            $total_qty=0;
+            $total_qty_return=0;
+            $total_harga=0;
+            $total_subtotal=0;
+            $total_subtotal_net=0;
+            $total_return=0;
+            @endphp
             @foreach($list->get_detail as $det)
+            @php $sub_total_return = $det->harga * $det->qty_return; @endphp
                 <tr>
                 <td>{{ $nom }}</td>
                 <td>{{ $det->get_produk->kode }}</td>
                 <td>{{ $det->get_produk->nama_produk }} ({{ $det->get_sub_produk->nama_produk }})</td>
-                <td style='text-align: center'>{{ $det->get_produk->kemasan }}</td>
-                <td style='text-align: center'>{{ $det->get_produk->get_unit->unit }}</td>
+                <td style='text-align: center'>{{ $det->get_produk->kemasan }} {{ $det->get_produk->get_unit->unit }}</td>
                 <td style='text-align: center'>{{ number_format($det->qty, 0) }}</td>
                 <td style='text-align: right'>{{ number_format($det->harga, 0) }}</td>
                 <td style='text-align: right'>{{ number_format($det->sub_total, 0) }}</td>
+                <td style='text-align: center; color:red'>{{  number_format($det->qty_return, 0) }}</td>
+                <td style='text-align: right; color:red'>{{ number_format($sub_total_return, 0) }}</td>
                 </tr>
                 @php $nom++ @endphp
             @endforeach
+            <tr><td colspan="9">&nbsp;</td></tr>
             </tbody>
         </table>
         </td>
     </tr>
     @endif
-    @php 
+    @php
     $no_urut++;
-    $total+=$list->total_invoice_net; 
+    $total+=$list->total_invoice_net;
     $total_bayar+=$total_terbayar_invoice;
     $total_outs+=$outs_invoice;
     @endphp
