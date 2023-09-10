@@ -35,7 +35,7 @@ class HutangController extends Controller
         $total_invoice = 0;
         $total_hutang = 0;
         $id_supplier = $request->supplier;
-        $result = ReceiveHeadModel::where('supplier_id', $id_supplier)->where('cara_bayar', 2)->whereNull('status_hutang')->get();
+        $result = ReceiveHeadModel::where('supplier_id', $id_supplier)->where('cara_bayar', 2)->where('status_hutang', 1)->get();
         // dd($result);
         $total_terbayar = \DB::table('hutang')
                                 ->join('receive_head', 'receive_head.id', '=', 'hutang.receive_id')
