@@ -10,7 +10,7 @@
             @if($selisih > 0)
             <li class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" onClick="viewInvoice(this)" id="{{ $list->id }}">
-                {{ $list->no_invoice }} | {{ date_format(date_create($list->tgl_invoice), 'd-m-Y') }}
+                {{ $list->no_invoice }} | {{ date_format(date_create($list->tgl_transaksi), 'd-m-Y') }}
                 <table style="width: 100%">
                     <tr>
                         <td style="width: 50%">Invoice</td>

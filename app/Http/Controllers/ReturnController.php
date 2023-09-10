@@ -184,7 +184,7 @@ class ReturnController extends Controller
 
     public function filter_invoice_penjualan($id_customer)
     {
-        $result = JualHeadModel::where('customer_id', $id_customer)->whereNull('jenis_jual')->orderby('tgl_invoice', 'desc')->get();
+        $result = JualHeadModel::where('customer_id', $id_customer)->whereNull('jenis_jual')->orderby('tgl_transaksi', 'desc')->get();
         $data = [
             'list_invoice' => $result
         ];
