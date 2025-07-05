@@ -279,7 +279,7 @@ class ProductController extends Controller
     public function searchItemJual(Request $request)
     {
         $keyword = $request->search;
-        $result = ProductSubModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->orderBy('kode', 'asc')->get();
+        $result = ProductSubModel::where('nama_produk', 'LIKE', '%'.$keyword.'%')->orderBy('kode', 'asc')->limit(10)->get();
         $response = array();
         foreach($result as $item){
             $response[] = array(

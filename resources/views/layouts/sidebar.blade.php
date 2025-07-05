@@ -345,26 +345,26 @@ $head_manaj_user = "";
     </ul>
 </li>
 @endif
-@if($head_manaj_user=="y")
+{{-- @if($head_manaj_user=="y") --}}
 <li class="nav-item">
     <a href="#" class="nav-link">
         <i class="nav-icon fas fa-user"></i>
         <p>Manajement User<i class="fas fa-angle-left right"></i></p>
     </a>
     <ul class="nav nav-treeview">
-        @can('manaj_users_roles_permission')
+        {{-- @can('manaj_users_roles_permission') --}}
         <li class="nav-item">
             <a href="{{ route('roles_permission') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Roles Permission</p></a>
         </li>
-        @endcan
-        @can('manaj_users_user')
+        {{-- @endcan
+        @can('manaj_users_user') --}}
         <li class="nav-item">
             <a href="{{ route('users') }}" class="nav-link"><i class="nav-icon far fa-circle text-warning"></i><p>Users</p></a>
         </li>
-        @endcan
+        {{-- @endcan --}}
     </ul>
 </li>
-@endif
+{{-- @endif --}}
     </ul>
     </nav>
     <!-- /.sidebar-menu -->

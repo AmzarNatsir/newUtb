@@ -50,13 +50,13 @@
                 </tr>
                 @php
                     $nom++;
-                @endphp 
+                @endphp
                 @endforeach
                 <tr>
                     <td colspan="3" style="text-align: right;"><b>Sisa Oustanding</b></td>
                     <td style="text-align: right;"><b>{{ number_format($n_outs, 0) }}</b></td>
                     <td>
-                    @if($n_outs==0)    
+                    @if($n_outs==0)
                     <button type="button" class="btn btn-success float-left" style="margin-right: 5px;"><i class="fas fa-check"></i> LUNAS</button>
                     @endif
                     </td>

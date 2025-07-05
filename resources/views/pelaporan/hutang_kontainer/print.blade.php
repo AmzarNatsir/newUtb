@@ -53,7 +53,7 @@
     </tr>
     </thead>
     <tbody>
-    @php 
+    @php
     $no_urut=1;
     $total=0;  @endphp
     @foreach($list_data as $list)
@@ -69,7 +69,7 @@
         <td style='text-align: right;'><b>{{ number_format($list->nominal, 0, ",", ".") }}</b></td>
         <td style='text-align: center;'>{{ ($list->metode_bayar==1) ? 'Tunai' : 'Transfer' }}</td>
     </tr>
-    @php 
+    @php
     $no_urut++;
     $total+=$list->nominal; @endphp
     @endforeach

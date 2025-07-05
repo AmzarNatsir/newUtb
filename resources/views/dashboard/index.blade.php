@@ -245,7 +245,7 @@
         <!-- /.col -->
         </div>
         <!-- /.row -->
-        <div class="row">
+        {{-- <div class="row">
         <!-- /.col -->
             <div class="col-md-12">
                 <div class="card card-primary">
@@ -254,7 +254,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -288,13 +288,13 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         <!-- /.col -->
-        </div>
+        </div> --}}
         <!-- /.row -->
         <input type="hidden" id="temp_array" class="form-control">
     </div><!--/. container-fluid -->

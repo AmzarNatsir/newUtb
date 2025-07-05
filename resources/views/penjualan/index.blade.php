@@ -150,6 +150,45 @@
                                 <textarea class="form-control" name="inp_keterangan" id="inp_keterangan"></textarea>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for="sel_kontainer">Kontainer</label>
+                                            <select class="form-control select2bs4" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" placeholder="Pilihan Kontainer" required>
+                                                <option></optionn>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="inp_nomor">Nomor Invoice Kontainer</label>
+                                            <input type="text" class="form-control" name="inp_invoice_kontainer" id="inp_invoice_kontainer" maxlength="50" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inp_ongkir_kontainer">Ongkir Kontainer</label>
+                                            <input type="text" class="form-control angka" id="inp_ongkir_kontainer" name="inp_ongkir_kontainer" value="0" style="text-align: right;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inpTglTiba">Tanggal Tiba</label>
+                                            <div class="input-group date" id="inpTglTiba">
+                                                <input type="text" class="form-control datetimepicker-input dtpicker" id="inpTglTiba" name="inpTglTiba" required />
+                                                <div class="input-group-append" >
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal-footer justify-content-between">
                             <button type="submit" class="btn btn-success btn-block" id="tbl_submit">Simpan</button>
                         </div>
@@ -441,6 +480,10 @@
         $("#inputOngkosKirim").val("0");
         $("#inputTotalNet").val("0");
         $("#sel_via").attr('required', false);
+        $("#sel_kontainer").val(null).trigger('change');
+        $("#inp_invoice_kontainer").val("");
+        $("#inp_ongkir_kontainer").val("0");
+        $("#inpTglTiba").val("");
     }
 
     function konfirm()

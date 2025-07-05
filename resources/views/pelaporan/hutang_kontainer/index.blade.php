@@ -27,7 +27,7 @@
                                     </div>
                                     <input class="form-control dtpicker input-sm" id="searchTglTrans_1" name="searchTglTrans_1" type="text" placeholder="Tanggal Awal" value="{{ date('d/m/Y') }}">
                                 </div>
-                                
+
                             </div>
                             <div class="form-group col-md-2">
                                 <div class="input-group">
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-5">
-                                <select class="form-control select2bs4_kontainer" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" required>   
+                                <select class="form-control select2bs4_kontainer" name="sel_kontainer" id="sel_kontainer" style="width: 100%;" required>
                                     @foreach($allKontainer as $kontainer)
                                     <option value="{{ $kontainer->id }}">{{ $kontainer->nama_kontainer }}</option>
                                     @endforeach
@@ -55,7 +55,7 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
